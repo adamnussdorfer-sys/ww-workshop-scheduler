@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 ## Current Position
 
 Phase: 2 of 7 (Calendar Grid)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-03-06 — Completed 02-01: CalendarGrid and WorkshopCard components
+Last activity: 2026-03-06 — Completed 02-02: Week navigation controls and view toggle tabs
 
-Progress: [████░░░░░░] 19%
+Progress: [████░░░░░░] 24%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 2.5 min
-- Total execution time: 0.18 hours
+- Total plans completed: 5
+- Average duration: 2.6 min
+- Total execution time: 0.22 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 3 | 7 min | 2.3 min |
-| 02-calendar-grid | 1 | 4 min | 4 min |
+| 02-calendar-grid | 2 | 7 min | 3.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min), 01-02 (1 min), 01-03 (4 min), 02-01 (4 min)
+- Last 5 plans: 01-01 (2 min), 01-02 (1 min), 01-03 (4 min), 02-01 (4 min), 02-02 (3 min)
 - Trend: -
 
 *Updated after each plan completion*
@@ -58,6 +58,9 @@ Recent decisions affecting current work:
 - [02-01]: Static TYPE_CARD_STYLES lookup object (not dynamic interpolation) ensures Tailwind JIT includes all border/bg classes at build time
 - [02-01]: Cancelled workshops filtered inside CalendarGrid, not ScheduleCalendar — filtering colocated with rendering concern
 - [02-01]: CalendarGrid maxHeight 600px with overflow-auto — grid scrollable within page layout
+- [02-02]: All date-fns week functions use weekStartsOn: 1 — Monday-first anchoring throughout
+- [02-02]: Today button uses HTML disabled + opacity-50/cursor-default CSS — no extra state branch needed
+- [02-02]: View toggle container uses ml-auto to right-align tabs in navigation bar
 
 ### Pending Todos
 
@@ -70,5 +73,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 02-01-PLAN.md — CalendarGrid and WorkshopCard built, ScheduleCalendar wired, proceed to 02-02
+Stopped at: Completed 02-02-PLAN.md — Week navigation controls and view toggle tabs added, proceed to 02-03
 Resume file: None

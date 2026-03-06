@@ -16,9 +16,9 @@
 ### Calendar Core
 
 - [x] **CAL-01**: Weekly calendar grid (Mon-Sun columns, 6:00 AM - 10:00 PM ET rows, 30-min increments)
-- [ ] **CAL-02**: View toggles: Day | Week | Month (Week default, others simplified)
-- [ ] **CAL-03**: Week navigation with left/right arrows and "Today" button
-- [ ] **CAL-04**: Header displays "Week of [date range]" with nav arrows
+- [x] **CAL-02**: View toggles: Day | Week | Month (Week default, others simplified)
+- [x] **CAL-03**: Week navigation with left/right arrows and "Today" button
+- [x] **CAL-04**: Header displays "Week of [date range]" with nav arrows
 - [x] **CAL-05**: Workshop events appear as colored blocks on the calendar grid
 
 ### Workshop Cards
@@ -142,9 +142,9 @@
 | DATA-03 | Phase 1 | Complete |
 | DATA-04 | Phase 1 | Complete |
 | CAL-01 | Phase 2 | Complete |
-| CAL-02 | Phase 2 | Pending |
-| CAL-03 | Phase 2 | Pending |
-| CAL-04 | Phase 2 | Pending |
+| CAL-02 | Phase 2 | Complete |
+| CAL-03 | Phase 2 | Complete |
+| CAL-04 | Phase 2 | Complete |
 | CAL-05 | Phase 2 | Complete |
 | CARD-01 | Phase 2 | Complete |
 | CARD-02 | Phase 2 | Complete |
