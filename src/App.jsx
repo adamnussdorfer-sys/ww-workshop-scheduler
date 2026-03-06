@@ -1,12 +1,24 @@
-function App() {
+import { useState } from 'react'
+import { Routes, Route } from 'react-router'
+import { AppContext } from './context/AppContext'
+import AppShell from './components/layout/AppShell'
+import ScheduleCalendar from './pages/ScheduleCalendar'
+import CoachRoster from './pages/CoachRoster'
+import DraftManager from './pages/DraftManager'
+
+export default function App() {
+  const [coaches, setCoaches] = useState([])
+  const [workshops, setWorkshops] = useState([])
+
   return (
-    <div className="min-h-screen bg-surface flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-2xl font-semibold text-ww-navy">WW Workshop Scheduler</h1>
-        <p className="mt-2 text-sm text-slate-500">Foundation loading...</p>
-      </div>
-    </div>
+    <AppContext.Provider value={{ coaches, setCoaches, workshops, setWorkshops }}>
+      <AppShell>
+        <Routes>
+          <Route path="/" element={<ScheduleCalendar />} />
+          <Route path="/roster" element={<CoachRoster />} />
+          <Route path="/drafts" element={<DraftManager />} />
+        </Routes>
+      </AppShell>
+    </AppContext.Provider>
   )
 }
-
-export default App
