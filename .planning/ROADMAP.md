@@ -12,7 +12,7 @@ Start from a bare Vite scaffold and build a high-fidelity workshop scheduling pr
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - App shell, navigation, brand design system, and all mock data
+- [x] **Phase 1: Foundation** - App shell, navigation, brand design system, and all mock data
 - [ ] **Phase 2: Calendar Grid** - Weekly calendar grid with workshop event cards rendered from mock data
 - [ ] **Phase 3: Workshop Detail** - Right-side detail panel (view/edit) and click-to-create workflow
 - [ ] **Phase 4: Conflict Detection** - Conflict detection engine with visual warnings on calendar and panel
@@ -36,8 +36,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01-PLAN.md — Install dependencies, configure Tailwind v4 with WW brand tokens, clean scaffold
-- [ ] 01-02-PLAN.md — Build app shell (sidebar, top bar, content area), React Router, navigation
-- [ ] 01-03-PLAN.md — Create mock data (18 coaches, 45 workshops, 3 intentional conflicts)
+- [x] 01-02-PLAN.md — Build app shell (sidebar, top bar, content area), React Router, navigation
+- [x] 01-03-PLAN.md — Create mock data (18 coaches, 45 workshops, 3 intentional conflicts)
 
 ### Phase 2: Calendar Grid
 **Goal**: Coordinators can see the full weekly workshop schedule at a glance on the calendar
@@ -144,7 +144,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 1/3 | In progress | - |
+| 1. Foundation | 3/3 | Complete | 2026-03-06 |
 | 2. Calendar Grid | 0/3 | Not started | - |
 | 3. Workshop Detail | 0/3 | Not started | - |
 | 4. Conflict Detection | 0/2 | Not started | - |

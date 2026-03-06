@@ -10,27 +10,27 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 ## Current Position
 
 Phase: 1 of 7 (Foundation)
-Plan: 2 of 3 in current phase
+Plan: 3 of 3 in current phase — PHASE COMPLETE
 Status: In progress
-Last activity: 2026-03-06 — Completed 01-02: App shell layout and navigation
+Last activity: 2026-03-06 — Completed 01-03: Mock data files and AppContext wiring
 
-Progress: [██░░░░░░░░] 10%
+Progress: [███░░░░░░░] 14%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 1.5 min
-- Total execution time: 0.05 hours
+- Total plans completed: 3
+- Average duration: 2 min
+- Total execution time: 0.12 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation | 2 | 3 min | 1.5 min |
+| 01-foundation | 3 | 7 min | 2.3 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min), 01-02 (1 min)
+- Last 5 plans: 01-01 (2 min), 01-02 (1 min), 01-03 (4 min)
 - Trend: -
 
 *Updated after each plan completion*
@@ -52,6 +52,8 @@ Recent decisions affecting current work:
 - [01-02]: Sidebar collapse state lives in AppShell (not Sidebar) — AppShell owns CSS Grid column width
 - [01-02]: NavItem uses end={to === '/'} to prevent root route matching all child paths
 - [01-02]: Import from react-router (not react-router-dom) — React Router v7 unified package
+- [01-03]: date-fns startOfWeek/addDays/setHours/setMinutes for dynamic week anchoring — avoids stale hardcoded dates
+- [01-03]: Conflicts at exact coach IDs/times specified (coach-005 Tue, coach-008 Thu, coach-012 Wed) — required by Phase 4 conflict detection
 
 ### Pending Todos
 
@@ -64,5 +66,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 01-02-PLAN.md — app shell layout and navigation complete, proceed to 01-03
+Stopped at: Completed 01-03-PLAN.md — mock data complete, Phase 1 Foundation done, proceed to Phase 2
 Resume file: None

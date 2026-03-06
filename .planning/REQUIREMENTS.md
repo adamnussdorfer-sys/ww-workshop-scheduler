@@ -78,10 +78,10 @@
 
 ### Mock Data
 
-- [ ] **DATA-01**: 15-20 coaches with mix of Coach Creators and Legacy Coaches, each with name, type, email, initials, availability, timezone
-- [ ] **DATA-02**: 40-50 workshops across the week with realistic times, types, coaches, co-coaches, mix of Draft/Published
-- [ ] **DATA-03**: 2-3 intentional conflicts (coach double-bookings) for demo
-- [ ] **DATA-04**: Attendance data (15-200 range) with 5-week trend for published workshops
+- [x] **DATA-01**: 15-20 coaches with mix of Coach Creators and Legacy Coaches, each with name, type, email, initials, availability, timezone
+- [x] **DATA-02**: 40-50 workshops across the week with realistic times, types, coaches, co-coaches, mix of Draft/Published
+- [x] **DATA-03**: 2-3 intentional conflicts (coach double-bookings) for demo
+- [x] **DATA-04**: Attendance data (15-200 range) with 5-week trend for published workshops
 
 ### Interactions & Polish
 
@@ -137,10 +137,10 @@
 | LAYOUT-03 | Phase 1 | Complete |
 | LAYOUT-04 | Phase 1 | Pending |
 | LAYOUT-05 | Phase 1 | Pending |
-| DATA-01 | Phase 1 | Pending |
-| DATA-02 | Phase 1 | Pending |
-| DATA-03 | Phase 1 | Pending |
-| DATA-04 | Phase 1 | Pending |
+| DATA-01 | Phase 1 | Complete |
+| DATA-02 | Phase 1 | Complete |
+| DATA-03 | Phase 1 | Complete |
+| DATA-04 | Phase 1 | Complete |
 | CAL-01 | Phase 2 | Pending |
 | CAL-02 | Phase 2 | Pending |
 | CAL-03 | Phase 2 | Pending |
