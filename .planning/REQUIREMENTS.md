@@ -38,8 +38,8 @@
 
 ### Workshop Creation
 
-- [ ] **CREATE-01**: Click empty time slot opens panel in create mode with date/time pre-filled
-- [ ] **CREATE-02**: Coach dropdown shows available coaches (green) vs unavailable (grayed out with reason)
+- [x] **CREATE-01**: Click empty time slot opens panel in create mode with date/time pre-filled
+- [x] **CREATE-02**: Coach dropdown shows available coaches (green) vs unavailable (grayed out with reason)
 
 ### Conflict Detection
 
@@ -155,8 +155,8 @@
 | PANEL-04 | Phase 3 | Pending |
 | PANEL-05 | Phase 3 | Pending |
 | PANEL-06 | Phase 3 | Pending |
-| CREATE-01 | Phase 3 | Pending |
-| CREATE-02 | Phase 3 | Pending |
+| CREATE-01 | Phase 3 | Complete |
+| CREATE-02 | Phase 3 | Complete |
 | CONFLICT-01 | Phase 4 | Pending |
 | CONFLICT-02 | Phase 4 | Pending |
 | CONFLICT-03 | Phase 4 | Pending |

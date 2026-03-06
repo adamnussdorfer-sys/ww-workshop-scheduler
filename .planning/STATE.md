@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-03-05)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** Phase 3 — Workshop Detail
+**Current focus:** Phase 4 — Conflict Detection
 
 ## Current Position
 
-Phase: 3 of 7 (Workshop Detail)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-03-06 — Completed 03-02: Workshop form, sparkline, and action buttons
+Phase: 3 of 7 (Workshop Detail) — COMPLETE
+Plan: 3 of 3 in current phase (all done)
+Status: Phase complete, advancing to Phase 4
+Last activity: 2026-03-06 — Completed 03-03: Click-to-create, coach availability dropdown
 
-Progress: [█████░░░░░] 30%
+Progress: [█████░░░░░] 38%
 
 ## Performance Metrics
 
@@ -29,10 +29,10 @@ Progress: [█████░░░░░] 30%
 |-------|-------|-------|----------|
 | 01-foundation | 3 | 7 min | 2.3 min |
 | 02-calendar-grid | 2 | 7 min | 3.5 min |
-| 03-workshop-detail | 2 | 4 min | 2.0 min |
+| 03-workshop-detail | 3 | 6 min | 2.0 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-03 (4 min), 02-01 (4 min), 02-02 (3 min), 03-01 (2 min), 03-02 (2 min)
+- Last 5 plans: 02-01 (4 min), 02-02 (3 min), 03-01 (2 min), 03-02 (2 min), 03-03 (2 min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -70,6 +70,10 @@ Recent decisions affecting current work:
 - [03-02]: initDraft factory centralizes view/create mode initialization in one place
 - [03-02]: Conflict stub accepts conflicts=[] prop — Phase 4 can pass array without WorkshopForm refactoring
 - [03-02]: Remove from Schedule soft-deletes (Cancelled status) consistent with CalendarGrid filter already in place
+- [03-03]: onSlotClick guard (e.target !== e.currentTarget) prevents card clicks triggering create mode — defense-in-depth
+- [03-03]: Inactive status checked first in getCoachAvailability before day availability check
+- [03-03]: workshopDate parsed from draft.startTime at render time — availability recomputes instantly when start time changes
+- [03-03]: Co-Coach dropdown filters out draft.coachId — a coach cannot co-coach their own session
 
 ### Pending Todos
 
@@ -82,5 +86,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 03-02-PLAN.md — Workshop form, sparkline, action buttons complete, proceed to 03-03
+Stopped at: Completed 03-03-PLAN.md — Click-to-create, coach availability dropdown complete. Phase 3 done, proceed to Phase 4.
 Resume file: None
