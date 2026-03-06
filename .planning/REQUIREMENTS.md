@@ -10,8 +10,8 @@
 - [ ] **LAYOUT-01**: App has left sidebar (240px, collapsible) with navigation and filters
 - [ ] **LAYOUT-02**: Top bar (56px) shows app name, current user (Kathleen Toth), and notifications bell with badge count
 - [ ] **LAYOUT-03**: Three navigable pages: Schedule Calendar, Coach Roster, Draft Manager
-- [ ] **LAYOUT-04**: WeightWatchers brand colors applied consistently (navy, blue, coral, success, warning)
-- [ ] **LAYOUT-05**: Inter or system font stack, 14px base, generous whitespace
+- [x] **LAYOUT-04**: WeightWatchers brand colors applied consistently (navy, blue, coral, success, warning)
+- [x] **LAYOUT-05**: Inter or system font stack, 14px base, generous whitespace
 
 ### Calendar Core
 
