@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { format, parseISO, setHours, setMinutes, addHours } from 'date-fns';
+import { useState, useRef, useEffect } from 'react';
+import { format, parseISO, setHours, setMinutes, addHours, getHours, getMinutes } from 'date-fns';
 import { AlertTriangle } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import AttendanceSparkline from './AttendanceSparkline';
+import { getCoachAvailability } from '../../utils/coachAvailability';
 
 const WORKSHOP_TYPES = [
   'Weekly Connection',
@@ -81,6 +82,10 @@ function fromDatetimeLocal(value) {
 const INPUT_CLASS =
   'w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue';
 const LABEL_CLASS = 'block text-sm font-medium text-slate-700 mb-1';
+const DROPDOWN_TRIGGER_CLASS =
+  'w-full px-3 py-2 border border-border rounded-lg text-sm text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue bg-white';
+const DROPDOWN_LIST_CLASS =
+  'absolute left-0 right-0 top-full mt-1 bg-white border border-border rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto';
 
 export default function WorkshopForm({
   workshop,
@@ -93,6 +98,36 @@ export default function WorkshopForm({
   const { setWorkshops } = useApp();
   const [draft, setDraft] = useState(() => initDraft(workshop, mode, slotContext));
 
+  // Custom dropdown open states
+  const [coachDropdownOpen, setCoachDropdownOpen] = useState(false);
+  const [coCoachDropdownOpen, setCoCoachDropdownOpen] = useState(false);
+
+  // Refs for click-outside detection
+  const coachDropdownRef = useRef(null);
+  const coCoachDropdownRef = useRef(null);
+
+  // Close dropdowns on outside click
+  useEffect(() => {
+    if (!coachDropdownOpen && !coCoachDropdownOpen) return;
+
+    function handleMouseDown(e) {
+      const clickedOutsideCoach =
+        coachDropdownRef.current && !coachDropdownRef.current.contains(e.target);
+      const clickedOutsideCoCoach =
+        coCoachDropdownRef.current && !coCoachDropdownRef.current.contains(e.target);
+
+      if (coachDropdownOpen && clickedOutsideCoach) {
+        setCoachDropdownOpen(false);
+      }
+      if (coCoachDropdownOpen && clickedOutsideCoCoach) {
+        setCoCoachDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleMouseDown);
+    return () => document.removeEventListener('mousedown', handleMouseDown);
+  }, [coachDropdownOpen, coCoachDropdownOpen]);
+
   const updateField = (field, value) =>
     setDraft((prev) => ({ ...prev, [field]: value }));
 
@@ -104,6 +139,21 @@ export default function WorkshopForm({
         : [...prev.markets, market],
     }));
   };
+
+  // Compute workshop date/hour/minute from draft.startTime for availability checks
+  let workshopDate = null;
+  let workshopHour = 0;
+  let workshopMinute = 0;
+  if (draft.startTime) {
+    try {
+      const parsed = parseISO(draft.startTime);
+      workshopDate = parsed;
+      workshopHour = getHours(parsed);
+      workshopMinute = getMinutes(parsed);
+    } catch {
+      // leave null
+    }
+  }
 
   // Action handlers
   const handleSaveDraft = () => {
@@ -138,6 +188,10 @@ export default function WorkshopForm({
 
   const showSparkline =
     mode === 'view' && draft.status === 'Published' && draft.attendance;
+
+  // Find selected coach name for trigger display
+  const selectedCoach = coaches.find((c) => c.id === draft.coachId);
+  const selectedCoCoach = coaches.find((c) => c.id === draft.coCoachId);
 
   return (
     <div className="space-y-4">
@@ -222,40 +276,144 @@ export default function WorkshopForm({
         </p>
       </div>
 
-      {/* 4. Coach */}
+      {/* 4. Coach — custom availability-aware dropdown */}
       <div>
         <label className={LABEL_CLASS}>Coach</label>
-        <select
-          value={draft.coachId}
-          onChange={(e) => updateField('coachId', e.target.value)}
-          className={INPUT_CLASS}
-        >
-          <option value="">-- Select coach --</option>
-          {coaches.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
+        <div className="relative" ref={coachDropdownRef}>
+          <button
+            type="button"
+            className={DROPDOWN_TRIGGER_CLASS}
+            onClick={() => setCoachDropdownOpen((o) => !o)}
+          >
+            <span className={selectedCoach ? 'text-slate-900' : 'text-slate-400'}>
+              {selectedCoach ? selectedCoach.name : 'Select coach...'}
+            </span>
+            <svg
+              className="w-4 h-4 text-slate-400 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          {coachDropdownOpen && (
+            <div className={DROPDOWN_LIST_CLASS}>
+              {coaches.map((coach) => {
+                const avail = workshopDate
+                  ? getCoachAvailability(coach, workshopDate, workshopHour, workshopMinute)
+                  : { available: true, reason: null };
+
+                return (
+                  <div
+                    key={coach.id}
+                    className={`flex items-center gap-2 px-3 py-2 text-sm ${
+                      avail.available
+                        ? 'text-green-700 hover:bg-green-50 cursor-pointer'
+                        : 'text-slate-400 cursor-not-allowed'
+                    }`}
+                    onClick={() => {
+                      if (!avail.available) return;
+                      updateField('coachId', coach.id);
+                      setCoachDropdownOpen(false);
+                    }}
+                  >
+                    {/* Availability indicator dot */}
+                    <span
+                      className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                        avail.available ? 'bg-green-500' : 'bg-slate-300'
+                      }`}
+                    />
+                    <span>
+                      {coach.name}
+                      {!avail.available && avail.reason && (
+                        <span className="ml-1 text-xs text-slate-400">({avail.reason})</span>
+                      )}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* 5. Co-Coach */}
+      {/* 5. Co-Coach — custom availability-aware dropdown with None option */}
       <div>
         <label className={LABEL_CLASS}>Co-Coach</label>
-        <select
-          value={draft.coCoachId ?? ''}
-          onChange={(e) =>
-            updateField('coCoachId', e.target.value === '' ? null : e.target.value)
-          }
-          className={INPUT_CLASS}
-        >
-          <option value="">None</option>
-          {coaches.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
+        <div className="relative" ref={coCoachDropdownRef}>
+          <button
+            type="button"
+            className={DROPDOWN_TRIGGER_CLASS}
+            onClick={() => setCoCoachDropdownOpen((o) => !o)}
+          >
+            <span className={selectedCoCoach ? 'text-slate-900' : 'text-slate-400'}>
+              {selectedCoCoach ? selectedCoCoach.name : 'None'}
+            </span>
+            <svg
+              className="w-4 h-4 text-slate-400 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          {coCoachDropdownOpen && (
+            <div className={DROPDOWN_LIST_CLASS}>
+              {/* None option */}
+              <div
+                className="flex items-center gap-2 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 cursor-pointer"
+                onClick={() => {
+                  updateField('coCoachId', null);
+                  setCoCoachDropdownOpen(false);
+                }}
+              >
+                <span className="w-2 h-2 rounded-full flex-shrink-0 bg-transparent" />
+                <span>None</span>
+              </div>
+
+              {/* Coach list — exclude currently selected primary coach */}
+              {coaches
+                .filter((c) => c.id !== draft.coachId)
+                .map((coach) => {
+                  const avail = workshopDate
+                    ? getCoachAvailability(coach, workshopDate, workshopHour, workshopMinute)
+                    : { available: true, reason: null };
+
+                  return (
+                    <div
+                      key={coach.id}
+                      className={`flex items-center gap-2 px-3 py-2 text-sm ${
+                        avail.available
+                          ? 'text-green-700 hover:bg-green-50 cursor-pointer'
+                          : 'text-slate-400 cursor-not-allowed'
+                      }`}
+                      onClick={() => {
+                        if (!avail.available) return;
+                        updateField('coCoachId', coach.id);
+                        setCoCoachDropdownOpen(false);
+                      }}
+                    >
+                      <span
+                        className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                          avail.available ? 'bg-green-500' : 'bg-slate-300'
+                        }`}
+                      />
+                      <span>
+                        {coach.name}
+                        {!avail.available && avail.reason && (
+                          <span className="ml-1 text-xs text-slate-400">({avail.reason})</span>
+                        )}
+                      </span>
+                    </div>
+                  );
+                })}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* 6. Type */}
