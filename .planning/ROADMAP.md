@@ -49,12 +49,11 @@ Plans:
   3. Each card has a visible status indicator: yellow dot for Draft, green dot for Published
   4. Workshop type color coding is applied: Weekly=blue, All In=purple, Special Event=coral, Coaching Corner=teal, Movement=green
   5. The coordinator can navigate to previous/next weeks using arrows and jump to the current week with a "Today" button; the header shows the correct week date range
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: Build calendar grid component — time axis, day columns, 30-min slot rows, event positioning logic
-- [ ] 02-02: Build workshop event card component with status dot, type color, and coach display; render all mock workshops on the grid
-- [ ] 02-03: Add week navigation (prev/next arrows, Today button), view toggle tabs (Day/Week/Month), and week header display
+- [ ] 02-01-PLAN.md — CalendarGrid + WorkshopCard components with type colors, status dots, coach info; wired into ScheduleCalendar with current week
+- [ ] 02-02-PLAN.md — Week navigation (prev/next arrows, Today button), view toggle tabs (Day/Week/Month), and week header date range display
 
 ### Phase 3: Workshop Detail
 **Goal**: Coordinators can open any workshop to view and edit its details, and create new workshops by clicking empty time slots
@@ -145,7 +144,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete    | 2026-03-06 |
-| 2. Calendar Grid | 0/3 | Not started | - |
+| 2. Calendar Grid | 0/2 | Not started | - |
 | 3. Workshop Detail | 0/3 | Not started | - |
 | 4. Conflict Detection | 0/2 | Not started | - |
 | 5. Filters & Availability | 0/2 | Not started | - |
