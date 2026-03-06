@@ -145,7 +145,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete    | 2026-03-06 |
 | 2. Calendar Grid | 2/2 | Complete    | 2026-03-06 |
-| 3. Workshop Detail | 3/3 | Complete   | 2026-03-06 |
+| 3. Workshop Detail | 3/3 | Complete    | 2026-03-06 |
 | 4. Conflict Detection | 0/2 | Not started | - |
 | 5. Filters & Availability | 0/2 | Not started | - |
 | 6. Coach Roster | 0/2 | Not started | - |
