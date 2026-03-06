@@ -35,6 +35,12 @@ export default function ScheduleCalendar() {
     setSlotContext(null);
   }, []);
 
+  const openCreate = useCallback((date, hour, minute) => {
+    setSelectedWorkshopId(null);
+    setPanelMode('create');
+    setSlotContext({ date, hour, minute });
+  }, []);
+
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(currentWeekStart, i));
   const weekEnd = weekDays[6];
   const headerText =
@@ -112,6 +118,7 @@ export default function ScheduleCalendar() {
             workshops={workshops}
             coaches={coaches}
             onWorkshopClick={openWorkshop}
+            onSlotClick={openCreate}
           />
         )}
         {viewMode === 'day' && (

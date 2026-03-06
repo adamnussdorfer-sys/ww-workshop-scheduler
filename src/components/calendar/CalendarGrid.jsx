@@ -41,7 +41,7 @@ const HOUR_LABELS = Array.from(
 // 32 slot lines: one per 30-min slot across 16 hours = 32 slots
 const SLOT_LINES = Array.from({ length: 32 }, (_, i) => i);
 
-export default function CalendarGrid({ weekDays, workshops, coaches, onWorkshopClick }) {
+export default function CalendarGrid({ weekDays, workshops, coaches, onWorkshopClick, onSlotClick }) {
   const coachMap = useMemo(
     () => new Map(coaches.map((c) => [c.id, c])),
     [coaches]
@@ -106,8 +106,25 @@ export default function CalendarGrid({ weekDays, workshops, coaches, onWorkshopC
             return (
               <div
                 key={day.toISOString()}
-                className="relative border-l border-border"
+                className="relative border-l border-border cursor-pointer"
                 style={{ height: GRID_HEIGHT }}
+                onClick={(e) => {
+                  // Only fire when clicking the background, not a workshop card
+                  if (e.target !== e.currentTarget) return;
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  // Account for scroll offset of the parent overflow container
+                  const scrollContainer = e.currentTarget.closest('.overflow-y-auto');
+                  const scrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
+                  const relY = e.clientY - rect.top + scrollTop;
+                  const totalMinutes = Math.floor(relY / PX_PER_MIN);
+                  const snappedMinutes = Math.floor(totalMinutes / 30) * 30;
+                  const hour = GRID_START_HOUR + Math.floor(snappedMinutes / 60);
+                  const minute = snappedMinutes % 60;
+                  // Clamp to grid bounds
+                  if (hour >= GRID_START_HOUR && hour < GRID_END_HOUR) {
+                    onSlotClick?.(day, hour, minute);
+                  }
+                }}
               >
                 {/* Slot row lines */}
                 {SLOT_LINES.map((i) => {
