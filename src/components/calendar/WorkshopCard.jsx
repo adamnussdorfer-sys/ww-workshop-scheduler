@@ -15,7 +15,7 @@ const STATUS_DOT_COLORS = {
   Conflict: 'bg-red-500 animate-pulse',
 };
 
-export default function WorkshopCard({ workshop, coachMap }) {
+export default function WorkshopCard({ workshop, coachMap, onClick }) {
   const cardStyle = TYPE_CARD_STYLES[workshop.type] ?? 'bg-slate-50 border-l-4 border-slate-400';
   const dotColor = STATUS_DOT_COLORS[workshop.status] ?? 'bg-slate-400';
 
@@ -33,6 +33,10 @@ export default function WorkshopCard({ workshop, coachMap }) {
   return (
     <div
       className={`h-full overflow-hidden rounded text-xs px-1.5 py-1 cursor-pointer hover:brightness-95 transition-all ${cardStyle}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick?.(workshop.id);
+      }}
     >
       <div className="flex items-center gap-1 mb-0.5">
         <span className={`flex-shrink-0 w-2 h-2 rounded-full ${dotColor}`} />
