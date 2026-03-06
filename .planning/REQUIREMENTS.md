@@ -132,65 +132,65 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LAYOUT-01 | TBD | Pending |
-| LAYOUT-02 | TBD | Pending |
-| LAYOUT-03 | TBD | Pending |
-| LAYOUT-04 | TBD | Pending |
-| LAYOUT-05 | TBD | Pending |
-| CAL-01 | TBD | Pending |
-| CAL-02 | TBD | Pending |
-| CAL-03 | TBD | Pending |
-| CAL-04 | TBD | Pending |
-| CAL-05 | TBD | Pending |
-| CARD-01 | TBD | Pending |
-| CARD-02 | TBD | Pending |
-| CARD-03 | TBD | Pending |
-| PANEL-01 | TBD | Pending |
-| PANEL-02 | TBD | Pending |
-| PANEL-03 | TBD | Pending |
-| PANEL-04 | TBD | Pending |
-| PANEL-05 | TBD | Pending |
-| PANEL-06 | TBD | Pending |
-| CREATE-01 | TBD | Pending |
-| CREATE-02 | TBD | Pending |
-| CONFLICT-01 | TBD | Pending |
-| CONFLICT-02 | TBD | Pending |
-| CONFLICT-03 | TBD | Pending |
-| CONFLICT-04 | TBD | Pending |
-| CONFLICT-05 | TBD | Pending |
-| FILTER-01 | TBD | Pending |
-| FILTER-02 | TBD | Pending |
-| FILTER-03 | TBD | Pending |
-| FILTER-04 | TBD | Pending |
-| FILTER-05 | TBD | Pending |
-| AVAIL-01 | TBD | Pending |
-| AVAIL-02 | TBD | Pending |
-| AVAIL-03 | TBD | Pending |
-| ROSTER-01 | TBD | Pending |
-| ROSTER-02 | TBD | Pending |
-| ROSTER-03 | TBD | Pending |
-| DRAFT-01 | TBD | Pending |
-| DRAFT-02 | TBD | Pending |
-| DRAFT-03 | TBD | Pending |
-| DRAFT-04 | TBD | Pending |
-| DATA-01 | TBD | Pending |
-| DATA-02 | TBD | Pending |
-| DATA-03 | TBD | Pending |
-| DATA-04 | TBD | Pending |
-| UX-01 | TBD | Pending |
-| UX-02 | TBD | Pending |
-| UX-03 | TBD | Pending |
-| UX-04 | TBD | Pending |
-| UX-05 | TBD | Pending |
-| UX-06 | TBD | Pending |
-| KEY-01 | TBD | Pending |
-| KEY-02 | TBD | Pending |
+| LAYOUT-01 | Phase 1 | Pending |
+| LAYOUT-02 | Phase 1 | Pending |
+| LAYOUT-03 | Phase 1 | Pending |
+| LAYOUT-04 | Phase 1 | Pending |
+| LAYOUT-05 | Phase 1 | Pending |
+| DATA-01 | Phase 1 | Pending |
+| DATA-02 | Phase 1 | Pending |
+| DATA-03 | Phase 1 | Pending |
+| DATA-04 | Phase 1 | Pending |
+| CAL-01 | Phase 2 | Pending |
+| CAL-02 | Phase 2 | Pending |
+| CAL-03 | Phase 2 | Pending |
+| CAL-04 | Phase 2 | Pending |
+| CAL-05 | Phase 2 | Pending |
+| CARD-01 | Phase 2 | Pending |
+| CARD-02 | Phase 2 | Pending |
+| CARD-03 | Phase 2 | Pending |
+| PANEL-01 | Phase 3 | Pending |
+| PANEL-02 | Phase 3 | Pending |
+| PANEL-03 | Phase 3 | Pending |
+| PANEL-04 | Phase 3 | Pending |
+| PANEL-05 | Phase 3 | Pending |
+| PANEL-06 | Phase 3 | Pending |
+| CREATE-01 | Phase 3 | Pending |
+| CREATE-02 | Phase 3 | Pending |
+| CONFLICT-01 | Phase 4 | Pending |
+| CONFLICT-02 | Phase 4 | Pending |
+| CONFLICT-03 | Phase 4 | Pending |
+| CONFLICT-04 | Phase 4 | Pending |
+| CONFLICT-05 | Phase 4 | Pending |
+| FILTER-01 | Phase 5 | Pending |
+| FILTER-02 | Phase 5 | Pending |
+| FILTER-03 | Phase 5 | Pending |
+| FILTER-04 | Phase 5 | Pending |
+| FILTER-05 | Phase 5 | Pending |
+| AVAIL-01 | Phase 5 | Pending |
+| AVAIL-02 | Phase 5 | Pending |
+| AVAIL-03 | Phase 5 | Pending |
+| ROSTER-01 | Phase 6 | Pending |
+| ROSTER-02 | Phase 6 | Pending |
+| ROSTER-03 | Phase 6 | Pending |
+| DRAFT-01 | Phase 7 | Pending |
+| DRAFT-02 | Phase 7 | Pending |
+| DRAFT-03 | Phase 7 | Pending |
+| DRAFT-04 | Phase 7 | Pending |
+| UX-01 | Phase 7 | Pending |
+| UX-02 | Phase 7 | Pending |
+| UX-03 | Phase 7 | Pending |
+| UX-04 | Phase 7 | Pending |
+| UX-05 | Phase 7 | Pending |
+| UX-06 | Phase 7 | Pending |
+| KEY-01 | Phase 7 | Pending |
+| KEY-02 | Phase 7 | Pending |
 
 **Coverage:**
-- v1 requirements: 48 total
-- Mapped to phases: 0
-- Unmapped: 48
+- v1 requirements: 53 total
+- Mapped to phases: 53
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-05*
-*Last updated: 2026-03-05 after initial definition*
+*Last updated: 2026-03-05 — traceability updated after roadmap creation*
