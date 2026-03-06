@@ -9,6 +9,7 @@ import {
   isToday,
 } from 'date-fns';
 import WorkshopCard from './WorkshopCard';
+import { getSaturatedSlots } from '../../utils/conflictEngine';
 
 const GRID_START_HOUR = 6;
 const GRID_END_HOUR = 22;
@@ -41,7 +42,7 @@ const HOUR_LABELS = Array.from(
 // 32 slot lines: one per 30-min slot across 16 hours = 32 slots
 const SLOT_LINES = Array.from({ length: 32 }, (_, i) => i);
 
-export default function CalendarGrid({ weekDays, workshops, coaches, onWorkshopClick, onSlotClick }) {
+export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap, onWorkshopClick, onSlotClick }) {
   const coachMap = useMemo(
     () => new Map(coaches.map((c) => [c.id, c])),
     [coaches]
@@ -51,6 +52,15 @@ export default function CalendarGrid({ weekDays, workshops, coaches, onWorkshopC
     () => workshops.filter((ws) => ws.status !== 'Cancelled'),
     [workshops]
   );
+
+  const saturationMap = useMemo(() => {
+    const result = new Map();
+    weekDays.forEach(day => {
+      const dayWs = visibleWorkshops.filter(ws => isSameDay(parseISO(ws.startTime), day));
+      result.set(day.toISOString(), getSaturatedSlots(dayWs));
+    });
+    return result;
+  }, [visibleWorkshops, weekDays]);
 
   return (
     <div className="border border-border rounded-lg overflow-hidden bg-white">
@@ -140,6 +150,17 @@ export default function CalendarGrid({ weekDays, workshops, coaches, onWorkshopC
                   );
                 })}
 
+                {/* Saturation bars — amber overlay for 4+ concurrent workshops */}
+                {saturationMap.get(day.toISOString())?.map(({ slotIndex, count }) => (
+                  <div
+                    key={`sat-${slotIndex}`}
+                    className="absolute left-0 right-0 bg-amber-50 border-t border-amber-300 flex items-center px-1 z-10 pointer-events-none"
+                    style={{ top: slotIndex * 32, height: 32 }}
+                  >
+                    <span className="text-[9px] text-amber-700 font-medium">{count} concurrent</span>
+                  </div>
+                ))}
+
                 {/* Workshop cards */}
                 {dayWorkshops.map((ws, idx) => {
                   const { top, height } = getEventPosition(ws.startTime, ws.endTime);
@@ -155,7 +176,12 @@ export default function CalendarGrid({ weekDays, workshops, coaches, onWorkshopC
                         zIndex: idx + 1,
                       }}
                     >
-                      <WorkshopCard workshop={ws} coachMap={coachMap} onClick={onWorkshopClick} />
+                      <WorkshopCard
+                        workshop={ws}
+                        coachMap={coachMap}
+                        conflicts={conflictMap?.get(ws.id)?.conflicts ?? []}
+                        onClick={onWorkshopClick}
+                      />
                     </div>
                   );
                 })}

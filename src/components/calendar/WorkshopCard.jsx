@@ -1,4 +1,5 @@
 import { format, parseISO } from 'date-fns';
+import { AlertTriangle } from 'lucide-react';
 
 const TYPE_CARD_STYLES = {
   'Weekly Connection': 'bg-blue-50 border-l-4 border-ww-blue',
@@ -15,7 +16,13 @@ const STATUS_DOT_COLORS = {
   Conflict: 'bg-red-500 animate-pulse',
 };
 
-export default function WorkshopCard({ workshop, coachMap, onClick }) {
+// Static lookup prevents Tailwind JIT from purging these classes (same pattern as TYPE_CARD_STYLES)
+const CONFLICT_RING = {
+  red: 'ring-2 ring-red-500',
+  orange: 'ring-2 ring-orange-400',
+};
+
+export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick }) {
   const cardStyle = TYPE_CARD_STYLES[workshop.type] ?? 'bg-slate-50 border-l-4 border-slate-400';
   const dotColor = STATUS_DOT_COLORS[workshop.status] ?? 'bg-slate-400';
 
@@ -30,14 +37,28 @@ export default function WorkshopCard({ workshop, coachMap, onClick }) {
       : coach.name
     : '';
 
+  const ringColor = conflicts.some(c => c.severity === 'red')
+    ? 'red'
+    : conflicts.length > 0
+    ? 'orange'
+    : null;
+  const ringClass = ringColor ? CONFLICT_RING[ringColor] : '';
+  const hasConflicts = conflicts.length > 0;
+  const iconColor = ringColor === 'red' ? 'text-red-500' : 'text-orange-400';
+
   return (
     <div
-      className={`h-full overflow-hidden rounded text-xs px-1.5 py-1 cursor-pointer hover:brightness-95 transition-all ${cardStyle}`}
+      className={`h-full overflow-hidden rounded text-xs px-1.5 py-1 cursor-pointer hover:brightness-95 transition-all relative ${cardStyle} ${ringClass}`}
       onClick={(e) => {
         e.stopPropagation();
         onClick?.(workshop.id);
       }}
     >
+      {hasConflicts && (
+        <div className={`absolute top-0.5 right-0.5 ${iconColor}`}>
+          <AlertTriangle size={12} />
+        </div>
+      )}
       <div className="flex items-center gap-1 mb-0.5">
         <span className={`flex-shrink-0 w-2 h-2 rounded-full ${dotColor}`} />
         <span className="text-slate-500 truncate">{startLabel}</span>
