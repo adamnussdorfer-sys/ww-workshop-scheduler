@@ -15,7 +15,7 @@ export default function ScheduleCalendar() {
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(currentWeekStart, i));
   const weekEnd = weekDays[6];
   const headerText =
-    format(currentWeekStart, 'MMM d') + ' \u2013 ' + format(weekEnd, 'MMM d, yyyy');
+    'Week of ' + format(currentWeekStart, 'MMM d') + ' \u2013 ' + format(weekEnd, 'MMM d, yyyy');
   const isCurrentWeek = isSameWeek(currentWeekStart, new Date(), { weekStartsOn: 1 });
 
   const prevWeek = () => setCurrentWeekStart((d) => subWeeks(d, 1));

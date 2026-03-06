@@ -12,6 +12,7 @@ const STATUS_DOT_COLORS = {
   Published: 'bg-ww-success',
   Draft: 'bg-ww-warning',
   Cancelled: 'bg-slate-400',
+  Conflict: 'bg-red-500 animate-pulse',
 };
 
 export default function WorkshopCard({ workshop, coachMap }) {
