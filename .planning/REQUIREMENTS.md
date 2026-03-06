@@ -7,9 +7,9 @@
 
 ### Layout & Navigation
 
-- [ ] **LAYOUT-01**: App has left sidebar (240px, collapsible) with navigation and filters
-- [ ] **LAYOUT-02**: Top bar (56px) shows app name, current user (Kathleen Toth), and notifications bell with badge count
-- [ ] **LAYOUT-03**: Three navigable pages: Schedule Calendar, Coach Roster, Draft Manager
+- [x] **LAYOUT-01**: App has left sidebar (240px, collapsible) with navigation and filters
+- [x] **LAYOUT-02**: Top bar (56px) shows app name, current user (Kathleen Toth), and notifications bell with badge count
+- [x] **LAYOUT-03**: Three navigable pages: Schedule Calendar, Coach Roster, Draft Manager
 - [x] **LAYOUT-04**: WeightWatchers brand colors applied consistently (navy, blue, coral, success, warning)
 - [x] **LAYOUT-05**: Inter or system font stack, 14px base, generous whitespace
 
@@ -132,9 +132,9 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LAYOUT-01 | Phase 1 | Pending |
-| LAYOUT-02 | Phase 1 | Pending |
-| LAYOUT-03 | Phase 1 | Pending |
+| LAYOUT-01 | Phase 1 | Complete |
+| LAYOUT-02 | Phase 1 | Complete |
+| LAYOUT-03 | Phase 1 | Complete |
 | LAYOUT-04 | Phase 1 | Pending |
 | LAYOUT-05 | Phase 1 | Pending |
 | DATA-01 | Phase 1 | Pending |

@@ -10,27 +10,27 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 ## Current Position
 
 Phase: 1 of 7 (Foundation)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-03-06 — Completed 01-01: Tailwind v4 + WW brand design system
+Last activity: 2026-03-06 — Completed 01-02: App shell layout and navigation
 
-Progress: [█░░░░░░░░░] 5%
+Progress: [██░░░░░░░░] 10%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 2 min
-- Total execution time: 0.03 hours
+- Total plans completed: 2
+- Average duration: 1.5 min
+- Total execution time: 0.05 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation | 1 | 2 min | 2 min |
+| 01-foundation | 2 | 3 min | 1.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min)
+- Last 5 plans: 01-01 (2 min), 01-02 (1 min)
 - Trend: -
 
 *Updated after each plan completion*
@@ -49,6 +49,9 @@ Recent decisions affecting current work:
 - [01-01]: Tailwind v4 CSS-first config via @theme directive — no tailwind.config.js
 - [01-01]: Inter font via @fontsource/inter (self-hosted, no CDN dependency)
 - [01-01]: BrowserRouter deferred to Plan 02 — design system plan kept focused
+- [01-02]: Sidebar collapse state lives in AppShell (not Sidebar) — AppShell owns CSS Grid column width
+- [01-02]: NavItem uses end={to === '/'} to prevent root route matching all child paths
+- [01-02]: Import from react-router (not react-router-dom) — React Router v7 unified package
 
 ### Pending Todos
 
@@ -61,5 +64,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 01-01-PLAN.md — design system foundation ready, proceed to 01-02
+Stopped at: Completed 01-02-PLAN.md — app shell layout and navigation complete, proceed to 01-03
 Resume file: None
