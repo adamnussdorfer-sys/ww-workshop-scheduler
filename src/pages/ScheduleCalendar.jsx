@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { startOfWeek, addWeeks, subWeeks, addDays, format, isSameWeek } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import CalendarGrid from '../components/calendar/CalendarGrid';
+import WorkshopPanel from '../components/panel/WorkshopPanel';
 
 export default function ScheduleCalendar() {
   const { workshops, coaches } = useApp();
@@ -11,6 +12,28 @@ export default function ScheduleCalendar() {
     startOfWeek(new Date(), { weekStartsOn: 1 })
   );
   const [viewMode, setViewMode] = useState('week');
+
+  // Panel state
+  const [selectedWorkshopId, setSelectedWorkshopId] = useState(null);
+  const [panelMode, setPanelMode] = useState('view'); // 'view' | 'create'
+  const [slotContext, setSlotContext] = useState(null); // { date, hour, minute } | null
+
+  // Derived panel values
+  const isPanelOpen = selectedWorkshopId !== null || panelMode === 'create';
+  const selectedWorkshop = workshops.find((w) => w.id === selectedWorkshopId) ?? null;
+
+  // Panel callbacks
+  const openWorkshop = useCallback((id) => {
+    setSelectedWorkshopId(id);
+    setPanelMode('view');
+    setSlotContext(null);
+  }, []);
+
+  const closePanel = useCallback(() => {
+    setSelectedWorkshopId(null);
+    setPanelMode('view');
+    setSlotContext(null);
+  }, []);
 
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(currentWeekStart, i));
   const weekEnd = weekDays[6];
@@ -84,7 +107,12 @@ export default function ScheduleCalendar() {
       {/* Calendar body */}
       <div className="flex-1 overflow-auto p-4">
         {viewMode === 'week' && (
-          <CalendarGrid weekDays={weekDays} workshops={workshops} coaches={coaches} />
+          <CalendarGrid
+            weekDays={weekDays}
+            workshops={workshops}
+            coaches={coaches}
+            onWorkshopClick={openWorkshop}
+          />
         )}
         {viewMode === 'day' && (
           <div className="flex-1 flex items-center justify-center text-slate-400 text-sm">
@@ -97,6 +125,11 @@ export default function ScheduleCalendar() {
           </div>
         )}
       </div>
+
+      {/* Workshop panel — always mounted so exit animation plays */}
+      <WorkshopPanel isOpen={isPanelOpen} onClose={closePanel}>
+        {/* Plan 02 fills content */}
+      </WorkshopPanel>
     </div>
   );
 }
