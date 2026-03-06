@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { X } from 'lucide-react';
 import WorkshopForm from './WorkshopForm';
 
-export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode, slotContext }) {
+export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode, slotContext, conflicts }) {
   // Escape key listener — adds when open, cleans up via AbortController
   useEffect(() => {
     if (!isOpen) return;
@@ -58,6 +58,7 @@ export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode
               mode={mode}
               slotContext={slotContext}
               onClose={onClose}
+              conflicts={conflicts}
               key={workshop?.id ?? 'create'}
             />
           )}

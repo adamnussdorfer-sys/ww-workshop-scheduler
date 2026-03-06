@@ -1,12 +1,18 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { startOfWeek, addWeeks, subWeeks, addDays, format, isSameWeek } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import CalendarGrid from '../components/calendar/CalendarGrid';
 import WorkshopPanel from '../components/panel/WorkshopPanel';
+import { buildConflictMap } from '../utils/conflictEngine';
 
 export default function ScheduleCalendar() {
   const { workshops, coaches } = useApp();
+
+  const conflictMap = useMemo(
+    () => buildConflictMap(workshops, coaches),
+    [workshops, coaches]
+  );
 
   const [currentWeekStart, setCurrentWeekStart] = useState(() =>
     startOfWeek(new Date(), { weekStartsOn: 1 })
@@ -117,6 +123,7 @@ export default function ScheduleCalendar() {
             weekDays={weekDays}
             workshops={workshops}
             coaches={coaches}
+            conflictMap={conflictMap}
             onWorkshopClick={openWorkshop}
             onSlotClick={openCreate}
           />
@@ -141,6 +148,7 @@ export default function ScheduleCalendar() {
         coaches={coaches}
         mode={panelMode}
         slotContext={slotContext}
+        conflicts={conflictMap.get(selectedWorkshopId)?.conflicts ?? []}
       />
     </div>
   );

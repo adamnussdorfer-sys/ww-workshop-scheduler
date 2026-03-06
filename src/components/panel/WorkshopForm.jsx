@@ -206,17 +206,22 @@ export default function WorkshopForm({
         </span>
       </div>
 
-      {/* Conflict warnings stub (PANEL-05) */}
+      {/* Conflict warnings (CONFLICT-01 through CONFLICT-04) */}
       {conflicts.length > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
-          <div className="flex items-start gap-2">
-            <AlertTriangle size={16} className="text-red-500 mt-0.5 flex-shrink-0" />
-            <ul className="text-sm text-red-700 space-y-1">
-              {conflicts.map((conflict, i) => (
-                <li key={i}>{conflict}</li>
+        <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+          <ul className="text-sm text-red-700 space-y-1">
+            {[...conflicts]
+              .sort((a, b) => (a.severity === 'red' ? -1 : 1) - (b.severity === 'red' ? -1 : 1))
+              .map((conflict, i) => (
+                <li key={i} className="flex items-start gap-1.5">
+                  <AlertTriangle
+                    size={14}
+                    className={`flex-shrink-0 mt-0.5 ${conflict.severity === 'red' ? 'text-red-500' : 'text-orange-400'}`}
+                  />
+                  <span>{conflict.message}</span>
+                </li>
               ))}
-            </ul>
-          </div>
+          </ul>
         </div>
       )}
 
