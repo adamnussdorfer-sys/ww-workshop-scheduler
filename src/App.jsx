@@ -5,10 +5,12 @@ import AppShell from './components/layout/AppShell'
 import ScheduleCalendar from './pages/ScheduleCalendar'
 import CoachRoster from './pages/CoachRoster'
 import DraftManager from './pages/DraftManager'
+import { coaches as initialCoaches } from './data/coaches'
+import { workshops as initialWorkshops } from './data/workshops'
 
 export default function App() {
-  const [coaches, setCoaches] = useState([])
-  const [workshops, setWorkshops] = useState([])
+  const [coaches, setCoaches] = useState(initialCoaches)
+  const [workshops, setWorkshops] = useState(initialWorkshops)
 
   return (
     <AppContext.Provider value={{ coaches, setCoaches, workshops, setWorkshops }}>
