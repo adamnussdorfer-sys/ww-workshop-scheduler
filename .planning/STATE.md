@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-03-05)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** Phase 2 — Calendar Grid
+**Current focus:** Phase 3 — Workshop Detail
 
 ## Current Position
 
-Phase: 2 of 7 (Calendar Grid)
-Plan: 2 of 3 in current phase
+Phase: 3 of 7 (Workshop Detail)
+Plan: 1 of 3 in current phase
 Status: In progress
-Last activity: 2026-03-06 — Completed 02-02: Week navigation controls and view toggle tabs
+Last activity: 2026-03-06 — Completed 03-01: Workshop panel shell and click wiring
 
-Progress: [████░░░░░░] 24%
+Progress: [████░░░░░░] 27%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: 2.6 min
-- Total execution time: 0.22 hours
+- Total plans completed: 6
+- Average duration: 2.3 min
+- Total execution time: 0.23 hours
 
 **By Phase:**
 
@@ -29,9 +29,10 @@ Progress: [████░░░░░░] 24%
 |-------|-------|-------|----------|
 | 01-foundation | 3 | 7 min | 2.3 min |
 | 02-calendar-grid | 2 | 7 min | 3.5 min |
+| 03-workshop-detail | 1 | 2 min | 2.0 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min), 01-02 (1 min), 01-03 (4 min), 02-01 (4 min), 02-02 (3 min)
+- Last 5 plans: 01-02 (1 min), 01-03 (4 min), 02-01 (4 min), 02-02 (3 min), 03-01 (2 min)
 - Trend: -
 
 *Updated after each plan completion*
@@ -61,6 +62,10 @@ Recent decisions affecting current work:
 - [02-02]: All date-fns week functions use weekStartsOn: 1 — Monday-first anchoring throughout
 - [02-02]: Today button uses HTML disabled + opacity-50/cursor-default CSS — no extra state branch needed
 - [02-02]: View toggle container uses ml-auto to right-align tabs in navigation bar
+- [03-01]: WorkshopPanel always mounted in DOM (never conditional) so exit animation plays via translate-x-full
+- [03-01]: Panel state (selectedWorkshopId, panelMode, slotContext) lives in ScheduleCalendar — UI state, not domain state
+- [03-01]: AbortController.abort() for Escape listener cleanup — cleaner than removeEventListener reference
+- [03-01]: e.stopPropagation() on WorkshopCard click prevents future slot-click handler (Plan 03-03) from firing
 
 ### Pending Todos
 
@@ -73,5 +78,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 02-02-PLAN.md — Week navigation controls and view toggle tabs added, proceed to 02-03
+Stopped at: Completed 03-01-PLAN.md — Workshop panel shell and click wiring complete, proceed to 03-02
 Resume file: None
