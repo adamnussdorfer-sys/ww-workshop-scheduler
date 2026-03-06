@@ -66,12 +66,12 @@ Plans:
   4. The panel shows a status badge and an attendance sparkline (last 5 weeks) for published workshops
   5. Clicking an empty calendar time slot opens the panel in create mode with date and time pre-filled
   6. Save Draft, Remove from Schedule, and Publish action buttons are present and functional (updating app state)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: Build slide-in panel shell with open/close animation, close-on-Escape, and overlay backdrop
-- [ ] 03-02: Build panel form with all editable fields, status badge, attendance sparkline, and action buttons wired to state
-- [ ] 03-03: Implement click-to-create on empty time slots (pre-fills date/time) and coach availability-aware dropdown
+- [ ] 03-01-PLAN.md — Build slide-in panel shell with open/close animation, close-on-Escape, overlay backdrop, and wire card click to open panel
+- [ ] 03-02-PLAN.md — Build panel form with all editable fields, status badge, attendance sparkline, conflict stub, and action buttons wired to state
+- [ ] 03-03-PLAN.md — Implement click-to-create on empty time slots (pre-fills date/time) and coach availability-aware dropdown
 
 ### Phase 4: Conflict Detection
 **Goal**: Conflicts are immediately visible on the calendar and in the detail panel so coordinators can spot problems at a glance
