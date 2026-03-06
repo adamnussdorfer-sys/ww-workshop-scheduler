@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - App shell, navigation, brand design system, and all mock data
 - [x] **Phase 2: Calendar Grid** - Weekly calendar grid with workshop event cards rendered from mock data (completed 2026-03-06)
 - [x] **Phase 3: Workshop Detail** - Right-side detail panel (view/edit) and click-to-create workflow (completed 2026-03-06)
-- [ ] **Phase 4: Conflict Detection** - Conflict detection engine with visual warnings on calendar and panel
+- [x] **Phase 4: Conflict Detection** - Conflict detection engine with visual warnings on calendar and panel (completed 2026-03-06)
 - [ ] **Phase 5: Filters & Availability** - Sidebar filters and coach availability overlay on calendar
 - [ ] **Phase 6: Coach Roster** - Coach Roster page with table view and detail panel
 - [ ] **Phase 7: Draft Manager & Polish** - Draft Manager page, batch publish, micro-interactions, and keyboard shortcuts
@@ -146,7 +146,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 1. Foundation | 3/3 | Complete    | 2026-03-06 |
 | 2. Calendar Grid | 2/2 | Complete    | 2026-03-06 |
 | 3. Workshop Detail | 3/3 | Complete    | 2026-03-06 |
-| 4. Conflict Detection | 1/2 | In Progress|  |
+| 4. Conflict Detection | 2/2 | Complete   | 2026-03-06 |
 | 5. Filters & Availability | 0/2 | Not started | - |
 | 6. Coach Roster | 0/2 | Not started | - |
 | 7. Draft Manager & Polish | 0/3 | Not started | - |

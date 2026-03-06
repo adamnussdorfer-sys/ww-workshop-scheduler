@@ -44,7 +44,7 @@
 ### Conflict Detection
 
 - [x] **CONFLICT-01**: Coach double-booking: red border + warning icon on overlapping workshops
-- [ ] **CONFLICT-02**: Time slot saturation: amber bar when 4+ workshops at same time with count
+- [x] **CONFLICT-02**: Time slot saturation: amber bar when 4+ workshops at same time with count
 - [x] **CONFLICT-03**: Buffer violation: orange warning when coach has <15 min gap between workshops
 - [x] **CONFLICT-04**: Availability conflict: warning when workshop scheduled during coach's unavailable time
 - [x] **CONFLICT-05**: Conflicts are informational (warnings, not blocking)
@@ -158,7 +158,7 @@
 | CREATE-01 | Phase 3 | Complete |
 | CREATE-02 | Phase 3 | Complete |
 | CONFLICT-01 | Phase 4 | Complete |
-| CONFLICT-02 | Phase 4 | Pending |
+| CONFLICT-02 | Phase 4 | Complete |
 | CONFLICT-03 | Phase 4 | Complete |
 | CONFLICT-04 | Phase 4 | Complete |
 | CONFLICT-05 | Phase 4 | Complete |

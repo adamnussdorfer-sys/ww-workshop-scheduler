@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 ## Current Position
 
 Phase: 4 of 7 (Conflict Detection) — IN PROGRESS
-Plan: 1 of 3 in current phase (04-01 complete)
+Plan: 2 of 3 in current phase (04-02 complete, awaiting Task 3 human-verify)
 Status: Active
-Last activity: 2026-03-06 — Completed 04-01: Conflict detection engine (TDD)
+Last activity: 2026-03-06 — Completed 04-02: Conflict visualization UI (rings, icons, saturation bars, panel alert)
 
-Progress: [██████░░░░] 43%
+Progress: [███████░░░] 47%
 
 ## Performance Metrics
 
@@ -30,10 +30,10 @@ Progress: [██████░░░░] 43%
 | 01-foundation | 3 | 7 min | 2.3 min |
 | 02-calendar-grid | 2 | 7 min | 3.5 min |
 | 03-workshop-detail | 3 | 6 min | 2.0 min |
-| 04-conflict-detection | 1 of 3 | 3 min | 3.0 min |
+| 04-conflict-detection | 2 of 3 | 5 min | 2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-02 (3 min), 03-01 (2 min), 03-02 (2 min), 03-03 (2 min), 04-01 (3 min)
+- Last 5 plans: 03-01 (2 min), 03-02 (2 min), 03-03 (2 min), 04-01 (3 min), 04-02 (2 min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -79,6 +79,9 @@ Recent decisions affecting current work:
 - [04-01]: addConflict helper updates ringColor eagerly on insert — avoids second pass to derive ringColor
 - [04-01]: getSaturatedSlots iterates 32 fixed slots (GRID_START_HOUR=7, 32 half-hour slots to 23:00)
 - [04-01]: ConflictResult shape established: { conflicts, ringColor: 'red'|'orange'|null, hasConflicts }
+- [Phase 04-conflict-detection]: 04-02: CONFLICT_RING static lookup prevents Tailwind JIT purging conflict ring classes (same pattern as TYPE_CARD_STYLES)
+- [Phase 04-conflict-detection]: 04-02: Saturation bars use pointer-events-none so workshop card clicks pass through
+- [Phase 04-conflict-detection]: 04-02: conflictMap.get(selectedWorkshopId)?.conflicts derived at render time — no separate conflict UI state
 
 ### Pending Todos
 
@@ -91,5 +94,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 04-01-PLAN.md — Conflict detection engine built (TDD). buildConflictMap and getSaturatedSlots ready for UI integration.
+Stopped at: Completed 04-02-PLAN.md tasks 1-2 — Conflict visualization UI built. Task 3 awaits human-verify checkpoint (visual inspection at http://localhost:5173).
 Resume file: None
