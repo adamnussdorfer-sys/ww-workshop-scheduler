@@ -15,17 +15,17 @@
 
 ### Calendar Core
 
-- [ ] **CAL-01**: Weekly calendar grid (Mon-Sun columns, 6:00 AM - 10:00 PM ET rows, 30-min increments)
+- [x] **CAL-01**: Weekly calendar grid (Mon-Sun columns, 6:00 AM - 10:00 PM ET rows, 30-min increments)
 - [ ] **CAL-02**: View toggles: Day | Week | Month (Week default, others simplified)
 - [ ] **CAL-03**: Week navigation with left/right arrows and "Today" button
 - [ ] **CAL-04**: Header displays "Week of [date range]" with nav arrows
-- [ ] **CAL-05**: Workshop events appear as colored blocks on the calendar grid
+- [x] **CAL-05**: Workshop events appear as colored blocks on the calendar grid
 
 ### Workshop Cards
 
-- [ ] **CARD-01**: Cards show time, title, coach name, co-coach (if applicable)
-- [ ] **CARD-02**: Status indicator dot/badge: Draft (yellow), Published (green), Conflict (red pulse)
-- [ ] **CARD-03**: Workshop type color coding: Weekly=blue, All In=purple, Special Event=coral, Coaching Corner=teal, Movement/Fitness=green
+- [x] **CARD-01**: Cards show time, title, coach name, co-coach (if applicable)
+- [x] **CARD-02**: Status indicator dot/badge: Draft (yellow), Published (green), Conflict (red pulse)
+- [x] **CARD-03**: Workshop type color coding: Weekly=blue, All In=purple, Special Event=coral, Coaching Corner=teal, Movement/Fitness=green
 
 ### Workshop Detail Panel
 
@@ -141,14 +141,14 @@
 | DATA-02 | Phase 1 | Complete |
 | DATA-03 | Phase 1 | Complete |
 | DATA-04 | Phase 1 | Complete |
-| CAL-01 | Phase 2 | Pending |
+| CAL-01 | Phase 2 | Complete |
 | CAL-02 | Phase 2 | Pending |
 | CAL-03 | Phase 2 | Pending |
 | CAL-04 | Phase 2 | Pending |
-| CAL-05 | Phase 2 | Pending |
-| CARD-01 | Phase 2 | Pending |
-| CARD-02 | Phase 2 | Pending |
-| CARD-03 | Phase 2 | Pending |
+| CAL-05 | Phase 2 | Complete |
+| CARD-01 | Phase 2 | Complete |
+| CARD-02 | Phase 2 | Complete |
+| CARD-03 | Phase 2 | Complete |
 | PANEL-01 | Phase 3 | Pending |
 | PANEL-02 | Phase 3 | Pending |
 | PANEL-03 | Phase 3 | Pending |
@@ -193,4 +193,4 @@
 
 ---
 *Requirements defined: 2026-03-05*
-*Last updated: 2026-03-05 — traceability updated after roadmap creation*
+*Last updated: 2026-03-06 — CAL-01, CAL-05, CARD-01, CARD-02, CARD-03 marked complete after 02-01*

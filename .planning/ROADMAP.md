@@ -52,7 +52,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — CalendarGrid + WorkshopCard components with type colors, status dots, coach info; wired into ScheduleCalendar with current week
+- [x] 02-01-PLAN.md — CalendarGrid + WorkshopCard components with type colors, status dots, coach info; wired into ScheduleCalendar with current week
 - [ ] 02-02-PLAN.md — Week navigation (prev/next arrows, Today button), view toggle tabs (Day/Week/Month), and week header date range display
 
 ### Phase 3: Workshop Detail
@@ -144,7 +144,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete    | 2026-03-06 |
-| 2. Calendar Grid | 0/2 | Not started | - |
+| 2. Calendar Grid | 1/2 | In progress | - |
 | 3. Workshop Detail | 0/3 | Not started | - |
 | 4. Conflict Detection | 0/2 | Not started | - |
 | 5. Filters & Availability | 0/2 | Not started | - |
