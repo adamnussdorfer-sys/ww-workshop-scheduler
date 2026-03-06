@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 ## Current Position
 
 Phase: 3 of 7 (Workshop Detail)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-03-06 — Completed 03-01: Workshop panel shell and click wiring
+Last activity: 2026-03-06 — Completed 03-02: Workshop form, sparkline, and action buttons
 
-Progress: [████░░░░░░] 27%
+Progress: [█████░░░░░] 30%
 
 ## Performance Metrics
 
@@ -29,11 +29,11 @@ Progress: [████░░░░░░] 27%
 |-------|-------|-------|----------|
 | 01-foundation | 3 | 7 min | 2.3 min |
 | 02-calendar-grid | 2 | 7 min | 3.5 min |
-| 03-workshop-detail | 1 | 2 min | 2.0 min |
+| 03-workshop-detail | 2 | 4 min | 2.0 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-02 (1 min), 01-03 (4 min), 02-01 (4 min), 02-02 (3 min), 03-01 (2 min)
-- Trend: -
+- Last 5 plans: 01-03 (4 min), 02-01 (4 min), 02-02 (3 min), 03-01 (2 min), 03-02 (2 min)
+- Trend: stable
 
 *Updated after each plan completion*
 
@@ -66,6 +66,10 @@ Recent decisions affecting current work:
 - [03-01]: Panel state (selectedWorkshopId, panelMode, slotContext) lives in ScheduleCalendar — UI state, not domain state
 - [03-01]: AbortController.abort() for Escape listener cleanup — cleaner than removeEventListener reference
 - [03-01]: e.stopPropagation() on WorkshopCard click prevents future slot-click handler (Plan 03-03) from firing
+- [03-02]: key={workshop?.id ?? 'create'} on WorkshopForm forces remount when switching workshops — cleanest stale draft fix
+- [03-02]: initDraft factory centralizes view/create mode initialization in one place
+- [03-02]: Conflict stub accepts conflicts=[] prop — Phase 4 can pass array without WorkshopForm refactoring
+- [03-02]: Remove from Schedule soft-deletes (Cancelled status) consistent with CalendarGrid filter already in place
 
 ### Pending Todos
 
@@ -78,5 +82,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 03-01-PLAN.md — Workshop panel shell and click wiring complete, proceed to 03-02
+Stopped at: Completed 03-02-PLAN.md — Workshop form, sparkline, action buttons complete, proceed to 03-03
 Resume file: None

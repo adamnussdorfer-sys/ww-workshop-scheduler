@@ -29,12 +29,12 @@
 
 ### Workshop Detail Panel
 
-- [ ] **PANEL-01**: Right-side slide-in panel (400px) opens on workshop card click
-- [ ] **PANEL-02**: Shows editable fields: title, date/time with timezone, coach dropdown, co-coach dropdown, type dropdown, description, recurrence, markets (US/CA/UK/ANZ checkboxes)
-- [ ] **PANEL-03**: Status badge display (Draft/Published/Cancelled)
-- [ ] **PANEL-04**: Attendance sparkline for published workshops (last 5 weeks mini chart)
-- [ ] **PANEL-05**: Conflict warnings shown as red alert box at top of panel
-- [ ] **PANEL-06**: Action buttons: Save Draft, Remove from Schedule, Publish
+- [x] **PANEL-01**: Right-side slide-in panel (400px) opens on workshop card click
+- [x] **PANEL-02**: Shows editable fields: title, date/time with timezone, coach dropdown, co-coach dropdown, type dropdown, description, recurrence, markets (US/CA/UK/ANZ checkboxes)
+- [x] **PANEL-03**: Status badge display (Draft/Published/Cancelled)
+- [x] **PANEL-04**: Attendance sparkline for published workshops (last 5 weeks mini chart)
+- [x] **PANEL-05**: Conflict warnings shown as red alert box at top of panel
+- [x] **PANEL-06**: Action buttons: Save Draft, Remove from Schedule, Publish
 
 ### Workshop Creation
 
@@ -149,7 +149,7 @@
 | CARD-01 | Phase 2 | Complete |
 | CARD-02 | Phase 2 | Complete |
 | CARD-03 | Phase 2 | Complete |
-| PANEL-01 | Phase 3 | Pending |
+| PANEL-01 | Phase 3 | Complete |
 | PANEL-02 | Phase 3 | Pending |
 | PANEL-03 | Phase 3 | Pending |
 | PANEL-04 | Phase 3 | Pending |

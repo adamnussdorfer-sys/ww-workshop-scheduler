@@ -70,7 +70,7 @@ Plans:
 
 Plans:
 - [x] 03-01-PLAN.md — Build slide-in panel shell with open/close animation, close-on-Escape, overlay backdrop, and wire card click to open panel
-- [ ] 03-02-PLAN.md — Build panel form with all editable fields, status badge, attendance sparkline, conflict stub, and action buttons wired to state
+- [x] 03-02-PLAN.md — Build panel form with all editable fields, status badge, attendance sparkline, conflict stub, and action buttons wired to state
 - [ ] 03-03-PLAN.md — Implement click-to-create on empty time slots (pre-fills date/time) and coach availability-aware dropdown
 
 ### Phase 4: Conflict Detection
@@ -145,7 +145,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete    | 2026-03-06 |
 | 2. Calendar Grid | 2/2 | Complete    | 2026-03-06 |
-| 3. Workshop Detail | 1/3 | In progress | - |
+| 3. Workshop Detail | 2/3 | In progress | - |
 | 4. Conflict Detection | 0/2 | Not started | - |
 | 5. Filters & Availability | 0/2 | Not started | - |
 | 6. Coach Roster | 0/2 | Not started | - |
