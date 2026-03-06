@@ -32,12 +32,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Brand colors (navy, blue, coral) and Inter/system font at 14px base are applied consistently throughout the shell
   4. Mock data is loadable: 15-20 coaches with availability and 40-50 workshops with realistic types, times, coaches, and attendance data exist in the app's state
   5. At least 2-3 intentional coach double-booking conflicts exist in the mock data (visible to developers inspecting state)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Install dependencies (Tailwind CSS, date-fns, Lucide React), configure Tailwind with WW brand tokens, replace scaffold boilerplate
-- [ ] 01-02: Build app shell — top bar, collapsible sidebar, three-page router structure, and navigation components
-- [ ] 01-03: Create all mock data files — coaches, workshops, availability, attendance trends with intentional conflicts
+- [ ] 01-01-PLAN.md — Install dependencies, configure Tailwind v4 with WW brand tokens, clean scaffold
+- [ ] 01-02-PLAN.md — Build app shell (sidebar, top bar, content area), React Router, navigation
+- [ ] 01-03-PLAN.md — Create mock data (18 coaches, 45 workshops, 3 intentional conflicts)
 
 ### Phase 2: Calendar Grid
 **Goal**: Coordinators can see the full weekly workshop schedule at a glance on the calendar
