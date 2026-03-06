@@ -127,9 +127,14 @@ export default function ScheduleCalendar() {
       </div>
 
       {/* Workshop panel — always mounted so exit animation plays */}
-      <WorkshopPanel isOpen={isPanelOpen} onClose={closePanel}>
-        {/* Plan 02 fills content */}
-      </WorkshopPanel>
+      <WorkshopPanel
+        isOpen={isPanelOpen}
+        onClose={closePanel}
+        workshop={selectedWorkshop}
+        coaches={coaches}
+        mode={panelMode}
+        slotContext={slotContext}
+      />
     </div>
   );
 }

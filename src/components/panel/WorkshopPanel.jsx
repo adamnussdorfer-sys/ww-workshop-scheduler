@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { X } from 'lucide-react';
+import WorkshopForm from './WorkshopForm';
 
-export default function WorkshopPanel({ isOpen, onClose, children }) {
+export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode, slotContext }) {
   // Escape key listener — adds when open, cleans up via AbortController
   useEffect(() => {
     if (!isOpen) return;
@@ -15,6 +16,10 @@ export default function WorkshopPanel({ isOpen, onClose, children }) {
     );
     return () => controller.abort();
   }, [isOpen, onClose]);
+
+  // Dynamic panel title
+  const panelTitle =
+    mode === 'create' ? 'New Workshop' : (workshop?.title ?? 'Workshop Details');
 
   return (
     <>
@@ -34,7 +39,7 @@ export default function WorkshopPanel({ isOpen, onClose, children }) {
       >
         {/* Panel header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border flex-shrink-0">
-          <h2 className="text-base font-semibold text-ww-navy">Workshop Details</h2>
+          <h2 className="text-base font-semibold text-ww-navy">{panelTitle}</h2>
           <button
             onClick={onClose}
             className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded hover:bg-surface-2"
@@ -45,7 +50,18 @@ export default function WorkshopPanel({ isOpen, onClose, children }) {
         </div>
 
         {/* Panel body — scrollable */}
-        <div className="flex-1 overflow-y-auto p-5">{children}</div>
+        <div className="flex-1 overflow-y-auto p-5">
+          {isOpen && (
+            <WorkshopForm
+              workshop={workshop}
+              coaches={coaches}
+              mode={mode}
+              slotContext={slotContext}
+              onClose={onClose}
+              key={workshop?.id ?? 'create'}
+            />
+          )}
+        </div>
       </div>
     </>
   );
