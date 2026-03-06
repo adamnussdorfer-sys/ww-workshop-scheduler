@@ -71,7 +71,7 @@ Plans:
 Plans:
 - [x] 03-01-PLAN.md — Build slide-in panel shell with open/close animation, close-on-Escape, overlay backdrop, and wire card click to open panel
 - [x] 03-02-PLAN.md — Build panel form with all editable fields, status badge, attendance sparkline, conflict stub, and action buttons wired to state
-- [ ] 03-03-PLAN.md — Implement click-to-create on empty time slots (pre-fills date/time) and coach availability-aware dropdown
+- [x] 03-03-PLAN.md — Implement click-to-create on empty time slots (pre-fills date/time) and coach availability-aware dropdown
 
 ### Phase 4: Conflict Detection
 **Goal**: Conflicts are immediately visible on the calendar and in the detail panel so coordinators can spot problems at a glance
@@ -83,11 +83,11 @@ Plans:
   3. A workshop detail panel shows a red alert box at the top listing all active conflicts (double-booking, buffer violation, availability conflict) when the workshop has conflicts
   4. The intentional mock data conflicts are visually flagged on the calendar without any coordinator action
   5. Conflicts display as warnings only — saving and publishing workshops with conflicts is not blocked
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 04-01: Build conflict detection engine — functions that compute double-bookings, buffer violations (<15 min gap), availability conflicts, and time slot saturation from workshop state
-- [ ] 04-02: Wire conflict results into calendar card rendering (red border, warning icon, amber saturation bar) and detail panel (red alert box at top)
+- [ ] 04-01-PLAN.md — TDD: Build conflict detection engine (buildConflictMap + getSaturatedSlots) with tests
+- [ ] 04-02-PLAN.md — Wire conflict results into calendar cards (rings, icons, saturation bars) and detail panel (alert box)
 
 ### Phase 5: Filters & Availability
 **Goal**: Coordinators can narrow the calendar view by coach, type, status, or market, and overlay coach availability on the grid
