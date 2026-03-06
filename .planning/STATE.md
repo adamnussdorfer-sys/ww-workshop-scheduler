@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 
 ## Current Position
 
-Phase: 3 of 7 (Workshop Detail) — COMPLETE
-Plan: 3 of 3 in current phase (all done)
-Status: Phase complete, advancing to Phase 4
-Last activity: 2026-03-06 — Completed 03-03: Click-to-create, coach availability dropdown
+Phase: 4 of 7 (Conflict Detection) — IN PROGRESS
+Plan: 1 of 3 in current phase (04-01 complete)
+Status: Active
+Last activity: 2026-03-06 — Completed 04-01: Conflict detection engine (TDD)
 
-Progress: [█████░░░░░] 38%
+Progress: [██████░░░░] 43%
 
 ## Performance Metrics
 
@@ -30,9 +30,10 @@ Progress: [█████░░░░░] 38%
 | 01-foundation | 3 | 7 min | 2.3 min |
 | 02-calendar-grid | 2 | 7 min | 3.5 min |
 | 03-workshop-detail | 3 | 6 min | 2.0 min |
+| 04-conflict-detection | 1 of 3 | 3 min | 3.0 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (4 min), 02-02 (3 min), 03-01 (2 min), 03-02 (2 min), 03-03 (2 min)
+- Last 5 plans: 02-02 (3 min), 03-01 (2 min), 03-02 (2 min), 03-03 (2 min), 04-01 (3 min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -74,6 +75,10 @@ Recent decisions affecting current work:
 - [03-03]: Inactive status checked first in getCoachAvailability before day availability check
 - [03-03]: workshopDate parsed from draft.startTime at render time — availability recomputes instantly when start time changes
 - [03-03]: Co-Coach dropdown filters out draft.coachId — a coach cannot co-coach their own session
+- [04-01]: O(n^2) pairwise loop for double-booking — adequate for mock data scale, no optimization needed
+- [04-01]: addConflict helper updates ringColor eagerly on insert — avoids second pass to derive ringColor
+- [04-01]: getSaturatedSlots iterates 32 fixed slots (GRID_START_HOUR=7, 32 half-hour slots to 23:00)
+- [04-01]: ConflictResult shape established: { conflicts, ringColor: 'red'|'orange'|null, hasConflicts }
 
 ### Pending Todos
 
@@ -86,5 +91,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 03-03-PLAN.md — Click-to-create, coach availability dropdown complete. Phase 3 done, proceed to Phase 4.
+Stopped at: Completed 04-01-PLAN.md — Conflict detection engine built (TDD). buildConflictMap and getSaturatedSlots ready for UI integration.
 Resume file: None
