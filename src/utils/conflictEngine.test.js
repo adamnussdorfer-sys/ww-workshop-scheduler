@@ -319,7 +319,7 @@ describe('getSaturatedSlots', () => {
   });
 
   it('returns correct slotIndex for a saturated window not at start', () => {
-    // 4 workshops overlapping at 10:00 — slotIndex = (10*60 - 7*60) / 30 = 6
+    // 4 workshops overlapping at 10:00 — slotIndex = (10*60 - 6*60) / 30 = 8
     const dayWorkshops = Array.from({ length: 4 }, (_, i) => ({
       id: `sat-10-${i}`,
       status: 'Published',
@@ -330,8 +330,8 @@ describe('getSaturatedSlots', () => {
     const saturatedSlots = getSaturatedSlots(dayWorkshops);
     expect(saturatedSlots.length).toBeGreaterThan(0);
 
-    // Slot 6: 10:00-10:30 (7*60 + 6*30 = 600min = 10:00)
-    const slotAt10 = saturatedSlots.find((s) => s.slotIndex === 6);
+    // Slot 8: 10:00-10:30 (6*60 + 8*30 = 600min = 10:00)
+    const slotAt10 = saturatedSlots.find((s) => s.slotIndex === 8);
     expect(slotAt10).toBeDefined();
     expect(slotAt10.count).toBe(4);
   });
