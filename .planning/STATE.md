@@ -5,17 +5,17 @@
 See: .planning/PROJECT.md (updated 2026-03-09)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** v1.1 Interactive Polish — Phase 5: Context Foundation + Toast System
+**Current focus:** v1.1 Interactive Polish — Phase 6: Sidebar Filters + Highlight/Dim
 
 ## Current Position
 
-Phase: 5 (Context Foundation + Toast System)
-Plan: 1 of 1 complete
-Status: Phase 5 execution in progress — Plan 01 complete
-Last activity: 2026-03-09 — Phase 5 Plan 01 complete (sonner toast system + AppContext filters/memoization)
+Phase: 6 (Sidebar Filters + Highlight/Dim)
+Plan: 1 of 3 complete
+Status: Phase 6 execution in progress — Plan 01 complete
+Last activity: 2026-03-09 — Phase 6 Plan 01 complete (filterEngine.js + Sidebar filter controls)
 
 ```
-Progress: [###-----------------] 1/7 phases (Phase 5 Plan 01 done)
+Progress: [####----------------] 2/7 phases (Phase 6 Plan 01 done)
 ```
 
 ## Performance Metrics
@@ -39,6 +39,7 @@ Progress: [###-----------------] 1/7 phases (Phase 5 Plan 01 done)
 | Phase | Plan | Duration | Files | Date |
 |-------|------|----------|-------|------|
 | 05-context-foundation-toast-system | 01 | 2 min | 3 | 2026-03-09 |
+| 06-sidebar-filters-highlight-dim | 01 | 5 min | 2 | 2026-03-09 |
 
 ## Accumulated Context
 
@@ -61,6 +62,12 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 - setCoaches/setWorkshops/setFilters omitted from useMemo deps — React guarantees setState identity stability
 - toast re-exported on context value — allows useApp() import path, zero behavioral cost
 
+**Phase 6 Plan 01 decisions:**
+- FilterSection defined as module-level function (not inline) for readability without a separate file
+- nav changed from flex-1 to shrink-0 so filter container owns remaining flex-1 scroll space
+- Show all 18 coaches including inactive — coordinators may need to verify inactive coaches have no assignments
+- Coach section uses max-h-48 scrollable, other sections max-h-32 — proportional to item counts
+
 ### Pending Todos
 
 - Verify coach availability data shape in coaches.js before Phase 10 (OVER-01/OVER-02 depend on availability[].day/start/end fields)
@@ -73,5 +80,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-09
-Stopped at: Phase 5 Plan 01 complete. Toast infrastructure and AppContext filters ready for Phase 6 sidebar filters.
+Stopped at: Phase 6 Plan 01 complete. filterEngine.js and Sidebar filter controls ready. Next: Plan 02 highlight/dim logic in CalendarGrid.
 Resume file: None

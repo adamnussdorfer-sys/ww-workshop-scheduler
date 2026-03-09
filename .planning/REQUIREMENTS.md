@@ -9,14 +9,14 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 
 ### Filtering
 
-- [ ] **FILT-01**: Coordinator can filter calendar by coach name via sidebar checkboxes
-- [ ] **FILT-02**: Coordinator can filter calendar by workshop type via sidebar checkboxes
-- [ ] **FILT-03**: Coordinator can filter calendar by status (draft/published/conflict) via sidebar checkboxes
-- [ ] **FILT-04**: Coordinator can filter calendar by market/region via sidebar checkboxes
+- [x] **FILT-01**: Coordinator can filter calendar by coach name via sidebar checkboxes
+- [x] **FILT-02**: Coordinator can filter calendar by workshop type via sidebar checkboxes
+- [x] **FILT-03**: Coordinator can filter calendar by status (draft/published/conflict) via sidebar checkboxes
+- [x] **FILT-04**: Coordinator can filter calendar by market/region via sidebar checkboxes
 - [ ] **FILT-05**: Active filters display as pills above the calendar grid showing what's applied
-- [ ] **FILT-06**: Coordinator can clear all active filters with a single "Clear" button
+- [x] **FILT-06**: Coordinator can clear all active filters with a single "Clear" button
 - [ ] **FILT-07**: Non-matching workshop cards dim to ~25% opacity while matching cards stay fully visible
-- [ ] **FILT-08**: Active filters persist when navigating between weeks (prev/next/today)
+- [x] **FILT-08**: Active filters persist when navigating between weeks (prev/next/today)
 
 ### Availability Overlay
 
@@ -88,14 +88,14 @@ Deferred beyond v1.1. Tracked for future consideration.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FILT-01 | Phase 6 | Pending |
-| FILT-02 | Phase 6 | Pending |
-| FILT-03 | Phase 6 | Pending |
-| FILT-04 | Phase 6 | Pending |
+| FILT-01 | Phase 6 | Complete |
+| FILT-02 | Phase 6 | Complete |
+| FILT-03 | Phase 6 | Complete |
+| FILT-04 | Phase 6 | Complete |
 | FILT-05 | Phase 6 | Pending |
-| FILT-06 | Phase 6 | Pending |
+| FILT-06 | Phase 6 | Complete |
 | FILT-07 | Phase 6 | Pending |
-| FILT-08 | Phase 6 | Pending |
+| FILT-08 | Phase 6 | Complete |
 | OVER-01 | Phase 10 | Pending |
 | OVER-02 | Phase 10 | Pending |
 | ROST-01 | Phase 8 | Pending |

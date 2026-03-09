@@ -64,7 +64,7 @@ Plans:
   5. When filters produce zero matching workshops, the grid shows a "No matching workshops" message with a "Clear filters" call to action; when a single coach is filtered with no workshops, the message is personalized ("No workshops for [Name] this week")
 **Plans**: 2 plans
 Plans:
-- [ ] 06-01-PLAN.md — Create filterEngine.js utility and wire sidebar filter controls
+- [x] 06-01-PLAN.md — Create filterEngine.js utility and wire sidebar filter controls
 - [ ] 06-02-PLAN.md — FilterPills strip, CalendarGrid dim effect, and empty state for zero matches
 
 ### Phase 7: Keyboard Shortcuts
@@ -133,8 +133,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 2. Calendar Grid | v1.0 | 2/2 | Complete | 2026-03-06 |
 | 3. Workshop Detail | v1.0 | 3/3 | Complete | 2026-03-06 |
 | 4. Conflict Detection | v1.0 | 2/2 | Complete | 2026-03-09 |
-| 5. Context Foundation + Toast System | 1/1 | Complete    | 2026-03-09 | - |
-| 6. Sidebar Filters + Highlight/Dim | v1.1 | 0/2 | Not started | - |
+| 5. Context Foundation + Toast System | v1.1 | 1/1 | Complete | 2026-03-09 |
+| 6. Sidebar Filters + Highlight/Dim | v1.1 | 1/2 | In progress | - |
 | 7. Keyboard Shortcuts | v1.1 | 0/? | Not started | - |
 | 8. Coach Roster Page | v1.1 | 0/? | Not started | - |
 | 9. Draft Manager Page | v1.1 | 0/? | Not started | - |
