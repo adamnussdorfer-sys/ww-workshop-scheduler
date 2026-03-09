@@ -21,7 +21,7 @@ const CONFLICT_RING = {
   orange: 'ring-2 ring-orange-400',
 };
 
-export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick }) {
+export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false }) {
   const cardStyle = TYPE_CARD_STYLES[workshop.type] ?? 'bg-slate-50 border-l-4 border-slate-400';
   const dotColor = STATUS_DOT_COLORS[workshop.status] ?? 'bg-slate-400';
 
@@ -47,7 +47,7 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
 
   return (
     <div
-      className={`h-full overflow-hidden rounded text-xs px-1.5 py-1 cursor-pointer hover:brightness-95 transition-all relative ${cardStyle} ${ringClass}`}
+      className={`h-full overflow-hidden rounded text-xs px-1.5 py-1 cursor-pointer hover:brightness-95 transition-all relative ${cardStyle} ${ringClass}${isFiltered ? ' opacity-25 pointer-events-none' : ''}`}
       onClick={(e) => {
         e.stopPropagation();
         onClick?.(workshop.id);

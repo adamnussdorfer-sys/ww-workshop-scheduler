@@ -42,7 +42,7 @@ const HOUR_LABELS = Array.from(
 // 32 slot lines: one per 30-min slot across 16 hours = 32 slots
 const SLOT_LINES = Array.from({ length: 32 }, (_, i) => i);
 
-export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap, onWorkshopClick, onSlotClick }) {
+export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap, onWorkshopClick, onSlotClick, filteredIds = new Set(), anyFilterActive = false }) {
   const coachMap = useMemo(
     () => new Map(coaches.map((c) => [c.id, c])),
     [coaches]
@@ -164,6 +164,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                 {/* Workshop cards */}
                 {dayWorkshops.map((ws, idx) => {
                   const { top, height } = getEventPosition(ws.startTime, ws.endTime);
+                  const isFiltered = anyFilterActive && !filteredIds.has(ws.id);
                   return (
                     <div
                       key={ws.id}
@@ -181,6 +182,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                         coachMap={coachMap}
                         conflicts={conflictMap?.get(ws.id)?.conflicts ?? []}
                         onClick={onWorkshopClick}
+                        isFiltered={isFiltered}
                       />
                     </div>
                   );
