@@ -1,0 +1,131 @@
+# Requirements: WW Workshop Scheduler v1.1
+
+**Defined:** 2026-03-09
+**Core Value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
+
+## v1.1 Requirements
+
+Requirements for Interactive Polish milestone. Each maps to roadmap phases.
+
+### Filtering
+
+- [ ] **FILT-01**: Coordinator can filter calendar by coach name via sidebar checkboxes
+- [ ] **FILT-02**: Coordinator can filter calendar by workshop type via sidebar checkboxes
+- [ ] **FILT-03**: Coordinator can filter calendar by status (draft/published/conflict) via sidebar checkboxes
+- [ ] **FILT-04**: Coordinator can filter calendar by market/region via sidebar checkboxes
+- [ ] **FILT-05**: Active filters display as pills above the calendar grid showing what's applied
+- [ ] **FILT-06**: Coordinator can clear all active filters with a single "Clear" button
+- [ ] **FILT-07**: Non-matching workshop cards dim to ~25% opacity while matching cards stay fully visible
+- [ ] **FILT-08**: Active filters persist when navigating between weeks (prev/next/today)
+
+### Availability Overlay
+
+- [ ] **OVER-01**: Coordinator can toggle a coach availability overlay on the calendar grid
+- [ ] **OVER-02**: Overlay renders semi-transparent colored bands behind workshop cards showing each coach's available hours
+
+### Coach Roster
+
+- [ ] **ROST-01**: Coach Roster page displays all coaches in a sortable table (name, workshops, availability)
+- [ ] **ROST-02**: Coordinator can sort roster table by clicking column headers (toggle ASC/DESC)
+- [ ] **ROST-03**: Coordinator can search/filter coaches by name in the roster
+- [ ] **ROST-04**: Coordinator can click a coach row to open a slide-in detail panel
+- [ ] **ROST-05**: Roster table shows workshop count per coach for current week
+- [ ] **ROST-06**: Roster table shows availability status badge per coach
+
+### Draft Manager
+
+- [ ] **DRAF-01**: Draft Manager page lists all draft workshops in a table
+- [ ] **DRAF-02**: Coordinator can select multiple draft workshops via checkboxes (with select-all)
+- [ ] **DRAF-03**: Coordinator can publish selected workshops via a confirmation modal showing item count
+- [ ] **DRAF-04**: Publish button displays a conflict count badge when selected workshops have conflicts
+- [ ] **DRAF-05**: Confirmation modal warns about conflicts and allows override ("publish anyway")
+
+### Interactions
+
+- [ ] **INTR-01**: Toast notification appears after create, save, publish, and delete actions (auto-dismiss 3-4s)
+- [ ] **INTR-02**: Left/Right arrow keys navigate to previous/next week
+- [ ] **INTR-03**: T key jumps to current week (today)
+- [ ] **INTR-04**: Escape key closes the detail panel (does not fire when focus is in a text input)
+- [ ] **INTR-05**: N key opens the create-workshop flow with next available slot pre-filled
+- [ ] **INTR-06**: Workshop cards lift on hover (2px translate-y + shadow elevation)
+- [ ] **INTR-07**: Detail panel uses cubic-bezier easing for slide entrance/exit
+- [ ] **INTR-08**: Conflict status dot pulses subtly to draw attention (2s CSS animation cycle)
+
+### Empty States
+
+- [ ] **EMPT-01**: Empty calendar week shows "No workshops scheduled" message with "Create Workshop" CTA
+- [ ] **EMPT-02**: Zero filter results shows "No matching workshops" message with "Clear filters" CTA
+- [ ] **EMPT-03**: Coach-specific filter with no results shows personalized "No workshops for [Name]" message
+
+## Future Requirements
+
+Deferred beyond v1.1. Tracked for future consideration.
+
+### Roster Enhancements
+
+- **ROST-07**: Coordinator can view coach schedule directly from roster detail panel
+- **ROST-08**: Roster supports pagination for larger coach lists (>50)
+
+### Advanced Filtering
+
+- **FILT-09**: Coordinator can save and load filter presets
+- **FILT-10**: Filter presets persist across sessions via localStorage
+
+## Out of Scope
+
+| Feature | Reason |
+|---------|--------|
+| Drag-and-drop rescheduling | Requires complete grid layout rewrite; click-to-create + panel edit is sufficient |
+| Animated week transitions | Causes layout jank with 48 dense cards; instant swap is cleaner |
+| Infinite scroll in roster | 18 coaches always fits on one screen; zero benefit |
+| Filter presets / saved views | Requires persistence layer; simple multi-select sufficient for demo |
+| Multi-step publish wizard | No backend, no real approval workflow; single confirmation modal sufficient |
+| Mobile-responsive filters | Desktop-only prototype (1280px+ per PROJECT.md) |
+| Inline cell editing on grid | Conflicts with click-to-create behavior; panel is the editing surface |
+| Real-time debounced filter | 18 coaches renders instantly; debounce adds perceived lag |
+
+## Traceability
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| FILT-01 | — | Pending |
+| FILT-02 | — | Pending |
+| FILT-03 | — | Pending |
+| FILT-04 | — | Pending |
+| FILT-05 | — | Pending |
+| FILT-06 | — | Pending |
+| FILT-07 | — | Pending |
+| FILT-08 | — | Pending |
+| OVER-01 | — | Pending |
+| OVER-02 | — | Pending |
+| ROST-01 | — | Pending |
+| ROST-02 | — | Pending |
+| ROST-03 | — | Pending |
+| ROST-04 | — | Pending |
+| ROST-05 | — | Pending |
+| ROST-06 | — | Pending |
+| DRAF-01 | — | Pending |
+| DRAF-02 | — | Pending |
+| DRAF-03 | — | Pending |
+| DRAF-04 | — | Pending |
+| DRAF-05 | — | Pending |
+| INTR-01 | — | Pending |
+| INTR-02 | — | Pending |
+| INTR-03 | — | Pending |
+| INTR-04 | — | Pending |
+| INTR-05 | — | Pending |
+| INTR-06 | — | Pending |
+| INTR-07 | — | Pending |
+| INTR-08 | — | Pending |
+| EMPT-01 | — | Pending |
+| EMPT-02 | — | Pending |
+| EMPT-03 | — | Pending |
+
+**Coverage:**
+- v1.1 requirements: 32 total
+- Mapped to phases: 0
+- Unmapped: 32 (pending roadmap creation)
+
+---
+*Requirements defined: 2026-03-09*
+*Last updated: 2026-03-09 after initial definition*
