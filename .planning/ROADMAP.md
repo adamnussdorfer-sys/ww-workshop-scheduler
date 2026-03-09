@@ -77,7 +77,9 @@ Plans:
   3. Pressing Escape closes the open workshop detail panel; pressing Escape with no panel open does nothing
   4. Escape does not fire when the cursor is inside a text input or textarea in the detail panel
   5. Pressing N opens the create-workshop flow with the next available time slot pre-filled
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 07-01-PLAN.md — Create useKeyboardShortcuts hook + slotFinder utility, wire into ScheduleCalendar, remove WorkshopPanel inline Escape listener
 
 ### Phase 8: Coach Roster Page
 **Goal**: Coordinators can review the full coach list, sort it, search it, and inspect any coach's details
@@ -135,7 +137,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 4. Conflict Detection | v1.0 | 2/2 | Complete | 2026-03-09 |
 | 5. Context Foundation + Toast System | v1.1 | 1/1 | Complete | 2026-03-09 |
 | 6. Sidebar Filters + Highlight/Dim | 2/2 | Complete    | 2026-03-09 | - |
-| 7. Keyboard Shortcuts | v1.1 | 0/? | Not started | - |
+| 7. Keyboard Shortcuts | v1.1 | 0/1 | Planned | - |
 | 8. Coach Roster Page | v1.1 | 0/? | Not started | - |
 | 9. Draft Manager Page | v1.1 | 0/? | Not started | - |
 | 10. Availability Overlay | v1.1 | 0/? | Not started | - |
