@@ -25,12 +25,12 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 
 ### Coach Roster
 
-- [ ] **ROST-01**: Coach Roster page displays all coaches in a sortable table (name, workshops, availability)
-- [ ] **ROST-02**: Coordinator can sort roster table by clicking column headers (toggle ASC/DESC)
-- [ ] **ROST-03**: Coordinator can search/filter coaches by name in the roster
-- [ ] **ROST-04**: Coordinator can click a coach row to open a slide-in detail panel
-- [ ] **ROST-05**: Roster table shows workshop count per coach for current week
-- [ ] **ROST-06**: Roster table shows availability status badge per coach
+- [x] **ROST-01**: Coach Roster page displays all coaches in a sortable table (name, workshops, availability)
+- [x] **ROST-02**: Coordinator can sort roster table by clicking column headers (toggle ASC/DESC)
+- [x] **ROST-03**: Coordinator can search/filter coaches by name in the roster
+- [x] **ROST-04**: Coordinator can click a coach row to open a slide-in detail panel
+- [x] **ROST-05**: Roster table shows workshop count per coach for current week
+- [x] **ROST-06**: Roster table shows availability status badge per coach
 
 ### Draft Manager
 
@@ -98,12 +98,12 @@ Deferred beyond v1.1. Tracked for future consideration.
 | FILT-08 | Phase 6 | Complete |
 | OVER-01 | Phase 10 | Pending |
 | OVER-02 | Phase 10 | Pending |
-| ROST-01 | Phase 8 | Pending |
-| ROST-02 | Phase 8 | Pending |
-| ROST-03 | Phase 8 | Pending |
-| ROST-04 | Phase 8 | Pending |
-| ROST-05 | Phase 8 | Pending |
-| ROST-06 | Phase 8 | Pending |
+| ROST-01 | Phase 8 | Complete |
+| ROST-02 | Phase 8 | Complete |
+| ROST-03 | Phase 8 | Complete |
+| ROST-04 | Phase 8 | Complete |
+| ROST-05 | Phase 8 | Complete |
+| ROST-06 | Phase 8 | Complete |
 | DRAF-01 | Phase 9 | Pending |
 | DRAF-02 | Phase 9 | Pending |
 | DRAF-03 | Phase 9 | Pending |

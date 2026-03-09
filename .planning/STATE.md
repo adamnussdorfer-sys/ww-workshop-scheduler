@@ -5,17 +5,17 @@
 See: .planning/PROJECT.md (updated 2026-03-09)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** v1.1 Interactive Polish — Phase 7: Keyboard Shortcuts
+**Current focus:** v1.1 Interactive Polish — Phase 8: Coach Roster Page
 
 ## Current Position
 
-Phase: 7 (Keyboard Shortcuts)
+Phase: 8 (Coach Roster Page)
 Plan: 1 of 1 complete
-Status: Phase 7 complete — Plan 01 done
-Last activity: 2026-03-09 — Phase 7 Plan 01 complete (useKeyboardShortcuts hook, slotFinder utility, wired into ScheduleCalendar)
+Status: Phase 8 complete — Plan 01 done
+Last activity: 2026-03-09 — Phase 8 Plan 01 complete (CoachDetailPanel, CoachRoster with sortable table + slide-in panel)
 
 ```
-Progress: [######--------------] 3/7 phases complete (Phase 7 done)
+Progress: [########------------] 4/7 phases complete (Phase 8 done)
 ```
 
 ## Performance Metrics
@@ -42,6 +42,7 @@ Progress: [######--------------] 3/7 phases complete (Phase 7 done)
 | 06-sidebar-filters-highlight-dim | 01 | 5 min | 2 | 2026-03-09 |
 | 06-sidebar-filters-highlight-dim | 02 | 3 min | 4 | 2026-03-09 |
 | 07-keyboard-shortcuts | 01 | 4 min | 4 | 2026-03-09 |
+| 08-coach-roster-page | 01 | 3 min | 2 | 2026-03-09 |
 
 ## Accumulated Context
 
@@ -79,10 +80,16 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 - slotFinder uses startOfWeek(now) as scan origin, covering 7 days regardless of displayed week — ensures future slot always returned
 - WorkshopPanel Escape useEffect removed — all keyboard handling centralized in useKeyboardShortcuts hook in ScheduleCalendar
 
+**Phase 8 Plan 01 decisions:**
+- CoachRoster gets its own inline panel markup (Option A) — avoids modifying shared WorkshopPanel.jsx and risking regressions in ScheduleCalendar
+- COACH_STATUS_BADGE defined in both CoachDetailPanel and CoachRoster for self-containment — no shared import needed
+- Escape key handled via simple useEffect in CoachRoster — useKeyboardShortcuts is ScheduleCalendar-specific
+- No debounce on search input — 18 coaches renders in <1ms; debounce adds perceived lag
+
 ### Pending Todos
 
-- Verify coach availability data shape in coaches.js before Phase 10 (OVER-01/OVER-02 depend on availability[].day/start/end fields)
 - Verify workshops.js includes status: "draft" | "published" field before Phase 9 (DRAF-01 through DRAF-05)
+- Coach availability data shape confirmed: availability[].day/start/end — verified from coaches.js in Phase 8
 
 ### Blockers/Concerns
 
@@ -91,5 +98,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-09
-Stopped at: Phase 7 Plan 01 complete. useKeyboardShortcuts hook + slotFinder utility + wired into ScheduleCalendar. Next: Phase 8 (if planned).
+Stopped at: Phase 8 Plan 01 complete. CoachDetailPanel display component + CoachRoster sortable/searchable table with slide-in panel. Next: Phase 9 (Draft Manager).
 Resume file: None
