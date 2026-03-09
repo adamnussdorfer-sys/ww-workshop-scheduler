@@ -48,7 +48,9 @@ See: `.planning/milestones/v1.0-ROADMAP.md` for full phase details.
   2. After creating a new workshop, a toast appears confirming the action with the workshop name
   3. Toast notifications stack cleanly when multiple actions fire in quick succession without overlapping or obscuring page content
   4. Navigating between pages (Schedule, Roster, Draft Manager) does not cause toasts from the previous page to disappear mid-display
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 05-01-PLAN.md — Install sonner, extend context with filters + memoization, wire toast into all action handlers
 
 ### Phase 6: Sidebar Filters + Highlight/Dim
 **Goal**: Coordinators can narrow the calendar to specific coaches, types, statuses, or markets with visual feedback
@@ -128,7 +130,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 2. Calendar Grid | v1.0 | 2/2 | Complete | 2026-03-06 |
 | 3. Workshop Detail | v1.0 | 3/3 | Complete | 2026-03-06 |
 | 4. Conflict Detection | v1.0 | 2/2 | Complete | 2026-03-09 |
-| 5. Context Foundation + Toast System | v1.1 | 0/? | Not started | - |
+| 5. Context Foundation + Toast System | v1.1 | 0/1 | Not started | - |
 | 6. Sidebar Filters + Highlight/Dim | v1.1 | 0/? | Not started | - |
 | 7. Keyboard Shortcuts | v1.1 | 0/? | Not started | - |
 | 8. Coach Roster Page | v1.1 | 0/? | Not started | - |
