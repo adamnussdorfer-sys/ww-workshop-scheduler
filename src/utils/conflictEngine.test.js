@@ -256,7 +256,7 @@ describe('buildConflictMap - ring color priority', () => {
 
 describe('getSaturatedSlots', () => {
   it('returns slot indices where 4+ workshops overlap in a 30-min window', () => {
-    // Create 4 workshops all overlapping in slot 0 (07:00-07:30, slot index 0 at GRID_START_HOUR=7)
+    // Create 4 workshops all overlapping at 07:00-07:30 (slot index 2 at GRID_START_HOUR=6)
     const dayWorkshops = [
       {
         id: 'sat-1',

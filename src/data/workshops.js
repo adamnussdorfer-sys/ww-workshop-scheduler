@@ -1,5 +1,5 @@
 // WW Workshop Scheduler — Mock Workshop Data
-// 45 workshops spread across Mon-Sun, anchored to current week dynamically
+// 48 workshops spread across Mon-Sun, anchored to current week dynamically
 //
 // INTENTIONAL CONFLICTS (for Phase 4 conflict detection demo):
 // Conflict A: coach-005 double-booked Tue 10:00-11:00 (ws-021) & Tue 10:30-11:30 (ws-022)
