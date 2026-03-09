@@ -43,10 +43,10 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 ### Interactions
 
 - [x] **INTR-01**: Toast notification appears after create, save, publish, and delete actions (auto-dismiss 3-4s)
-- [ ] **INTR-02**: Left/Right arrow keys navigate to previous/next week
-- [ ] **INTR-03**: T key jumps to current week (today)
-- [ ] **INTR-04**: Escape key closes the detail panel (does not fire when focus is in a text input)
-- [ ] **INTR-05**: N key opens the create-workshop flow with next available slot pre-filled
+- [x] **INTR-02**: Left/Right arrow keys navigate to previous/next week
+- [x] **INTR-03**: T key jumps to current week (today)
+- [x] **INTR-04**: Escape key closes the detail panel (does not fire when focus is in a text input)
+- [x] **INTR-05**: N key opens the create-workshop flow with next available slot pre-filled
 - [ ] **INTR-06**: Workshop cards lift on hover (2px translate-y + shadow elevation)
 - [ ] **INTR-07**: Detail panel uses cubic-bezier easing for slide entrance/exit
 - [ ] **INTR-08**: Conflict status dot pulses subtly to draw attention (2s CSS animation cycle)
@@ -110,10 +110,10 @@ Deferred beyond v1.1. Tracked for future consideration.
 | DRAF-04 | Phase 9 | Pending |
 | DRAF-05 | Phase 9 | Pending |
 | INTR-01 | Phase 5 | Complete |
-| INTR-02 | Phase 7 | Pending |
-| INTR-03 | Phase 7 | Pending |
-| INTR-04 | Phase 7 | Pending |
-| INTR-05 | Phase 7 | Pending |
+| INTR-02 | Phase 7 | Complete |
+| INTR-03 | Phase 7 | Complete |
+| INTR-04 | Phase 7 | Complete |
+| INTR-05 | Phase 7 | Complete |
 | INTR-06 | Phase 11 | Pending |
 | INTR-07 | Phase 11 | Pending |
 | INTR-08 | Phase 11 | Pending |

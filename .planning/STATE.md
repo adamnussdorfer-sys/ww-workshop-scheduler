@@ -5,17 +5,17 @@
 See: .planning/PROJECT.md (updated 2026-03-09)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** v1.1 Interactive Polish — Phase 6: Sidebar Filters + Highlight/Dim
+**Current focus:** v1.1 Interactive Polish — Phase 7: Keyboard Shortcuts
 
 ## Current Position
 
-Phase: 6 (Sidebar Filters + Highlight/Dim)
-Plan: 2 of 3 complete
-Status: Phase 6 execution in progress — Plans 01 and 02 complete
-Last activity: 2026-03-09 — Phase 6 Plan 02 complete (FilterPills + CalendarGrid dim effect + empty state)
+Phase: 7 (Keyboard Shortcuts)
+Plan: 1 of 1 complete
+Status: Phase 7 complete — Plan 01 done
+Last activity: 2026-03-09 — Phase 7 Plan 01 complete (useKeyboardShortcuts hook, slotFinder utility, wired into ScheduleCalendar)
 
 ```
-Progress: [####----------------] 2/7 phases (Phase 6 Plans 01-02 done)
+Progress: [######--------------] 3/7 phases complete (Phase 7 done)
 ```
 
 ## Performance Metrics
@@ -41,6 +41,7 @@ Progress: [####----------------] 2/7 phases (Phase 6 Plans 01-02 done)
 | 05-context-foundation-toast-system | 01 | 2 min | 3 | 2026-03-09 |
 | 06-sidebar-filters-highlight-dim | 01 | 5 min | 2 | 2026-03-09 |
 | 06-sidebar-filters-highlight-dim | 02 | 3 min | 4 | 2026-03-09 |
+| 07-keyboard-shortcuts | 01 | 4 min | 4 | 2026-03-09 |
 
 ## Accumulated Context
 
@@ -72,6 +73,12 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 - [Phase 06-sidebar-filters-highlight-dim]: weekMatchCount returns -1 sentinel when no filters active to prevent false empty state
 - [Phase 06-sidebar-filters-highlight-dim]: FilterPills reads from useApp() directly — no prop drilling through ScheduleCalendar
 
+**Phase 7 Plan 01 decisions:**
+- prevWeek/nextWeek/goToToday wrapped in useCallback with empty deps — React guarantees setState setter identity stability
+- openNewWithNextSlot and nav callbacks must be defined BEFORE useKeyboardShortcuts call — const declarations are not hoisted
+- slotFinder uses startOfWeek(now) as scan origin, covering 7 days regardless of displayed week — ensures future slot always returned
+- WorkshopPanel Escape useEffect removed — all keyboard handling centralized in useKeyboardShortcuts hook in ScheduleCalendar
+
 ### Pending Todos
 
 - Verify coach availability data shape in coaches.js before Phase 10 (OVER-01/OVER-02 depend on availability[].day/start/end fields)
@@ -84,5 +91,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-09
-Stopped at: Phase 6 Plan 02 complete. FilterPills, CalendarGrid dim effect, and empty state wired end-to-end. Next: Plan 03 if exists, otherwise Phase 7.
+Stopped at: Phase 7 Plan 01 complete. useKeyboardShortcuts hook + slotFinder utility + wired into ScheduleCalendar. Next: Phase 8 (if planned).
 Resume file: None

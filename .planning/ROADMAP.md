@@ -31,7 +31,7 @@ See: `.planning/milestones/v1.0-ROADMAP.md` for full phase details.
 
 - [x] **Phase 5: Context Foundation + Toast System** - Cross-cutting state infrastructure and toast notifications (completed 2026-03-09)
 - [x] **Phase 6: Sidebar Filters + Highlight/Dim** - Coach, type, status, and market filters with visual dim mode (completed 2026-03-09)
-- [ ] **Phase 7: Keyboard Shortcuts** - Week navigation, panel control, and create-workshop shortcuts
+- [x] **Phase 7: Keyboard Shortcuts** - Week navigation, panel control, and create-workshop shortcuts (completed 2026-03-09)
 - [ ] **Phase 8: Coach Roster Page** - Sortable coach table with slide-in detail panel
 - [ ] **Phase 9: Draft Manager Page** - Batch workshop selection, conflict-aware publish flow
 - [ ] **Phase 10: Availability Overlay** - Semi-transparent coach availability lanes on the calendar grid
@@ -137,7 +137,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 4. Conflict Detection | v1.0 | 2/2 | Complete | 2026-03-09 |
 | 5. Context Foundation + Toast System | v1.1 | 1/1 | Complete | 2026-03-09 |
 | 6. Sidebar Filters + Highlight/Dim | 2/2 | Complete    | 2026-03-09 | - |
-| 7. Keyboard Shortcuts | v1.1 | 0/1 | Planned | - |
+| 7. Keyboard Shortcuts | 1/1 | Complete   | 2026-03-09 | - |
 | 8. Coach Roster Page | v1.1 | 0/? | Not started | - |
 | 9. Draft Manager Page | v1.1 | 0/? | Not started | - |
 | 10. Availability Overlay | v1.1 | 0/? | Not started | - |
