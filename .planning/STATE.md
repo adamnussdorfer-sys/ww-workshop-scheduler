@@ -10,12 +10,12 @@ See: .planning/PROJECT.md (updated 2026-03-09)
 ## Current Position
 
 Phase: 5 (Context Foundation + Toast System)
-Plan: —
-Status: Roadmap created, awaiting phase planning
-Last activity: 2026-03-09 — v1.1 roadmap created (7 phases, 32 requirements mapped)
+Plan: 1 of 1 complete
+Status: Phase 5 execution in progress — Plan 01 complete
+Last activity: 2026-03-09 — Phase 5 Plan 01 complete (sonner toast system + AppContext filters/memoization)
 
 ```
-Progress: [--------------------] 0/7 phases
+Progress: [###-----------------] 1/7 phases (Phase 5 Plan 01 done)
 ```
 
 ## Performance Metrics
@@ -34,6 +34,12 @@ Progress: [--------------------] 0/7 phases
 | 03-workshop-detail | 3 | 6 min | 2.0 min |
 | 04-conflict-detection | 2 | 5 min | 2.5 min |
 
+**v1.1 execution (in progress):**
+
+| Phase | Plan | Duration | Files | Date |
+|-------|------|----------|-------|------|
+| 05-context-foundation-toast-system | 01 | 2 min | 3 | 2026-03-09 |
+
 ## Accumulated Context
 
 ### Decisions
@@ -48,6 +54,13 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 - filterEngine.js as pure utility — reusable across CalendarGrid, CoachRoster, DraftManager without coupling
 - DraftManager reads workshops from useApp() + useMemo — never local state copy (prevents stale data)
 
+**Phase 5 Plan 01 decisions:**
+- Import toast directly from sonner in WorkshopForm (not via context threading) — idiomatic, avoids prop drilling
+- Toaster placed as sibling before AppShell inside AppContext.Provider (outside Routes) — critical for navigation survival
+- Plain toast() calls (not toast.success/error) — WW brand blue/coral does not match sonner richColors green/red
+- setCoaches/setWorkshops/setFilters omitted from useMemo deps — React guarantees setState identity stability
+- toast re-exported on context value — allows useApp() import path, zero behavioral cost
+
 ### Pending Todos
 
 - Verify coach availability data shape in coaches.js before Phase 10 (OVER-01/OVER-02 depend on availability[].day/start/end fields)
@@ -60,5 +73,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-09
-Stopped at: v1.1 roadmap created. Ready for `/gsd:plan-phase 5`.
+Stopped at: Phase 5 Plan 01 complete. Toast infrastructure and AppContext filters ready for Phase 6 sidebar filters.
 Resume file: None

@@ -42,7 +42,7 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 
 ### Interactions
 
-- [ ] **INTR-01**: Toast notification appears after create, save, publish, and delete actions (auto-dismiss 3-4s)
+- [x] **INTR-01**: Toast notification appears after create, save, publish, and delete actions (auto-dismiss 3-4s)
 - [ ] **INTR-02**: Left/Right arrow keys navigate to previous/next week
 - [ ] **INTR-03**: T key jumps to current week (today)
 - [ ] **INTR-04**: Escape key closes the detail panel (does not fire when focus is in a text input)
@@ -109,7 +109,7 @@ Deferred beyond v1.1. Tracked for future consideration.
 | DRAF-03 | Phase 9 | Pending |
 | DRAF-04 | Phase 9 | Pending |
 | DRAF-05 | Phase 9 | Pending |
-| INTR-01 | Phase 5 | Pending |
+| INTR-01 | Phase 5 | Complete |
 | INTR-02 | Phase 7 | Pending |
 | INTR-03 | Phase 7 | Pending |
 | INTR-04 | Phase 7 | Pending |

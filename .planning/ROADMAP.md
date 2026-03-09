@@ -29,7 +29,7 @@ See: `.planning/milestones/v1.0-ROADMAP.md` for full phase details.
 
 ### v1.1 Interactive Polish (Active)
 
-- [ ] **Phase 5: Context Foundation + Toast System** - Cross-cutting state infrastructure and toast notifications
+- [x] **Phase 5: Context Foundation + Toast System** - Cross-cutting state infrastructure and toast notifications (completed 2026-03-09)
 - [ ] **Phase 6: Sidebar Filters + Highlight/Dim** - Coach, type, status, and market filters with visual dim mode
 - [ ] **Phase 7: Keyboard Shortcuts** - Week navigation, panel control, and create-workshop shortcuts
 - [ ] **Phase 8: Coach Roster Page** - Sortable coach table with slide-in detail panel
@@ -130,7 +130,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 2. Calendar Grid | v1.0 | 2/2 | Complete | 2026-03-06 |
 | 3. Workshop Detail | v1.0 | 3/3 | Complete | 2026-03-06 |
 | 4. Conflict Detection | v1.0 | 2/2 | Complete | 2026-03-09 |
-| 5. Context Foundation + Toast System | v1.1 | 0/1 | Not started | - |
+| 5. Context Foundation + Toast System | 1/1 | Complete   | 2026-03-09 | - |
 | 6. Sidebar Filters + Highlight/Dim | v1.1 | 0/? | Not started | - |
 | 7. Keyboard Shortcuts | v1.1 | 0/? | Not started | - |
 | 8. Coach Roster Page | v1.1 | 0/? | Not started | - |
