@@ -104,7 +104,9 @@ Plans:
   3. When selected workshops include conflicts, the Publish button displays a conflict count badge (e.g., "Publish (2 conflicts)") before the modal opens
   4. The confirmation modal warns about conflicts and offers both "Cancel" and "Publish anyway" options when conflicts are present
   5. After confirming publish, the selected workshops disappear from the draft list and a toast notification confirms the action
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 09-01-PLAN.md — DraftManager table with checkbox selection, conflict-aware publish button, confirmation modal, and toast feedback
 
 ### Phase 10: Availability Overlay
 **Goal**: Coordinators can see when each coach is available directly on the calendar grid
@@ -141,6 +143,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 6. Sidebar Filters + Highlight/Dim | 2/2 | Complete    | 2026-03-09 | - |
 | 7. Keyboard Shortcuts | 1/1 | Complete    | 2026-03-09 | - |
 | 8. Coach Roster Page | 1/1 | Complete    | 2026-03-09 | - |
-| 9. Draft Manager Page | v1.1 | 0/? | Not started | - |
+| 9. Draft Manager Page | v1.1 | 0/1 | Not started | - |
 | 10. Availability Overlay | v1.1 | 0/? | Not started | - |
 | 11. Micro-interactions + Empty States | v1.1 | 0/? | Not started | - |
