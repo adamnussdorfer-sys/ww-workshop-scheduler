@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { format, parseISO, setHours, setMinutes, addHours, getHours, getMinutes } from 'date-fns';
 import { AlertTriangle } from 'lucide-react';
+import { toast } from 'sonner';
 import { useApp } from '../../context/AppContext';
 import AttendanceSparkline from './AttendanceSparkline';
 import { getCoachAvailability } from '../../utils/coachAvailability';
@@ -159,8 +160,10 @@ export default function WorkshopForm({
   const handleSaveDraft = () => {
     if (mode === 'create') {
       setWorkshops((prev) => [...prev, { ...draft, id: 'ws-' + Date.now() }]);
+      toast('Workshop created \u2014 ' + draft.title);
     } else {
       setWorkshops((prev) => prev.map((w) => (w.id === draft.id ? { ...draft } : w)));
+      toast('Changes saved');
     }
     onClose();
   };
@@ -169,6 +172,7 @@ export default function WorkshopForm({
     setWorkshops((prev) =>
       prev.map((w) => (w.id === draft.id ? { ...w, status: 'Cancelled' } : w))
     );
+    toast('Workshop deleted');
     onClose();
   };
 
@@ -178,10 +182,12 @@ export default function WorkshopForm({
         ...prev,
         { ...draft, id: 'ws-' + Date.now(), status: 'Published' },
       ]);
+      toast('Workshop published \u2014 ' + draft.title);
     } else {
       setWorkshops((prev) =>
         prev.map((w) => (w.id === draft.id ? { ...draft, status: 'Published' } : w))
       );
+      toast('Workshop published');
     }
     onClose();
   };
