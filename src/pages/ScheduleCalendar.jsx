@@ -7,6 +7,8 @@ import WorkshopPanel from '../components/panel/WorkshopPanel';
 import FilterPills from '../components/filters/FilterPills';
 import { buildConflictMap } from '../utils/conflictEngine';
 import { getMatchedWorkshopIds, hasActiveFilters } from '../utils/filterEngine';
+import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
+import { findNextAvailableSlot } from '../utils/slotFinder';
 
 export default function ScheduleCalendar() {
   const { workshops, coaches, filters, setFilters } = useApp();
@@ -49,6 +51,27 @@ export default function ScheduleCalendar() {
     setSlotContext({ date, hour, minute });
   }, []);
 
+  const prevWeek = useCallback(() => setCurrentWeekStart((d) => subWeeks(d, 1)), []);
+  const nextWeek = useCallback(() => setCurrentWeekStart((d) => addWeeks(d, 1)), []);
+  const goToToday = useCallback(
+    () => setCurrentWeekStart(startOfWeek(new Date(), { weekStartsOn: 1 })),
+    []
+  );
+
+  const openNewWithNextSlot = useCallback(() => {
+    const slot = findNextAvailableSlot(workshops);
+    openCreate(slot.date, slot.hour, slot.minute);
+  }, [workshops, openCreate]);
+
+  useKeyboardShortcuts({
+    onPrevWeek: prevWeek,
+    onNextWeek: nextWeek,
+    onToday: goToToday,
+    onClosePanel: closePanel,
+    onNewWorkshop: openNewWithNextSlot,
+    isPanelOpen,
+  });
+
   const weekDays = useMemo(
     () => Array.from({ length: 7 }, (_, i) => addDays(currentWeekStart, i)),
     [currentWeekStart]
@@ -57,11 +80,6 @@ export default function ScheduleCalendar() {
   const headerText =
     'Week of ' + format(currentWeekStart, 'MMM d') + ' \u2013 ' + format(weekEnd, 'MMM d, yyyy');
   const isCurrentWeek = isSameWeek(currentWeekStart, new Date(), { weekStartsOn: 1 });
-
-  const prevWeek = () => setCurrentWeekStart((d) => subWeeks(d, 1));
-  const nextWeek = () => setCurrentWeekStart((d) => addWeeks(d, 1));
-  const goToToday = () =>
-    setCurrentWeekStart(startOfWeek(new Date(), { weekStartsOn: 1 }));
 
   // Filter computed values
   const anyFilterActive = useMemo(() => hasActiveFilters(filters), [filters]);

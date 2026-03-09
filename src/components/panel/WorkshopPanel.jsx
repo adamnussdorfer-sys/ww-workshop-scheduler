@@ -1,22 +1,7 @@
-import { useEffect } from 'react';
 import { X } from 'lucide-react';
 import WorkshopForm from './WorkshopForm';
 
 export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode, slotContext, conflicts }) {
-  // Escape key listener — adds when open, cleans up via AbortController
-  useEffect(() => {
-    if (!isOpen) return;
-    const controller = new AbortController();
-    document.addEventListener(
-      'keydown',
-      (e) => {
-        if (e.key === 'Escape') onClose();
-      },
-      { signal: controller.signal }
-    );
-    return () => controller.abort();
-  }, [isOpen, onClose]);
-
   // Dynamic panel title
   const panelTitle =
     mode === 'create' ? 'New Workshop' : (workshop?.title ?? 'Workshop Details');
