@@ -140,7 +140,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 5. Context Foundation + Toast System | v1.1 | 1/1 | Complete | 2026-03-09 |
 | 6. Sidebar Filters + Highlight/Dim | 2/2 | Complete    | 2026-03-09 | - |
 | 7. Keyboard Shortcuts | 1/1 | Complete    | 2026-03-09 | - |
-| 8. Coach Roster Page | 1/1 | Complete   | 2026-03-09 | - |
+| 8. Coach Roster Page | 1/1 | Complete    | 2026-03-09 | - |
 | 9. Draft Manager Page | v1.1 | 0/? | Not started | - |
 | 10. Availability Overlay | v1.1 | 0/? | Not started | - |
 | 11. Micro-interactions + Empty States | v1.1 | 0/? | Not started | - |
