@@ -10,12 +10,12 @@ See: .planning/PROJECT.md (updated 2026-03-09)
 ## Current Position
 
 Phase: 6 (Sidebar Filters + Highlight/Dim)
-Plan: 1 of 3 complete
-Status: Phase 6 execution in progress — Plan 01 complete
-Last activity: 2026-03-09 — Phase 6 Plan 01 complete (filterEngine.js + Sidebar filter controls)
+Plan: 2 of 3 complete
+Status: Phase 6 execution in progress — Plans 01 and 02 complete
+Last activity: 2026-03-09 — Phase 6 Plan 02 complete (FilterPills + CalendarGrid dim effect + empty state)
 
 ```
-Progress: [####----------------] 2/7 phases (Phase 6 Plan 01 done)
+Progress: [####----------------] 2/7 phases (Phase 6 Plans 01-02 done)
 ```
 
 ## Performance Metrics
@@ -40,6 +40,7 @@ Progress: [####----------------] 2/7 phases (Phase 6 Plan 01 done)
 |-------|------|----------|-------|------|
 | 05-context-foundation-toast-system | 01 | 2 min | 3 | 2026-03-09 |
 | 06-sidebar-filters-highlight-dim | 01 | 5 min | 2 | 2026-03-09 |
+| 06-sidebar-filters-highlight-dim | 02 | 3 min | 4 | 2026-03-09 |
 
 ## Accumulated Context
 
@@ -67,6 +68,9 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 - nav changed from flex-1 to shrink-0 so filter container owns remaining flex-1 scroll space
 - Show all 18 coaches including inactive — coordinators may need to verify inactive coaches have no assignments
 - Coach section uses max-h-48 scrollable, other sections max-h-32 — proportional to item counts
+- [Phase 06-sidebar-filters-highlight-dim]: weekDays converted to useMemo for stable reference in weekMatchCount dependency array
+- [Phase 06-sidebar-filters-highlight-dim]: weekMatchCount returns -1 sentinel when no filters active to prevent false empty state
+- [Phase 06-sidebar-filters-highlight-dim]: FilterPills reads from useApp() directly — no prop drilling through ScheduleCalendar
 
 ### Pending Todos
 
@@ -80,5 +84,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-09
-Stopped at: Phase 6 Plan 01 complete. filterEngine.js and Sidebar filter controls ready. Next: Plan 02 highlight/dim logic in CalendarGrid.
+Stopped at: Phase 6 Plan 02 complete. FilterPills, CalendarGrid dim effect, and empty state wired end-to-end. Next: Plan 03 if exists, otherwise Phase 7.
 Resume file: None

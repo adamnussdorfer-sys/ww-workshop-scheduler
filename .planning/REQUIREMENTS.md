@@ -13,9 +13,9 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 - [x] **FILT-02**: Coordinator can filter calendar by workshop type via sidebar checkboxes
 - [x] **FILT-03**: Coordinator can filter calendar by status (draft/published/conflict) via sidebar checkboxes
 - [x] **FILT-04**: Coordinator can filter calendar by market/region via sidebar checkboxes
-- [ ] **FILT-05**: Active filters display as pills above the calendar grid showing what's applied
+- [x] **FILT-05**: Active filters display as pills above the calendar grid showing what's applied
 - [x] **FILT-06**: Coordinator can clear all active filters with a single "Clear" button
-- [ ] **FILT-07**: Non-matching workshop cards dim to ~25% opacity while matching cards stay fully visible
+- [x] **FILT-07**: Non-matching workshop cards dim to ~25% opacity while matching cards stay fully visible
 - [x] **FILT-08**: Active filters persist when navigating between weeks (prev/next/today)
 
 ### Availability Overlay
@@ -54,8 +54,8 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 ### Empty States
 
 - [ ] **EMPT-01**: Empty calendar week shows "No workshops scheduled" message with "Create Workshop" CTA
-- [ ] **EMPT-02**: Zero filter results shows "No matching workshops" message with "Clear filters" CTA
-- [ ] **EMPT-03**: Coach-specific filter with no results shows personalized "No workshops for [Name]" message
+- [x] **EMPT-02**: Zero filter results shows "No matching workshops" message with "Clear filters" CTA
+- [x] **EMPT-03**: Coach-specific filter with no results shows personalized "No workshops for [Name]" message
 
 ## Future Requirements
 
@@ -92,9 +92,9 @@ Deferred beyond v1.1. Tracked for future consideration.
 | FILT-02 | Phase 6 | Complete |
 | FILT-03 | Phase 6 | Complete |
 | FILT-04 | Phase 6 | Complete |
-| FILT-05 | Phase 6 | Pending |
+| FILT-05 | Phase 6 | Complete |
 | FILT-06 | Phase 6 | Complete |
-| FILT-07 | Phase 6 | Pending |
+| FILT-07 | Phase 6 | Complete |
 | FILT-08 | Phase 6 | Complete |
 | OVER-01 | Phase 10 | Pending |
 | OVER-02 | Phase 10 | Pending |
@@ -118,8 +118,8 @@ Deferred beyond v1.1. Tracked for future consideration.
 | INTR-07 | Phase 11 | Pending |
 | INTR-08 | Phase 11 | Pending |
 | EMPT-01 | Phase 11 | Pending |
-| EMPT-02 | Phase 6 | Pending |
-| EMPT-03 | Phase 6 | Pending |
+| EMPT-02 | Phase 6 | Complete |
+| EMPT-03 | Phase 6 | Complete |
 
 **Coverage:**
 - v1.1 requirements: 32 total
