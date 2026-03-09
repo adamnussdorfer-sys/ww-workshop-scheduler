@@ -90,7 +90,9 @@ Plans:
   2. Clicking a column header sorts the table by that column; clicking it again toggles between ascending and descending order
   3. Typing in the search field filters the table to coaches whose names match the input — the table updates immediately with each keystroke
   4. Clicking a coach row opens a slide-in detail panel showing that coach's name, status badge, and relevant details
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 08-01-PLAN.md — Sortable/searchable coach table + CoachDetailPanel slide-in panel
 
 ### Phase 9: Draft Manager Page
 **Goal**: Coordinators can select draft workshops in bulk and publish them with conflict-aware confirmation
@@ -138,7 +140,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 5. Context Foundation + Toast System | v1.1 | 1/1 | Complete | 2026-03-09 |
 | 6. Sidebar Filters + Highlight/Dim | 2/2 | Complete    | 2026-03-09 | - |
 | 7. Keyboard Shortcuts | 1/1 | Complete    | 2026-03-09 | - |
-| 8. Coach Roster Page | v1.1 | 0/? | Not started | - |
+| 8. Coach Roster Page | v1.1 | 0/1 | Not started | - |
 | 9. Draft Manager Page | v1.1 | 0/? | Not started | - |
 | 10. Availability Overlay | v1.1 | 0/? | Not started | - |
 | 11. Micro-interactions + Empty States | v1.1 | 0/? | Not started | - |
