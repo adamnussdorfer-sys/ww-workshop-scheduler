@@ -62,7 +62,10 @@ Plans:
   3. A single "Clear all" button removes every active filter and restores all cards to full opacity
   4. Active filter state survives week navigation — filters applied on Monday's week remain applied after clicking the next-week arrow
   5. When filters produce zero matching workshops, the grid shows a "No matching workshops" message with a "Clear filters" call to action; when a single coach is filtered with no workshops, the message is personalized ("No workshops for [Name] this week")
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 06-01-PLAN.md — Create filterEngine.js utility and wire sidebar filter controls
+- [ ] 06-02-PLAN.md — FilterPills strip, CalendarGrid dim effect, and empty state for zero matches
 
 ### Phase 7: Keyboard Shortcuts
 **Goal**: Coordinators can navigate and act without reaching for the mouse
@@ -131,7 +134,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 3. Workshop Detail | v1.0 | 3/3 | Complete | 2026-03-06 |
 | 4. Conflict Detection | v1.0 | 2/2 | Complete | 2026-03-09 |
 | 5. Context Foundation + Toast System | 1/1 | Complete    | 2026-03-09 | - |
-| 6. Sidebar Filters + Highlight/Dim | v1.1 | 0/? | Not started | - |
+| 6. Sidebar Filters + Highlight/Dim | v1.1 | 0/2 | Not started | - |
 | 7. Keyboard Shortcuts | v1.1 | 0/? | Not started | - |
 | 8. Coach Roster Page | v1.1 | 0/? | Not started | - |
 | 9. Draft Manager Page | v1.1 | 0/? | Not started | - |
