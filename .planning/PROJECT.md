@@ -45,6 +45,19 @@ Coordinators can see the full weekly workshop schedule at a glance, spot conflic
 - Real-time collaboration — single-user prototype
 - Coach self-service portal — coordinator tool only
 
+## Current Milestone: v1.1 Interactive Polish
+
+**Goal:** Add filtering, secondary pages, and micro-interactions to make the prototype feel like a complete product demo.
+
+**Target features:**
+- Sidebar filters (coach, type, status, market) with highlight/dim
+- Coach availability overlay on calendar grid
+- Coach Roster page with sortable table and detail panel
+- Draft Manager page with batch publish and confirmation modal
+- Micro-interactions (hover lift, status transitions, toast notifications)
+- Keyboard shortcuts (arrows for weeks, T/Esc/N)
+- Empty states with contextual actions
+
 ## Context
 
 Shipped v1.0 with 2,629 LOC (JSX/JS/CSS) across 4 phases.
@@ -77,4 +90,4 @@ All mock workshop dates dynamically anchored to current week via date-fns.
 | Panel state in ScheduleCalendar | UI state collocated with the page that owns it | ✓ Good — clean prop threading |
 
 ---
-*Last updated: 2026-03-09 after v1.0 milestone*
+*Last updated: 2026-03-09 after v1.1 milestone start*

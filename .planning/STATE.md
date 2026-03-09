@@ -5,15 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-03-09)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** Planning next milestone (v1.1)
+**Current focus:** v1.1 Interactive Polish
 
 ## Current Position
 
-Phase: v1.0 complete (4 phases, 10 plans shipped)
-Status: Milestone completed
-Last activity: 2026-03-09 — v1.0 milestone archived
-
-Progress: [██████████] 100% (v1.0)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-03-09 — Milestone v1.1 started
 
 ## Performance Metrics
 
@@ -49,5 +48,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-09
-Stopped at: v1.0 milestone complete. Next: /gsd:new-milestone for v1.1
+Stopped at: v1.1 milestone started. Defining requirements.
 Resume file: None
