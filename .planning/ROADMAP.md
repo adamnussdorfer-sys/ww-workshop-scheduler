@@ -134,7 +134,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 3. Workshop Detail | v1.0 | 3/3 | Complete | 2026-03-06 |
 | 4. Conflict Detection | v1.0 | 2/2 | Complete | 2026-03-09 |
 | 5. Context Foundation + Toast System | v1.1 | 1/1 | Complete | 2026-03-09 |
-| 6. Sidebar Filters + Highlight/Dim | 2/2 | Complete   | 2026-03-09 | - |
+| 6. Sidebar Filters + Highlight/Dim | 2/2 | Complete    | 2026-03-09 | - |
 | 7. Keyboard Shortcuts | v1.1 | 0/? | Not started | - |
 | 8. Coach Roster Page | v1.1 | 0/? | Not started | - |
 | 9. Draft Manager Page | v1.1 | 0/? | Not started | - |
