@@ -88,44 +88,44 @@ Deferred beyond v1.1. Tracked for future consideration.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FILT-01 | — | Pending |
-| FILT-02 | — | Pending |
-| FILT-03 | — | Pending |
-| FILT-04 | — | Pending |
-| FILT-05 | — | Pending |
-| FILT-06 | — | Pending |
-| FILT-07 | — | Pending |
-| FILT-08 | — | Pending |
-| OVER-01 | — | Pending |
-| OVER-02 | — | Pending |
-| ROST-01 | — | Pending |
-| ROST-02 | — | Pending |
-| ROST-03 | — | Pending |
-| ROST-04 | — | Pending |
-| ROST-05 | — | Pending |
-| ROST-06 | — | Pending |
-| DRAF-01 | — | Pending |
-| DRAF-02 | — | Pending |
-| DRAF-03 | — | Pending |
-| DRAF-04 | — | Pending |
-| DRAF-05 | — | Pending |
-| INTR-01 | — | Pending |
-| INTR-02 | — | Pending |
-| INTR-03 | — | Pending |
-| INTR-04 | — | Pending |
-| INTR-05 | — | Pending |
-| INTR-06 | — | Pending |
-| INTR-07 | — | Pending |
-| INTR-08 | — | Pending |
-| EMPT-01 | — | Pending |
-| EMPT-02 | — | Pending |
-| EMPT-03 | — | Pending |
+| FILT-01 | Phase 6 | Pending |
+| FILT-02 | Phase 6 | Pending |
+| FILT-03 | Phase 6 | Pending |
+| FILT-04 | Phase 6 | Pending |
+| FILT-05 | Phase 6 | Pending |
+| FILT-06 | Phase 6 | Pending |
+| FILT-07 | Phase 6 | Pending |
+| FILT-08 | Phase 6 | Pending |
+| OVER-01 | Phase 10 | Pending |
+| OVER-02 | Phase 10 | Pending |
+| ROST-01 | Phase 8 | Pending |
+| ROST-02 | Phase 8 | Pending |
+| ROST-03 | Phase 8 | Pending |
+| ROST-04 | Phase 8 | Pending |
+| ROST-05 | Phase 8 | Pending |
+| ROST-06 | Phase 8 | Pending |
+| DRAF-01 | Phase 9 | Pending |
+| DRAF-02 | Phase 9 | Pending |
+| DRAF-03 | Phase 9 | Pending |
+| DRAF-04 | Phase 9 | Pending |
+| DRAF-05 | Phase 9 | Pending |
+| INTR-01 | Phase 5 | Pending |
+| INTR-02 | Phase 7 | Pending |
+| INTR-03 | Phase 7 | Pending |
+| INTR-04 | Phase 7 | Pending |
+| INTR-05 | Phase 7 | Pending |
+| INTR-06 | Phase 11 | Pending |
+| INTR-07 | Phase 11 | Pending |
+| INTR-08 | Phase 11 | Pending |
+| EMPT-01 | Phase 11 | Pending |
+| EMPT-02 | Phase 6 | Pending |
+| EMPT-03 | Phase 6 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 32 total
-- Mapped to phases: 0
-- Unmapped: 32 (pending roadmap creation)
+- Mapped to phases: 32
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-09*
-*Last updated: 2026-03-09 after initial definition*
+*Last updated: 2026-03-09 after v1.1 roadmap creation*
