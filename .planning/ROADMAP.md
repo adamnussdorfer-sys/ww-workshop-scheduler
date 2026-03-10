@@ -128,7 +128,9 @@ Plans:
   2. Opening and closing the workshop detail panel uses cubic-bezier easing that feels snappy on open and graceful on close
   3. Workshop cards with active conflicts display a subtly pulsing status dot on a 2-second cycle that draws the eye without being distracting
   4. A calendar week with no workshops scheduled shows a "No workshops scheduled" message and a "Create Workshop" call to action in place of the empty grid
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 11-01-PLAN.md — CSS tokens, card hover lift, conflict pulse, panel easing, and empty week state
 
 ## Progress
 
