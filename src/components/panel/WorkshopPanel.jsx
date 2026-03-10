@@ -19,7 +19,7 @@ export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode
       {/* Slide panel — always in DOM, translate-x-full when closed so exit animation plays */}
       <div
         className={`fixed right-0 top-0 h-screen w-[400px] bg-white z-30 shadow-2xl
-          flex flex-col transition-transform duration-200 ease-in-out
+          flex flex-col transition-transform duration-200 ${isOpen ? 'ease-panel-open' : 'ease-panel-close'}
           ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {/* Panel header */}

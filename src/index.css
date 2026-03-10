@@ -13,6 +13,18 @@
   --color-border: #E2E8F0;
 
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* INTR-07: Panel slide easing — asymmetric open/close */
+  --ease-panel-open: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-panel-close: cubic-bezier(0.4, 0, 0.6, 1);
+
+  /* INTR-08: Conflict indicator pulse */
+  --animate-conflict-pulse: conflict-pulse 2s ease-in-out infinite;
+
+  @keyframes conflict-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.35; }
+  }
 }
 
 body {

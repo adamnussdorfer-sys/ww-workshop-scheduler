@@ -47,14 +47,18 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
 
   return (
     <div
-      className={`h-full overflow-hidden rounded text-xs px-1.5 py-1 cursor-pointer hover:brightness-95 transition-all relative ${cardStyle} ${ringClass}${isFiltered ? ' opacity-25 pointer-events-none' : ''}`}
+      className={`h-full overflow-hidden rounded text-xs px-1.5 py-1 cursor-pointer relative
+        transition-[transform,box-shadow] duration-150 ease-out
+        hover:-translate-y-0.5 hover:shadow-md
+        motion-reduce:transition-none motion-reduce:hover:transform-none
+        ${cardStyle} ${ringClass}${isFiltered ? ' opacity-25 pointer-events-none' : ''}`}
       onClick={(e) => {
         e.stopPropagation();
         onClick?.(workshop.id);
       }}
     >
       {hasConflicts && (
-        <div className={`absolute top-0.5 right-0.5 ${iconColor}`}>
+        <div className={`absolute top-0.5 right-0.5 ${iconColor} ${hasConflicts ? 'animate-conflict-pulse motion-reduce:animate-none' : ''}`}>
           <AlertTriangle size={12} />
         </div>
       )}
