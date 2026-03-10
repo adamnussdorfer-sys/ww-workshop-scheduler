@@ -150,3 +150,18 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 9. Draft Manager Page | 1/1 | Complete    | 2026-03-10 | - |
 | 10. Availability Overlay | v1.1 | Complete    | 2026-03-10 | 2026-03-10 |
 | 11. Micro-interactions + Empty States | 1/1 | Complete    | 2026-03-10 | - |
+
+### Phase 12: Day and Month Calendar Views
+**Goal**: Coordinators can switch between week, day, and month views to see their schedule at different time scales
+**Depends on**: Phase 11
+**Requirements**: CAL-01, CAL-02, CAL-03, CAL-04, CAL-05, CAL-06, CAL-07
+**Success Criteria** (what must be TRUE):
+  1. A Week/Day/Month toggle in the navigation bar switches the calendar between three views — Week is the default
+  2. Day view shows a single day's workshops in the same hour grid (6AM–10PM) with wider cards showing full details, and prev/next day navigation
+  3. Month view shows a standard month grid with up to 3 workshop pills per day cell (type-colored), and a "+N more" overflow link that drills into day view
+  4. Clicking a day cell in month view or a day label in week view drills into day view for that date
+  5. Active filters, detail panel, and keyboard shortcuts work consistently across all three views
+**Plans**: 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 12 to break down)

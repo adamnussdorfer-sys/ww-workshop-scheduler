@@ -57,6 +57,16 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 - [x] **EMPT-02**: Zero filter results shows "No matching workshops" message with "Clear filters" CTA
 - [x] **EMPT-03**: Coach-specific filter with no results shows personalized "No workshops for [Name]" message
 
+### Calendar Views
+
+- [ ] **CAL-01**: Coordinator can switch between Week, Day, and Month views via a toggle in the navigation bar
+- [ ] **CAL-02**: Day view displays a single day's workshops in an hour grid (6AM–10PM) with wider cards showing full details
+- [ ] **CAL-03**: Day view supports prev/next day navigation and Today button
+- [ ] **CAL-04**: Month view displays a standard month grid with up to 3 type-colored workshop pills per day cell
+- [ ] **CAL-05**: Month view shows "+N more" overflow when a day has more than 3 workshops, linking to day view
+- [ ] **CAL-06**: Clicking a day cell in month view or a day label in week view drills into that day's day view
+- [ ] **CAL-07**: Active filters, detail panel, and keyboard shortcuts work consistently across all three views
+
 ## Future Requirements
 
 Deferred beyond v1.1. Tracked for future consideration.
@@ -120,12 +130,19 @@ Deferred beyond v1.1. Tracked for future consideration.
 | EMPT-01 | Phase 11 | Complete |
 | EMPT-02 | Phase 6 | Complete |
 | EMPT-03 | Phase 6 | Complete |
+| CAL-01 | Phase 12 | Pending |
+| CAL-02 | Phase 12 | Pending |
+| CAL-03 | Phase 12 | Pending |
+| CAL-04 | Phase 12 | Pending |
+| CAL-05 | Phase 12 | Pending |
+| CAL-06 | Phase 12 | Pending |
+| CAL-07 | Phase 12 | Pending |
 
 **Coverage:**
-- v1.1 requirements: 32 total
-- Mapped to phases: 32
+- v1.1 requirements: 39 total
+- Mapped to phases: 39
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-09*
-*Last updated: 2026-03-09 after v1.1 roadmap creation*
+*Last updated: 2026-03-09 after Phase 12 requirements added*
