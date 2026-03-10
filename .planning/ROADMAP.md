@@ -161,7 +161,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
   3. Month view shows a standard month grid with up to 3 workshop pills per day cell (type-colored), and a "+N more" overflow link that drills into day view
   4. Clicking a day cell in month view or a day label in week view drills into day view for that date
   5. Active filters, detail panel, and keyboard shortcuts work consistently across all three views
-**Plans**: 0 plans
+**Plans**: 2 plans
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 12 to break down)
+- [ ] 12-01-PLAN.md — Day view component, view-switching infrastructure, keyboard shortcut adaptation, day drill-down from week header
+- [ ] 12-02-PLAN.md — Month view component with workshop pills, overflow handling, conflict dots, and drill-to-day navigation
