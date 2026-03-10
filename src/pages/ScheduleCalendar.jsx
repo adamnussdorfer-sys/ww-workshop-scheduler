@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 import { startOfWeek, addWeeks, subWeeks, addDays, format, isSameWeek, isSameDay, parseISO } from 'date-fns';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Eye, EyeOff } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import CalendarGrid from '../components/calendar/CalendarGrid';
 import WorkshopPanel from '../components/panel/WorkshopPanel';
@@ -22,6 +22,7 @@ export default function ScheduleCalendar() {
     startOfWeek(new Date(), { weekStartsOn: 1 })
   );
   const [viewMode, setViewMode] = useState('week');
+  const [showOverlay, setShowOverlay] = useState(false);
 
   // Panel state
   const [selectedWorkshopId, setSelectedWorkshopId] = useState(null);
@@ -152,6 +153,20 @@ export default function ScheduleCalendar() {
           Today
         </button>
 
+        {/* Availability overlay toggle */}
+        <button
+          onClick={() => setShowOverlay((v) => !v)}
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded border transition-colors ${
+            showOverlay
+              ? 'bg-ww-blue text-white border-ww-blue'
+              : 'hover:bg-surface-2 border border-border'
+          }`}
+          aria-label="Toggle availability overlay"
+        >
+          {showOverlay ? <EyeOff size={16} /> : <Eye size={16} />}
+          Availability
+        </button>
+
         {/* View toggle tabs — right-aligned */}
         <div className="flex gap-1 bg-surface rounded-lg p-1 ml-auto">
           {VIEW_TABS.map(({ label, value }) => (
@@ -197,6 +212,7 @@ export default function ScheduleCalendar() {
               onSlotClick={openCreate}
               filteredIds={filteredIds}
               anyFilterActive={anyFilterActive}
+              showOverlay={showOverlay}
             />
           )
         )}
