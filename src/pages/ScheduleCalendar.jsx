@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Plus, Eye, EyeOff } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import CalendarGrid from '../components/calendar/CalendarGrid';
 import DayView from '../components/calendar/DayView';
+import MonthView from '../components/calendar/MonthView';
 import WorkshopPanel from '../components/panel/WorkshopPanel';
 import FilterPills from '../components/filters/FilterPills';
 import { buildConflictMap } from '../utils/conflictEngine';
@@ -157,6 +158,17 @@ export default function ScheduleCalendar() {
       (ws) => ws.status !== 'Cancelled' && isSameDay(parseISO(ws.startTime), currentDate)
     ).length;
   }, [viewMode, workshops, currentDate]);
+
+  // Month view filter empty state count
+  const monthMatchCount = useMemo(() => {
+    if (viewMode !== 'month' || !anyFilterActive) return -1;
+    return workshops.filter(
+      (ws) =>
+        ws.status !== 'Cancelled' &&
+        isSameMonth(parseISO(ws.startTime), currentDate) &&
+        filteredIds.has(ws.id)
+    ).length;
+  }, [viewMode, anyFilterActive, workshops, filteredIds, currentDate]);
 
   // Empty state helpers
   const singleCoachFilter =
@@ -345,9 +357,31 @@ export default function ScheduleCalendar() {
           )
         )}
         {viewMode === 'month' && (
-          <div className="flex-1 flex items-center justify-center text-slate-400 text-sm">
-            Month view coming soon
-          </div>
+          anyFilterActive && monthMatchCount === 0 ? (
+            <div className="flex flex-col items-center justify-center h-64 text-center">
+              <p className="text-slate-600 text-sm font-medium mb-2">
+                No matching workshops this month
+              </p>
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="text-ww-blue text-sm underline hover:text-ww-navy"
+              >
+                Clear filters
+              </button>
+            </div>
+          ) : (
+            <MonthView
+              currentDate={currentDate}
+              workshops={workshops}
+              coaches={coaches}
+              conflictMap={conflictMap}
+              onWorkshopClick={openWorkshop}
+              onDayClick={drillToDay}
+              filteredIds={filteredIds}
+              anyFilterActive={anyFilterActive}
+            />
+          )
         )}
       </div>
 
