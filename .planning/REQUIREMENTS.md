@@ -59,13 +59,13 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 
 ### Calendar Views
 
-- [ ] **CAL-01**: Coordinator can switch between Week, Day, and Month views via a toggle in the navigation bar
-- [ ] **CAL-02**: Day view displays a single day's workshops in an hour grid (6AM–10PM) with wider cards showing full details
-- [ ] **CAL-03**: Day view supports prev/next day navigation and Today button
+- [x] **CAL-01**: Coordinator can switch between Week, Day, and Month views via a toggle in the navigation bar
+- [x] **CAL-02**: Day view displays a single day's workshops in an hour grid (6AM–10PM) with wider cards showing full details
+- [x] **CAL-03**: Day view supports prev/next day navigation and Today button
 - [ ] **CAL-04**: Month view displays a standard month grid with up to 3 type-colored workshop pills per day cell
 - [ ] **CAL-05**: Month view shows "+N more" overflow when a day has more than 3 workshops, linking to day view
-- [ ] **CAL-06**: Clicking a day cell in month view or a day label in week view drills into that day's day view
-- [ ] **CAL-07**: Active filters, detail panel, and keyboard shortcuts work consistently across all three views
+- [x] **CAL-06**: Clicking a day cell in month view or a day label in week view drills into that day's day view
+- [x] **CAL-07**: Active filters, detail panel, and keyboard shortcuts work consistently across all three views
 
 ## Future Requirements
 
@@ -130,13 +130,13 @@ Deferred beyond v1.1. Tracked for future consideration.
 | EMPT-01 | Phase 11 | Complete |
 | EMPT-02 | Phase 6 | Complete |
 | EMPT-03 | Phase 6 | Complete |
-| CAL-01 | Phase 12 | Pending |
-| CAL-02 | Phase 12 | Pending |
-| CAL-03 | Phase 12 | Pending |
+| CAL-01 | Phase 12 | Complete |
+| CAL-02 | Phase 12 | Complete |
+| CAL-03 | Phase 12 | Complete |
 | CAL-04 | Phase 12 | Pending |
 | CAL-05 | Phase 12 | Pending |
-| CAL-06 | Phase 12 | Pending |
-| CAL-07 | Phase 12 | Pending |
+| CAL-06 | Phase 12 | Complete |
+| CAL-07 | Phase 12 | Complete |
 
 **Coverage:**
 - v1.1 requirements: 39 total

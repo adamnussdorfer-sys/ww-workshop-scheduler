@@ -164,5 +164,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 **Plans**: 2 plans
 
 Plans:
-- [ ] 12-01-PLAN.md — Day view component, view-switching infrastructure, keyboard shortcut adaptation, day drill-down from week header
+- [x] 12-01-PLAN.md — Day view component, view-switching infrastructure, keyboard shortcut adaptation, day drill-down from week header
 - [ ] 12-02-PLAN.md — Month view component with workshop pills, overflow handling, conflict dots, and drill-to-day navigation

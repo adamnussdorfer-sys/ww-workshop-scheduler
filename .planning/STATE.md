@@ -5,17 +5,17 @@
 See: .planning/PROJECT.md (updated 2026-03-09)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** v1.1 Interactive Polish — Phase 11: Micro-Interactions and Empty States (COMPLETE)
+**Current focus:** Phase 12: Day and Month Calendar Views (Plan 01 complete)
 
 ## Current Position
 
-Phase: 11 (Micro-Interactions and Empty States)
-Plan: 1 of 1 complete
-Status: Phase 11 complete — Plan 01 done — v1.1 milestone COMPLETE
-Last activity: 2026-03-10 — Phase 11 Plan 01 complete (CSS animations for card hover lift, conflict pulse, asymmetric panel easing, and empty week state with Create Workshop CTA — all v1.1 requirements satisfied)
+Phase: 12 (Day and Month Calendar Views)
+Plan: 1 of 2 complete
+Status: Plan 01 done — Day view component with multi-view switching infrastructure
+Last activity: 2026-03-10 — Phase 12 Plan 01 complete (DayView.jsx, view-mode-aware navigation/keyboard shortcuts, day drill-down from week header)
 
 ```
-Progress: [####################] 7/7 phases complete (Phase 11 done — v1.1 COMPLETE)
+Progress: [##########----------] 1/2 plans complete (Phase 12 in progress)
 ```
 
 ## Performance Metrics
@@ -46,7 +46,7 @@ Progress: [####################] 7/7 phases complete (Phase 11 done — v1.1 COM
 | 09-draft-manager-page | 01 | 2 min | 1 | 2026-03-09 |
 | 10-availability-overlay | 01 | 2 min | 3 | 2026-03-10 |
 | 11-micro-interactions-empty-states | 01 | 2 min | 4 | 2026-03-10 |
-| Phase 11-micro-interactions-empty-states P01 | 2 | 2 tasks | 4 files |
+| 12-day-and-month-calendar-views | 01 | 2 min | 4 | 2026-03-10 |
 
 ## Accumulated Context
 
@@ -104,6 +104,13 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 - weekWorkshopsCount is a separate memo from weekMatchCount — weekMatchCount uses -1 sentinel; modifying it would break filter empty state
 - Filter empty state (anyFilterActive && weekMatchCount === 0) checked before empty-week state — !anyFilterActive guard ensures correct priority
 
+**Phase 12 Plan 01 decisions:**
+- currentDate replaces currentWeekStart as canonical state -- weekStart derived via useMemo for backwards compatibility
+- useKeyboardShortcuts renamed to generic onPrev/onNext interface -- ScheduleCalendar passes view-mode-aware callbacks
+- Availability button conditionally hidden in month view (viewMode !== 'month') per CONTEXT.md
+- Day view reuses same grid constants, slot line pattern, and WorkshopCard from CalendarGrid for visual consistency
+- drillToDay callback shared between onDayClick (week header) and future month view cell clicks
+
 ### Pending Todos
 
 - Coach availability data shape confirmed: availability[].day/start/end — verified from coaches.js in Phase 8
@@ -119,6 +126,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-09
-Stopped at: Phase 12 context gathered, requirements defined (CAL-01 through CAL-07). Ready for /gsd:plan-phase 12.
-Resume file: .planning/phases/12-day-and-month-calendar-views/12-CONTEXT.md
+Last session: 2026-03-10
+Stopped at: Completed 12-01-PLAN.md
+Resume file: .planning/phases/12-day-and-month-calendar-views/12-01-SUMMARY.md
