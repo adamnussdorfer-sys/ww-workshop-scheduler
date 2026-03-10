@@ -109,12 +109,16 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 - Coach availability data shape confirmed: availability[].day/start/end — verified from coaches.js in Phase 8
 - Phase 9 pending todo resolved: workshops.js confirmed title-case status field ('Draft', 'Published', 'Cancelled')
 
+### Roadmap Evolution
+
+- Phase 12 added: Day and month calendar views
+
 ### Blockers/Concerns
 
 None.
 
 ## Session Continuity
 
-Last session: 2026-03-10
-Stopped at: Phase 11 Plan 01 complete. v1.1 Interactive Polish milestone COMPLETE. CSS animations for card hover lift, conflict pulse, asymmetric panel easing; empty week state with Create Workshop CTA. All 7 v1.1 phases done.
-Resume file: None
+Last session: 2026-03-09
+Stopped at: Phase 12 context gathered, requirements defined (CAL-01 through CAL-07). Ready for /gsd:plan-phase 12.
+Resume file: .planning/phases/12-day-and-month-calendar-views/12-CONTEXT.md
