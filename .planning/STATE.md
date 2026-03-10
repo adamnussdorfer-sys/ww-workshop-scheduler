@@ -5,17 +5,17 @@
 See: .planning/PROJECT.md (updated 2026-03-09)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** v1.1 Interactive Polish — Phase 9: Draft Manager Page
+**Current focus:** v1.1 Interactive Polish — Phase 10: Availability Overlay
 
 ## Current Position
 
-Phase: 9 (Draft Manager Page)
+Phase: 10 (Availability Overlay)
 Plan: 1 of 1 complete
-Status: Phase 9 complete — Plan 01 done
-Last activity: 2026-03-09 — Phase 9 Plan 01 complete (DraftManager page with checkbox selection, conflict-aware publish button/modal, toast, empty state)
+Status: Phase 10 complete — Plan 01 done
+Last activity: 2026-03-10 — Phase 10 Plan 01 complete (toggleable coach availability overlay with per-coach colored bands in CalendarGrid, coach filter integration, pointer-events-none)
 
 ```
-Progress: [##########----------] 5/7 phases complete (Phase 9 done)
+Progress: [##############------] 6/7 phases complete (Phase 10 done)
 ```
 
 ## Performance Metrics
@@ -44,6 +44,7 @@ Progress: [##########----------] 5/7 phases complete (Phase 9 done)
 | 07-keyboard-shortcuts | 01 | 4 min | 4 | 2026-03-09 |
 | 08-coach-roster-page | 01 | 3 min | 2 | 2026-03-09 |
 | 09-draft-manager-page | 01 | 2 min | 1 | 2026-03-09 |
+| 10-availability-overlay | 01 | 2 min | 3 | 2026-03-10 |
 
 ## Accumulated Context
 
@@ -89,6 +90,12 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 - [Phase 09-draft-manager-page]: effectiveSelectedIds intersection pattern prevents stale selection bugs after publish; both tasks committed together as single file
 - [Phase 09-draft-manager-page]: ref callback for HTML indeterminate checkbox property — cannot be set via JSX prop, must use DOM property directly
 
+**Phase 10 Plan 01 decisions:**
+- Grid constants extracted to availabilityBands.js and imported back into CalendarGrid — eliminates constant duplication/drift risk
+- Stable coachIndex approach: pass full coaches array to getAvailabilityBands then filter bands by coachFilterSet — preserves consistent coach-to-color mapping regardless of active filter state
+- showOverlay state in ScheduleCalendar (not AppContext) — overlay is calendar-view-local, no cross-page persistence needed
+- Eye/EyeOff icon toggle on Availability button — consistent with lucide-react icons already in nav bar
+
 ### Pending Todos
 
 - Coach availability data shape confirmed: availability[].day/start/end — verified from coaches.js in Phase 8
@@ -100,6 +107,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-09
-Stopped at: Phase 9 Plan 01 complete. DraftManager page with checkbox multi-select, conflict-aware publish button, modal, toast, and empty state. Next: Phase 10.
+Last session: 2026-03-10
+Stopped at: Phase 10 Plan 01 complete. Toggleable coach availability overlay with per-coach colored bands in CalendarGrid, coach filter integration, pointer-events-none. Next: Phase 11 (if any) or milestone complete.
 Resume file: None

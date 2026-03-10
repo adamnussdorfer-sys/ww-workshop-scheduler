@@ -20,8 +20,8 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 
 ### Availability Overlay
 
-- [ ] **OVER-01**: Coordinator can toggle a coach availability overlay on the calendar grid
-- [ ] **OVER-02**: Overlay renders semi-transparent colored bands behind workshop cards showing each coach's available hours
+- [x] **OVER-01**: Coordinator can toggle a coach availability overlay on the calendar grid
+- [x] **OVER-02**: Overlay renders semi-transparent colored bands behind workshop cards showing each coach's available hours
 
 ### Coach Roster
 
@@ -96,8 +96,8 @@ Deferred beyond v1.1. Tracked for future consideration.
 | FILT-06 | Phase 6 | Complete |
 | FILT-07 | Phase 6 | Complete |
 | FILT-08 | Phase 6 | Complete |
-| OVER-01 | Phase 10 | Pending |
-| OVER-02 | Phase 10 | Pending |
+| OVER-01 | Phase 10 | Complete |
+| OVER-02 | Phase 10 | Complete |
 | ROST-01 | Phase 8 | Complete |
 | ROST-02 | Phase 8 | Complete |
 | ROST-03 | Phase 8 | Complete |
