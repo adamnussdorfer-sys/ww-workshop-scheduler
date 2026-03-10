@@ -100,6 +100,14 @@ export default function ScheduleCalendar() {
     }, 0);
   }, [anyFilterActive, workshops, filteredIds, weekDays]);
 
+  const weekWorkshopsCount = useMemo(() => {
+    return weekDays.reduce((count, day) => {
+      return count + workshops.filter(
+        (ws) => ws.status !== 'Cancelled' && isSameDay(parseISO(ws.startTime), day)
+      ).length;
+    }, 0);
+  }, [workshops, weekDays]);
+
   // Empty state helpers
   const singleCoachFilter =
     filters.coaches.length === 1 &&
@@ -200,6 +208,17 @@ export default function ScheduleCalendar() {
                 className="text-ww-blue text-sm underline hover:text-ww-navy"
               >
                 Clear filters
+              </button>
+            </div>
+          ) : !anyFilterActive && weekWorkshopsCount === 0 ? (
+            <div className="flex flex-col items-center justify-center h-64 text-center gap-3">
+              <p className="text-slate-500 text-sm">No workshops scheduled this week.</p>
+              <button
+                type="button"
+                onClick={openNewWithNextSlot}
+                className="px-4 py-2 bg-ww-blue text-white text-sm font-medium rounded hover:bg-ww-navy transition-colors"
+              >
+                Create Workshop
               </button>
             </div>
           ) : (
