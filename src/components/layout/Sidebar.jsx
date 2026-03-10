@@ -110,7 +110,7 @@ export default function Sidebar({ collapsed, onToggle }) {
   const marketItems = WORKSHOP_MARKETS.map((v) => ({ key: v, label: v }));
 
   return (
-    <aside className="bg-ww-navy flex flex-col overflow-hidden">
+    <aside className="bg-panel flex flex-col overflow-hidden">
       {/* Logo */}
       <div className="h-14 flex items-center px-3 shrink-0 border-b border-white/10">
         {collapsed ? (

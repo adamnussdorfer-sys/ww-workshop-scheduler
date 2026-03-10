@@ -153,7 +153,14 @@ export default function DraftManager() {
                 <td className="px-4 py-3 text-sm text-slate-600">{w.type}</td>
                 <td className="px-4 py-3 text-center">
                   {conflictMap.get(w.id)?.hasConflicts && (
-                    <AlertTriangle size={14} className="text-ww-coral inline" />
+                    <span className="relative group inline-flex">
+                      <AlertTriangle size={14} className="text-ww-coral" />
+                      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-max max-w-xs px-3 py-2 text-xs text-white bg-ww-navy rounded-lg shadow-lg z-10 pointer-events-none">
+                        {conflictMap.get(w.id).conflicts.map((c, i) => (
+                          <span key={i} className="block">{c.message}</span>
+                        ))}
+                      </span>
+                    </span>
                   )}
                 </td>
               </tr>

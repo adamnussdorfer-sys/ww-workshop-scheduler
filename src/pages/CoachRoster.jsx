@@ -15,7 +15,7 @@ function SortHeader({ label, sortKey, sort, onSort, align = 'left' }) {
     <th className={`px-4 py-3 text-${align}`}>
       <button
         onClick={() => onSort(sortKey)}
-        className="flex items-center gap-1 text-xs font-semibold text-slate-500 uppercase tracking-wider hover:text-ww-navy transition-colors"
+        className={`flex items-center gap-1 text-xs font-semibold text-slate-500 uppercase tracking-wider hover:text-ww-navy transition-colors ${align === 'center' ? 'mx-auto' : ''}`}
       >
         {label}
         {isActive ? (

@@ -2,7 +2,7 @@
 
 @theme {
   --color-ww-navy: #1A2332;
-  --color-ww-blue: #0066CC;
+  --color-ww-blue: #0222D0;
   --color-ww-coral: #E85D4A;
   --color-ww-success: #22C55E;
   --color-ww-warning: #F59E0B;
@@ -11,8 +11,9 @@
   --color-surface: #F8FAFC;
   --color-surface-2: #F1F5F9;
   --color-border: #E2E8F0;
+  --color-panel: #020B46;
 
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* INTR-07: Panel slide easing — asymmetric open/close */
   --ease-panel-open: cubic-bezier(0.32, 0.72, 0, 1);

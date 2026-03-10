@@ -201,7 +201,7 @@ export default function ScheduleCalendar() {
     <div className="flex flex-col h-full">
       {/* Navigation bar */}
       <div className="flex items-center gap-3 py-3 px-4 flex-shrink-0">
-        {/* Left section: prev arrow, header, next arrow */}
+        {/* Left: nav arrows + date */}
         <button
           onClick={prevPeriod}
           className="text-slate-600 hover:text-ww-navy p-1 rounded hover:bg-surface-2 transition-colors"
@@ -220,41 +220,41 @@ export default function ScheduleCalendar() {
           <ChevronRight size={20} />
         </button>
 
-        {/* Today button */}
-        <button
-          onClick={goToToday}
-          disabled={isCurrentPeriod}
-          className={`px-3 py-1.5 text-sm font-medium rounded border border-border hover:bg-surface-2 transition-colors ${
-            isCurrentPeriod ? 'opacity-50 cursor-default' : ''
-          }`}
-        >
-          Today
-        </button>
+        {/* Right: today, view toggle, create — pinned right */}
+        <div className="flex items-center gap-3 ml-auto">
+          <button
+            onClick={goToToday}
+            disabled={isCurrentPeriod}
+            className={`px-3 py-1.5 text-sm font-medium rounded border border-border hover:bg-surface-2 transition-colors ${
+              isCurrentPeriod ? 'opacity-50 cursor-default' : ''
+            }`}
+          >
+            Today
+          </button>
 
-        {/* Create workshop button */}
-        <button
-          onClick={openNewWithNextSlot}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
-        >
-          <Plus size={16} />
-          Create Workshop
-        </button>
+          <div className="flex items-center bg-surface-2 rounded-full p-1">
+            {VIEW_TABS.map(({ label, value }) => (
+              <button
+                key={value}
+                onClick={() => setViewMode(value)}
+                className={`px-5 py-1.5 text-sm font-medium rounded-full transition-all ${
+                  viewMode === value
+                    ? 'bg-white text-ww-navy shadow-sm ring-1 ring-border'
+                    : 'text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
 
-        {/* View toggle tabs — right-aligned */}
-        <div className="flex gap-1 bg-surface rounded-lg p-1 ml-auto">
-          {VIEW_TABS.map(({ label, value }) => (
-            <button
-              key={value}
-              onClick={() => setViewMode(value)}
-              className={`px-4 py-1.5 text-sm font-medium rounded transition-colors ${
-                viewMode === value
-                  ? 'bg-ww-blue text-white'
-                  : 'text-slate-600 hover:bg-surface-2'
-              }`}
-            >
-              {label}
-            </button>
-          ))}
+          <button
+            onClick={openNewWithNextSlot}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
+          >
+            <Plus size={16} />
+            Create Workshop
+          </button>
         </div>
       </div>
 

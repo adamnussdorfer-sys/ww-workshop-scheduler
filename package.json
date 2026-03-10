@@ -11,7 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@fontsource/inter": "^5.2.8",
+    "@fontsource/geist-sans": "^5.2.5",
     "@tailwindcss/vite": "^4.2.1",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.577.0",
