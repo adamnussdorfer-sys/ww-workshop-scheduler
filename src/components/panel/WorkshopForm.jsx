@@ -1,6 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
-import { format, parseISO, setHours, setMinutes, addHours, getHours, getMinutes } from 'date-fns';
-import { AlertTriangle } from 'lucide-react';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import {
+  format, parseISO, setHours, setMinutes, addHours, getHours, getMinutes,
+  startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, addMonths, subMonths,
+  isSameMonth, isSameDay, isToday,
+} from 'date-fns';
+import { AlertTriangle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { useApp } from '../../context/AppContext';
 import AttendanceSparkline from './AttendanceSparkline';
@@ -78,6 +82,212 @@ function fromDatetimeLocal(value) {
   } catch {
     return '';
   }
+}
+
+// Generate 30-min time options from 6:00 AM to 10:00 PM
+const TIME_OPTIONS = Array.from({ length: 33 }, (_, i) => {
+  const totalMinutes = 6 * 60 + i * 30;
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  const period = h >= 12 ? 'pm' : 'am';
+  const display = `${h > 12 ? h - 12 : h === 0 ? 12 : h}:${String(m).padStart(2, '0')}${period}`;
+  return { h, m, display };
+});
+
+function MiniCalendar({ selected, onSelect, onClose }) {
+  const [viewMonth, setViewMonth] = useState(selected || new Date());
+  const ref = useRef(null);
+
+  useEffect(() => {
+    function handleMouseDown(e) {
+      if (ref.current && !ref.current.contains(e.target)) onClose();
+    }
+    document.addEventListener('mousedown', handleMouseDown);
+    return () => document.removeEventListener('mousedown', handleMouseDown);
+  }, [onClose]);
+
+  const weeks = useMemo(() => {
+    const monthStart = startOfMonth(viewMonth);
+    const monthEnd = endOfMonth(viewMonth);
+    const calStart = startOfWeek(monthStart);
+    const calEnd = endOfWeek(monthEnd);
+    const rows = [];
+    let day = calStart;
+    while (day <= calEnd) {
+      const week = [];
+      for (let i = 0; i < 7; i++) {
+        week.push(day);
+        day = addDays(day, 1);
+      }
+      rows.push(week);
+    }
+    return rows;
+  }, [viewMonth]);
+
+  return (
+    <div ref={ref} className="absolute left-0 top-full mt-1 bg-white border border-border rounded-lg shadow-lg z-20 p-3 w-64">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-sm font-semibold text-slate-800">{format(viewMonth, 'MMMM yyyy')}</span>
+        <div className="flex gap-1">
+          <button type="button" onClick={() => setViewMonth(subMonths(viewMonth, 1))} className="p-0.5 hover:bg-slate-100 rounded">
+            <ChevronLeft size={16} className="text-slate-500" />
+          </button>
+          <button type="button" onClick={() => setViewMonth(addMonths(viewMonth, 1))} className="p-0.5 hover:bg-slate-100 rounded">
+            <ChevronRight size={16} className="text-slate-500" />
+          </button>
+        </div>
+      </div>
+      <div className="grid grid-cols-7 text-center text-[10px] text-slate-400 mb-1">
+        {['S','M','T','W','T','F','S'].map((d, i) => <div key={i}>{d}</div>)}
+      </div>
+      {weeks.map((week, wi) => (
+        <div key={wi} className="grid grid-cols-7 text-center">
+          {week.map((day) => {
+            const inMonth = isSameMonth(day, viewMonth);
+            const sel = selected && isSameDay(day, selected);
+            const today = isToday(day);
+            return (
+              <button
+                key={day.toISOString()}
+                type="button"
+                onClick={() => { onSelect(day); onClose(); }}
+                className={`w-8 h-8 text-xs rounded-full flex items-center justify-center
+                  ${sel ? 'bg-ww-blue text-white font-bold' : ''}
+                  ${!sel && today ? 'text-ww-blue font-bold' : ''}
+                  ${!sel && !today && inMonth ? 'text-slate-700 hover:bg-slate-100' : ''}
+                  ${!inMonth ? 'text-slate-300' : ''}
+                `}
+              >
+                {format(day, 'd')}
+              </button>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TimePicker({ value, onChange, label }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const listRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    function handleMouseDown(e) {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    }
+    document.addEventListener('mousedown', handleMouseDown);
+    return () => document.removeEventListener('mousedown', handleMouseDown);
+  }, [open]);
+
+  // Scroll to selected time when opened
+  useEffect(() => {
+    if (open && listRef.current) {
+      const selected = listRef.current.querySelector('[data-selected="true"]');
+      if (selected) selected.scrollIntoView({ block: 'center' });
+    }
+  }, [open]);
+
+  // Find display text for current value
+  const display = value
+    ? TIME_OPTIONS.find((t) => t.h === value.h && t.m === value.m)?.display ?? `${value.h}:${String(value.m).padStart(2, '0')}`
+    : label;
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="px-3 py-2 border border-border rounded-lg text-sm bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue min-w-[90px] text-center"
+      >
+        {display}
+      </button>
+      {open && (
+        <div ref={listRef} className="absolute left-0 top-full mt-1 bg-white border border-border rounded-lg shadow-lg z-20 max-h-48 overflow-y-auto w-28">
+          {TIME_OPTIONS.map((t) => {
+            const sel = value && t.h === value.h && t.m === value.m;
+            return (
+              <div
+                key={t.display}
+                data-selected={sel ? 'true' : undefined}
+                className={`px-3 py-1.5 text-sm cursor-pointer ${sel ? 'bg-ww-blue/10 text-ww-blue font-medium' : 'text-slate-700 hover:bg-slate-50'}`}
+                onClick={() => { onChange(t); setOpen(false); }}
+              >
+                {t.display}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function DateTimeRow({ draft, updateField }) {
+  const [calOpen, setCalOpen] = useState(false);
+  const dateRef = useRef(null);
+
+  // Parse current date from draft.startTime
+  const currentDate = draft.startTime ? parseISO(draft.startTime) : null;
+  const startTime = draft.startTime
+    ? { h: getHours(parseISO(draft.startTime)), m: getMinutes(parseISO(draft.startTime)) }
+    : null;
+  const endTime = draft.endTime
+    ? { h: getHours(parseISO(draft.endTime)), m: getMinutes(parseISO(draft.endTime)) }
+    : null;
+
+  const handleDateSelect = (day) => {
+    // Preserve existing times, update the date
+    const sh = startTime?.h ?? 9;
+    const sm = startTime?.m ?? 0;
+    const eh = endTime?.h ?? 10;
+    const em = endTime?.m ?? 0;
+    updateField('startTime', setMinutes(setHours(new Date(day), sh), sm).toISOString());
+    updateField('endTime', setMinutes(setHours(new Date(day), eh), em).toISOString());
+  };
+
+  const handleStartTimeChange = (t) => {
+    const base = currentDate || new Date();
+    updateField('startTime', setMinutes(setHours(new Date(base), t.h), t.m).toISOString());
+    // Auto-advance end time if it would be before start
+    if (endTime && (t.h > endTime.h || (t.h === endTime.h && t.m >= endTime.m))) {
+      const newEnd = addHours(setMinutes(setHours(new Date(base), t.h), t.m), 1);
+      updateField('endTime', newEnd.toISOString());
+    }
+  };
+
+  const handleEndTimeChange = (t) => {
+    const base = currentDate || new Date();
+    updateField('endTime', setMinutes(setHours(new Date(base), t.h), t.m).toISOString());
+  };
+
+  return (
+    <div className="flex items-center gap-2">
+      {/* Date button */}
+      <div className="relative" ref={dateRef}>
+        <button
+          type="button"
+          onClick={() => setCalOpen((o) => !o)}
+          className="px-3 py-2 border border-border rounded-lg text-sm bg-white hover:bg-slate-50 focus:outline-none whitespace-nowrap"
+        >
+          {currentDate ? format(currentDate, 'EEEE, MMMM d') : 'Select date'}
+        </button>
+        {calOpen && (
+          <MiniCalendar selected={currentDate} onSelect={handleDateSelect} onClose={() => setCalOpen(false)} />
+        )}
+      </div>
+
+      {/* Start time */}
+      <TimePicker value={startTime} onChange={handleStartTimeChange} label="Start" />
+
+      <span className="text-slate-400 text-sm">–</span>
+
+      {/* End time */}
+      <TimePicker value={endTime} onChange={handleEndTimeChange} label="End" />
+    </div>
+  );
 }
 
 const INPUT_CLASS =
@@ -254,29 +464,10 @@ export default function WorkshopForm({
         />
       </div>
 
-      {/* 2. Date & Time */}
+      {/* 2. Date & Time — Google Calendar style */}
       <div>
         <label className={LABEL_CLASS}>Date & Time</label>
-        <div className="flex gap-2">
-          <div className="flex-1">
-            <label className="block text-xs text-slate-500 mb-1">Start</label>
-            <input
-              type="datetime-local"
-              value={toDatetimeLocal(draft.startTime)}
-              onChange={(e) => updateField('startTime', fromDatetimeLocal(e.target.value))}
-              className={INPUT_CLASS}
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block text-xs text-slate-500 mb-1">End</label>
-            <input
-              type="datetime-local"
-              value={toDatetimeLocal(draft.endTime)}
-              onChange={(e) => updateField('endTime', fromDatetimeLocal(e.target.value))}
-              className={INPUT_CLASS}
-            />
-          </div>
-        </div>
+        <DateTimeRow draft={draft} updateField={updateField} />
       </div>
 
       {/* 3. Timezone */}

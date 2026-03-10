@@ -111,14 +111,12 @@ export default function Sidebar({ collapsed, onToggle }) {
 
   return (
     <aside className="bg-ww-navy flex flex-col overflow-hidden">
-      {/* Logo / app name */}
-      <div className="h-14 flex items-center px-4 shrink-0 border-b border-white/10">
+      {/* Logo */}
+      <div className="h-14 flex items-center px-3 shrink-0 border-b border-white/10">
         {collapsed ? (
-          <span className="text-white font-bold text-base mx-auto select-none">WW</span>
+          <img src="/ww-glyph.svg" alt="WeightWatchers" className="h-5 mx-auto" />
         ) : (
-          <span className="text-white font-semibold text-sm leading-tight select-none">
-            WW Workshop<br />Scheduler
-          </span>
+          <img src="/ww-logo.svg" alt="WeightWatchers" className="h-5" />
         )}
       </div>
 

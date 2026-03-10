@@ -39,6 +39,7 @@ function getColumnLayout(dayWorkshops) {
     const end = parseISO(ws.endTime);
     return { id: ws.id, start: start.getTime(), end: end.getTime() };
   });
+  items.sort((a, b) => a.start - b.start);
 
   // Group into overlapping clusters
   const clusters = [];
