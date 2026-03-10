@@ -5,17 +5,17 @@
 See: .planning/PROJECT.md (updated 2026-03-09)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** v1.1 Interactive Polish — Phase 8: Coach Roster Page
+**Current focus:** v1.1 Interactive Polish — Phase 9: Draft Manager Page
 
 ## Current Position
 
-Phase: 8 (Coach Roster Page)
+Phase: 9 (Draft Manager Page)
 Plan: 1 of 1 complete
-Status: Phase 8 complete — Plan 01 done
-Last activity: 2026-03-09 — Phase 8 Plan 01 complete (CoachDetailPanel, CoachRoster with sortable table + slide-in panel)
+Status: Phase 9 complete — Plan 01 done
+Last activity: 2026-03-09 — Phase 9 Plan 01 complete (DraftManager page with checkbox selection, conflict-aware publish button/modal, toast, empty state)
 
 ```
-Progress: [########------------] 4/7 phases complete (Phase 8 done)
+Progress: [##########----------] 5/7 phases complete (Phase 9 done)
 ```
 
 ## Performance Metrics
@@ -43,6 +43,7 @@ Progress: [########------------] 4/7 phases complete (Phase 8 done)
 | 06-sidebar-filters-highlight-dim | 02 | 3 min | 4 | 2026-03-09 |
 | 07-keyboard-shortcuts | 01 | 4 min | 4 | 2026-03-09 |
 | 08-coach-roster-page | 01 | 3 min | 2 | 2026-03-09 |
+| 09-draft-manager-page | 01 | 2 min | 1 | 2026-03-09 |
 
 ## Accumulated Context
 
@@ -85,11 +86,13 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 - COACH_STATUS_BADGE defined in both CoachDetailPanel and CoachRoster for self-containment — no shared import needed
 - Escape key handled via simple useEffect in CoachRoster — useKeyboardShortcuts is ScheduleCalendar-specific
 - No debounce on search input — 18 coaches renders in <1ms; debounce adds perceived lag
+- [Phase 09-draft-manager-page]: effectiveSelectedIds intersection pattern prevents stale selection bugs after publish; both tasks committed together as single file
+- [Phase 09-draft-manager-page]: ref callback for HTML indeterminate checkbox property — cannot be set via JSX prop, must use DOM property directly
 
 ### Pending Todos
 
-- Verify workshops.js includes status: "draft" | "published" field before Phase 9 (DRAF-01 through DRAF-05)
 - Coach availability data shape confirmed: availability[].day/start/end — verified from coaches.js in Phase 8
+- Phase 9 pending todo resolved: workshops.js confirmed title-case status field ('Draft', 'Published', 'Cancelled')
 
 ### Blockers/Concerns
 
@@ -98,5 +101,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-09
-Stopped at: Phase 8 Plan 01 complete. CoachDetailPanel display component + CoachRoster sortable/searchable table with slide-in panel. Next: Phase 9 (Draft Manager).
+Stopped at: Phase 9 Plan 01 complete. DraftManager page with checkbox multi-select, conflict-aware publish button, modal, toast, and empty state. Next: Phase 10.
 Resume file: None

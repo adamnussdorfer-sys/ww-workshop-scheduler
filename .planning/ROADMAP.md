@@ -33,7 +33,7 @@ See: `.planning/milestones/v1.0-ROADMAP.md` for full phase details.
 - [x] **Phase 6: Sidebar Filters + Highlight/Dim** - Coach, type, status, and market filters with visual dim mode (completed 2026-03-09)
 - [x] **Phase 7: Keyboard Shortcuts** - Week navigation, panel control, and create-workshop shortcuts (completed 2026-03-09)
 - [x] **Phase 8: Coach Roster Page** - Sortable coach table with slide-in detail panel (completed 2026-03-09)
-- [ ] **Phase 9: Draft Manager Page** - Batch workshop selection, conflict-aware publish flow
+- [x] **Phase 9: Draft Manager Page** - Batch workshop selection, conflict-aware publish flow (completed 2026-03-10)
 - [ ] **Phase 10: Availability Overlay** - Semi-transparent coach availability lanes on the calendar grid
 - [ ] **Phase 11: Micro-interactions + Empty States** - Hover animations, panel easing, conflict pulse, and empty state messages
 
@@ -143,6 +143,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 6. Sidebar Filters + Highlight/Dim | 2/2 | Complete    | 2026-03-09 | - |
 | 7. Keyboard Shortcuts | 1/1 | Complete    | 2026-03-09 | - |
 | 8. Coach Roster Page | 1/1 | Complete    | 2026-03-09 | - |
-| 9. Draft Manager Page | v1.1 | 0/1 | Not started | - |
+| 9. Draft Manager Page | 1/1 | Complete   | 2026-03-10 | - |
 | 10. Availability Overlay | v1.1 | 0/? | Not started | - |
 | 11. Micro-interactions + Empty States | v1.1 | 0/? | Not started | - |

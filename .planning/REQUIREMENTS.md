@@ -34,11 +34,11 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 
 ### Draft Manager
 
-- [ ] **DRAF-01**: Draft Manager page lists all draft workshops in a table
-- [ ] **DRAF-02**: Coordinator can select multiple draft workshops via checkboxes (with select-all)
-- [ ] **DRAF-03**: Coordinator can publish selected workshops via a confirmation modal showing item count
-- [ ] **DRAF-04**: Publish button displays a conflict count badge when selected workshops have conflicts
-- [ ] **DRAF-05**: Confirmation modal warns about conflicts and allows override ("publish anyway")
+- [x] **DRAF-01**: Draft Manager page lists all draft workshops in a table
+- [x] **DRAF-02**: Coordinator can select multiple draft workshops via checkboxes (with select-all)
+- [x] **DRAF-03**: Coordinator can publish selected workshops via a confirmation modal showing item count
+- [x] **DRAF-04**: Publish button displays a conflict count badge when selected workshops have conflicts
+- [x] **DRAF-05**: Confirmation modal warns about conflicts and allows override ("publish anyway")
 
 ### Interactions
 
@@ -104,11 +104,11 @@ Deferred beyond v1.1. Tracked for future consideration.
 | ROST-04 | Phase 8 | Complete |
 | ROST-05 | Phase 8 | Complete |
 | ROST-06 | Phase 8 | Complete |
-| DRAF-01 | Phase 9 | Pending |
-| DRAF-02 | Phase 9 | Pending |
-| DRAF-03 | Phase 9 | Pending |
-| DRAF-04 | Phase 9 | Pending |
-| DRAF-05 | Phase 9 | Pending |
+| DRAF-01 | Phase 9 | Complete |
+| DRAF-02 | Phase 9 | Complete |
+| DRAF-03 | Phase 9 | Complete |
+| DRAF-04 | Phase 9 | Complete |
+| DRAF-05 | Phase 9 | Complete |
 | INTR-01 | Phase 5 | Complete |
 | INTR-02 | Phase 7 | Complete |
 | INTR-03 | Phase 7 | Complete |
