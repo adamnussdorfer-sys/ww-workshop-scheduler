@@ -51,7 +51,7 @@ export default function FilterPills() {
     setFilters({ coaches: [], types: [], statuses: [], markets: [] });
 
   return (
-    <div className="flex flex-wrap items-center gap-2 px-4 py-2 bg-white border-b border-border">
+    <div className="flex flex-wrap items-center gap-2 px-4 py-2">
       {pills.map(({ key, label, remove }) => (
         <span
           key={key}

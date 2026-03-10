@@ -28,8 +28,52 @@ function getEventPosition(startTimeISO, endTimeISO) {
   const top = startMinutes * PX_PER_MIN;
   const durationMinutes = differenceInMinutes(end, start);
   const rawHeight = durationMinutes * PX_PER_MIN;
-  const height = Math.min(Math.max(rawHeight, 20), GRID_HEIGHT - top);
+  const height = Math.min(Math.max(rawHeight, 20), GRID_HEIGHT - top) - 6;
   return { top, height };
+}
+
+// Assign columns to overlapping workshops so they sit side-by-side
+function getColumnLayout(dayWorkshops) {
+  const items = dayWorkshops.map((ws) => {
+    const start = parseISO(ws.startTime);
+    const end = parseISO(ws.endTime);
+    return { id: ws.id, start: start.getTime(), end: end.getTime() };
+  });
+
+  // Group into overlapping clusters
+  const clusters = [];
+  for (const item of items) {
+    let placed = false;
+    for (const cluster of clusters) {
+      if (cluster.some((c) => c.start < item.end && item.start < c.end)) {
+        cluster.push(item);
+        placed = true;
+        break;
+      }
+    }
+    if (!placed) clusters.push([item]);
+  }
+
+  // Assign columns within each cluster
+  const layout = new Map();
+  for (const cluster of clusters) {
+    const cols = [];
+    for (const item of cluster) {
+      // Find first column where this item doesn't overlap with existing items
+      let col = 0;
+      while (cols[col]?.some((c) => c.start < item.end && item.start < c.end)) {
+        col++;
+      }
+      if (!cols[col]) cols[col] = [];
+      cols[col].push(item);
+      layout.set(item.id, { col, totalCols: 0 });
+    }
+    // Set totalCols for all items in this cluster
+    for (const item of cluster) {
+      layout.get(item.id).totalCols = cols.length;
+    }
+  }
+  return layout;
 }
 
 function formatHourLabel(h) {
@@ -86,7 +130,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
   }, [showOverlay, coaches, weekDays, filters.coaches]);
 
   return (
-    <div className="border border-border rounded-lg overflow-hidden bg-white">
+    <div className="border border-border rounded-lg overflow-hidden bg-white flex flex-col flex-1">
       {/* Header row: time gutter spacer + 7 day headers */}
       <div className="flex border-b border-border sticky top-0 bg-white z-10">
         {/* Time gutter spacer */}
@@ -118,7 +162,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
       </div>
 
       {/* Body: time gutter + day columns */}
-      <div className="flex overflow-y-auto" style={{ maxHeight: '600px' }}>
+      <div className="flex overflow-y-auto flex-1">
         {/* Time gutter */}
         <div className="w-16 flex-shrink-0 relative" style={{ height: GRID_HEIGHT }}>
           {HOUR_LABELS.map((h) => (
@@ -198,9 +242,14 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                 ))}
 
                 {/* Workshop cards */}
-                {dayWorkshops.map((ws, idx) => {
+                {(() => {
+                  const colLayout = getColumnLayout(dayWorkshops);
+                  return dayWorkshops.map((ws) => {
                   const { top, height } = getEventPosition(ws.startTime, ws.endTime);
                   const isFiltered = anyFilterActive && !filteredIds.has(ws.id);
+                  const { col, totalCols } = colLayout.get(ws.id) ?? { col: 0, totalCols: 1 };
+                  const widthPct = 100 / totalCols;
+                  const leftPct = col * widthPct;
                   return (
                     <div
                       key={ws.id}
@@ -208,9 +257,9 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                       style={{
                         top,
                         height,
-                        left: 2 + idx * 4,
-                        right: 2,
-                        zIndex: idx + 1,
+                        left: `${leftPct}%`,
+                        width: `calc(${widthPct}% - 2px)`,
+                        zIndex: col + 1,
                       }}
                     >
                       <WorkshopCard
@@ -219,10 +268,12 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                         conflicts={conflictMap?.get(ws.id)?.conflicts ?? []}
                         onClick={onWorkshopClick}
                         isFiltered={isFiltered}
+                        height={height}
                       />
                     </div>
                   );
-                })}
+                });
+                })()}
               </div>
             );
           })}

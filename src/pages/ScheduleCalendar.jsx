@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 import { startOfWeek, addWeeks, subWeeks, addDays, subDays, addMonths, subMonths, format, isSameWeek, isSameDay, isSameMonth, parseISO } from 'date-fns';
-import { ChevronLeft, ChevronRight, Plus, Eye, EyeOff } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import CalendarGrid from '../components/calendar/CalendarGrid';
 import DayView from '../components/calendar/DayView';
@@ -200,7 +200,7 @@ export default function ScheduleCalendar() {
   return (
     <div className="flex flex-col h-full">
       {/* Navigation bar */}
-      <div className="flex items-center gap-3 py-3 px-4 bg-white border-b border-border flex-shrink-0">
+      <div className="flex items-center gap-3 py-3 px-4 flex-shrink-0">
         {/* Left section: prev arrow, header, next arrow */}
         <button
           onClick={prevPeriod}
@@ -230,22 +230,6 @@ export default function ScheduleCalendar() {
         >
           Today
         </button>
-
-        {/* Availability overlay toggle — hidden in month view */}
-        {viewMode !== 'month' && (
-          <button
-            onClick={() => setShowOverlay((v) => !v)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded border transition-colors ${
-              showOverlay
-                ? 'bg-ww-blue text-white border-ww-blue'
-                : 'hover:bg-surface-2 border border-border'
-            }`}
-            aria-label="Toggle availability overlay"
-          >
-            {showOverlay ? <EyeOff size={16} /> : <Eye size={16} />}
-            Availability
-          </button>
-        )}
 
         {/* Create workshop button */}
         <button
@@ -280,42 +264,18 @@ export default function ScheduleCalendar() {
       {/* Calendar body */}
       <div className="flex-1 overflow-auto p-4">
         {viewMode === 'week' && (
-          anyFilterActive && weekMatchCount === 0 ? (
-            <div className="flex flex-col items-center justify-center h-64 text-center">
-              <p className="text-slate-600 text-sm font-medium mb-2">{emptyMessage}</p>
-              <button
-                type="button"
-                onClick={clearFilters}
-                className="text-ww-blue text-sm underline hover:text-ww-navy"
-              >
-                Clear filters
-              </button>
-            </div>
-          ) : !anyFilterActive && weekWorkshopsCount === 0 ? (
-            <div className="flex flex-col items-center justify-center h-64 text-center gap-3">
-              <p className="text-slate-500 text-sm">No workshops scheduled this week.</p>
-              <button
-                type="button"
-                onClick={openNewWithNextSlot}
-                className="px-4 py-2 bg-ww-blue text-white text-sm font-medium rounded hover:bg-ww-navy transition-colors"
-              >
-                Create Workshop
-              </button>
-            </div>
-          ) : (
-            <CalendarGrid
-              weekDays={weekDays}
-              workshops={workshops}
-              coaches={coaches}
-              conflictMap={conflictMap}
-              onWorkshopClick={openWorkshop}
-              onSlotClick={openCreate}
-              filteredIds={filteredIds}
-              anyFilterActive={anyFilterActive}
-              showOverlay={showOverlay}
-              onDayClick={drillToDay}
-            />
-          )
+          <CalendarGrid
+            weekDays={weekDays}
+            workshops={workshops}
+            coaches={coaches}
+            conflictMap={conflictMap}
+            onWorkshopClick={openWorkshop}
+            onSlotClick={openCreate}
+            filteredIds={filteredIds}
+            anyFilterActive={anyFilterActive}
+            showOverlay={showOverlay}
+            onDayClick={drillToDay}
+          />
         )}
         {viewMode === 'day' && (
           anyFilterActive && dayMatchCount === 0 ? (

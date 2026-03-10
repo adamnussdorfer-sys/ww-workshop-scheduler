@@ -1,7 +1,8 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import { ChevronUp, ChevronDown, ChevronsUpDown, Search, X } from 'lucide-react';
+import { ChevronUp, ChevronDown, ChevronsUpDown, Search, X, Plus } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import CoachDetailPanel from '../components/panel/CoachDetailPanel';
+import CoachForm from '../components/panel/CoachForm';
 
 const COACH_STATUS_BADGE = {
   active: 'bg-green-100 text-green-800',
@@ -32,17 +33,42 @@ function SortHeader({ label, sortKey, sort, onSort, align = 'left' }) {
 }
 
 export default function CoachRoster() {
-  const { coaches } = useApp();
+  const { coaches, setCoaches, toast } = useApp();
 
   const [sort, setSort] = useState({ key: 'name', direction: 'asc' });
   const [search, setSearch] = useState('');
   const [selectedCoachId, setSelectedCoachId] = useState(null);
+  const [panelMode, setPanelMode] = useState('view'); // 'view' | 'create' | 'edit'
 
   const selectedCoach = coaches.find((c) => c.id === selectedCoachId) ?? null;
-  const isPanelOpen = selectedCoachId !== null;
+  const isPanelOpen = selectedCoachId !== null || panelMode === 'create';
 
-  const openCoach = useCallback((id) => setSelectedCoachId(id), []);
-  const closePanel = useCallback(() => setSelectedCoachId(null), []);
+  const openCoach = useCallback((id) => {
+    setSelectedCoachId(id);
+    setPanelMode('view');
+  }, []);
+
+  const closePanel = useCallback(() => {
+    setSelectedCoachId(null);
+    setPanelMode('view');
+  }, []);
+
+  const openCreate = useCallback(() => {
+    setSelectedCoachId(null);
+    setPanelMode('create');
+  }, []);
+
+  const openEdit = useCallback(() => {
+    setPanelMode('edit');
+  }, []);
+
+  const handleRemove = useCallback(() => {
+    if (!selectedCoachId) return;
+    const name = selectedCoach?.name ?? 'Coach';
+    setCoaches((prev) => prev.filter((c) => c.id !== selectedCoachId));
+    closePanel();
+    toast(`Removed ${name}`);
+  }, [selectedCoachId, selectedCoach, setCoaches, closePanel, toast]);
 
   function handleSort(key) {
     setSort((prev) =>
@@ -67,7 +93,7 @@ export default function CoachRoster() {
     });
   }, [coaches, search, sort]);
 
-  // Escape key handler — closes panel when open, guards against input focus
+  // Escape key handler
   useEffect(() => {
     const controller = new AbortController();
 
@@ -94,37 +120,55 @@ export default function CoachRoster() {
     return () => controller.abort();
   }, [isPanelOpen, closePanel]);
 
+  const panelTitle =
+    panelMode === 'create'
+      ? 'New Coach'
+      : panelMode === 'edit'
+      ? 'Edit Coach'
+      : (selectedCoach?.name ?? 'Coach Details');
+
   return (
     <div className="flex flex-col h-full">
       {/* Page header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-border flex-shrink-0">
+      <div className="flex items-center justify-between px-6 py-4 flex-shrink-0">
         <div>
           <h1 className="text-xl font-semibold text-ww-navy">Coach Roster</h1>
           <p className="text-sm text-slate-500 mt-0.5">{coaches.length} coaches</p>
         </div>
 
-        {/* Search input */}
-        <div className="relative">
-          <Search
-            size={16}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-          />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search coaches..."
-            className="pl-9 pr-8 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue w-64"
-          />
-          {search && (
-            <button
-              onClick={() => setSearch('')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
-              aria-label="Clear search"
-            >
-              <X size={14} />
-            </button>
-          )}
+        <div className="flex items-center gap-3">
+          {/* Search input */}
+          <div className="relative">
+            <Search
+              size={16}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+            />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search coaches..."
+              className="pl-9 pr-8 py-2 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue w-64"
+            />
+            {search && (
+              <button
+                onClick={() => setSearch('')}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                aria-label="Clear search"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+
+          {/* Add Coach button */}
+          <button
+            onClick={openCreate}
+            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
+          >
+            <Plus size={16} />
+            Add Coach
+          </button>
         </div>
       </div>
 
@@ -213,9 +257,7 @@ export default function CoachRoster() {
       >
         {/* Panel header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border flex-shrink-0">
-          <h2 className="text-base font-semibold text-ww-navy">
-            {selectedCoach?.name ?? 'Coach Details'}
-          </h2>
+          <h2 className="text-base font-semibold text-ww-navy">{panelTitle}</h2>
           <button
             onClick={closePanel}
             className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded hover:bg-surface-2"
@@ -227,7 +269,21 @@ export default function CoachRoster() {
 
         {/* Panel body — scrollable */}
         <div className="flex-1 overflow-y-auto p-5">
-          {isPanelOpen && <CoachDetailPanel coach={selectedCoach} />}
+          {isPanelOpen && panelMode === 'view' && (
+            <CoachDetailPanel
+              coach={selectedCoach}
+              onEdit={openEdit}
+              onRemove={handleRemove}
+            />
+          )}
+          {isPanelOpen && (panelMode === 'create' || panelMode === 'edit') && (
+            <CoachForm
+              coach={selectedCoach}
+              mode={panelMode}
+              onClose={closePanel}
+              key={selectedCoach?.id ?? 'create'}
+            />
+          )}
         </div>
       </div>
     </div>

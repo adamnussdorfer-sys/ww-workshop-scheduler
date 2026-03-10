@@ -22,7 +22,7 @@ function DetailRow({ label, value }) {
   );
 }
 
-export default function CoachDetailPanel({ coach }) {
+export default function CoachDetailPanel({ coach, onEdit, onRemove }) {
   if (!coach) return null;
 
   return (
@@ -71,6 +71,24 @@ export default function CoachDetailPanel({ coach }) {
             </span>
           </div>
         ))}
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-2 pt-2 border-t border-border">
+        <button
+          type="button"
+          onClick={onEdit}
+          className="flex-1 px-4 py-2 text-sm font-medium rounded-lg bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          onClick={onRemove}
+          className="px-4 py-2 text-sm font-medium rounded-lg text-ww-coral border border-ww-coral/30 hover:bg-ww-coral/10 transition-colors"
+        >
+          Remove
+        </button>
       </div>
     </div>
   );

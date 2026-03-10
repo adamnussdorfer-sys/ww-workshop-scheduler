@@ -1,12 +1,13 @@
 import { format, parseISO } from 'date-fns';
 import { AlertTriangle } from 'lucide-react';
+import Tooltip from '../ui/Tooltip';
 
 const TYPE_CARD_STYLES = {
-  'Weekly Connection': 'bg-blue-50 border-l-4 border-ww-blue',
-  'All In': 'bg-purple-50 border-l-4 border-purple-600',
-  'Special Event': 'bg-rose-50 border-l-4 border-ww-coral',
-  'Coaching Corner': 'bg-teal-50 border-l-4 border-teal-500',
-  'Movement/Fitness': 'bg-green-50 border-l-4 border-green-500',
+  'Weekly Connection': 'bg-blue-50',
+  'All In': 'bg-purple-50',
+  'Special Event': 'bg-rose-50',
+  'Coaching Corner': 'bg-teal-50',
+  'Movement/Fitness': 'bg-green-50',
 };
 
 const STATUS_DOT_COLORS = {
@@ -21,8 +22,9 @@ const CONFLICT_RING = {
   orange: 'ring-2 ring-orange-400',
 };
 
-export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false }) {
-  const cardStyle = TYPE_CARD_STYLES[workshop.type] ?? 'bg-slate-50 border-l-4 border-slate-400';
+export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999 }) {
+  const compact = height < 42;
+  const cardStyle = TYPE_CARD_STYLES[workshop.type] ?? 'bg-slate-50';
   const dotColor = STATUS_DOT_COLORS[workshop.status] ?? 'bg-slate-400';
 
   const startLabel = format(parseISO(workshop.startTime), 'h:mm a');
@@ -51,24 +53,36 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
         transition-[transform,box-shadow] duration-150 ease-out
         hover:-translate-y-0.5 hover:shadow-md
         motion-reduce:transition-none motion-reduce:hover:transform-none
-        ${cardStyle} ${ringClass}${isFiltered ? ' opacity-25 pointer-events-none' : ''}`}
+        ${cardStyle} ${ringClass || 'ring-[1.5px] ring-border'}${isFiltered ? ' opacity-25 pointer-events-none' : ''}`}
       onClick={(e) => {
         e.stopPropagation();
         onClick?.(workshop.id);
       }}
     >
       {hasConflicts && (
-        <div className={`absolute top-0.5 right-0.5 ${iconColor} ${hasConflicts ? 'animate-conflict-pulse motion-reduce:animate-none' : ''}`}>
-          <AlertTriangle size={12} />
+        <div className={`absolute top-0.5 right-0.5 ${iconColor} cursor-help`}>
+          <Tooltip
+            content={conflicts.map((c, i) => (
+              <div key={i}>{c.message}</div>
+            ))}
+          >
+            <AlertTriangle size={12} strokeWidth={2.5} />
+          </Tooltip>
         </div>
       )}
-      <div className="flex items-center gap-1 mb-0.5">
-        <span className={`flex-shrink-0 w-2 h-2 rounded-full ${dotColor}`} />
-        <span className="text-slate-500 truncate">{startLabel}</span>
-      </div>
-      <p className="font-semibold text-ww-navy leading-tight truncate">{workshop.title}</p>
-      {coachLine && (
-        <p className="text-slate-500 truncate mt-0.5">{coachLine}</p>
+      {compact ? (
+        <p className="font-semibold text-ww-navy leading-tight truncate">{workshop.title}</p>
+      ) : (
+        <>
+          <div className="flex items-center gap-1 mb-0.5">
+            <span className={`flex-shrink-0 w-2 h-2 rounded-full ${dotColor}`} />
+            <span className="text-slate-500 truncate">{startLabel}</span>
+          </div>
+          <p className="font-semibold text-ww-navy leading-tight truncate">{workshop.title}</p>
+          {coachLine && (
+            <p className="text-slate-500 truncate mt-0.5">{coachLine}</p>
+          )}
+        </>
       )}
     </div>
   );

@@ -28,8 +28,47 @@ function getEventPosition(startTimeISO, endTimeISO) {
   const top = startMinutes * PX_PER_MIN;
   const durationMinutes = differenceInMinutes(end, start);
   const rawHeight = durationMinutes * PX_PER_MIN;
-  const height = Math.min(Math.max(rawHeight, 20), GRID_HEIGHT - top);
+  const height = Math.min(Math.max(rawHeight, 20), GRID_HEIGHT - top) - 6;
   return { top, height };
+}
+
+function getColumnLayout(dayWorkshops) {
+  const items = dayWorkshops.map((ws) => {
+    const start = parseISO(ws.startTime);
+    const end = parseISO(ws.endTime);
+    return { id: ws.id, start: start.getTime(), end: end.getTime() };
+  });
+
+  const clusters = [];
+  for (const item of items) {
+    let placed = false;
+    for (const cluster of clusters) {
+      if (cluster.some((c) => c.start < item.end && item.start < c.end)) {
+        cluster.push(item);
+        placed = true;
+        break;
+      }
+    }
+    if (!placed) clusters.push([item]);
+  }
+
+  const layout = new Map();
+  for (const cluster of clusters) {
+    const cols = [];
+    for (const item of cluster) {
+      let col = 0;
+      while (cols[col]?.some((c) => c.start < item.end && item.start < c.end)) {
+        col++;
+      }
+      if (!cols[col]) cols[col] = [];
+      cols[col].push(item);
+      layout.set(item.id, { col, totalCols: 0 });
+    }
+    for (const item of cluster) {
+      layout.get(item.id).totalCols = cols.length;
+    }
+  }
+  return layout;
 }
 
 function formatHourLabel(h) {
@@ -182,31 +221,38 @@ export default function DayView({
           ))}
 
           {/* Workshop cards — wider in day view */}
-          {dayWorkshops.map((ws, idx) => {
-            const { top, height } = getEventPosition(ws.startTime, ws.endTime);
-            const isFiltered = anyFilterActive && !filteredIds.has(ws.id);
-            return (
-              <div
-                key={ws.id}
-                className="absolute"
-                style={{
-                  top,
-                  height,
-                  left: 2 + idx * 4,
-                  right: 2,
-                  zIndex: idx + 1,
-                }}
-              >
-                <WorkshopCard
-                  workshop={ws}
-                  coachMap={coachMap}
-                  conflicts={conflictMap?.get(ws.id)?.conflicts ?? []}
-                  onClick={onWorkshopClick}
-                  isFiltered={isFiltered}
-                />
-              </div>
-            );
-          })}
+          {(() => {
+            const colLayout = getColumnLayout(dayWorkshops);
+            return dayWorkshops.map((ws) => {
+              const { top, height } = getEventPosition(ws.startTime, ws.endTime);
+              const isFiltered = anyFilterActive && !filteredIds.has(ws.id);
+              const { col, totalCols } = colLayout.get(ws.id) ?? { col: 0, totalCols: 1 };
+              const widthPct = 100 / totalCols;
+              const leftPct = col * widthPct;
+              return (
+                <div
+                  key={ws.id}
+                  className="absolute"
+                  style={{
+                    top,
+                    height,
+                    left: `${leftPct}%`,
+                    width: `calc(${widthPct}% - 2px)`,
+                    zIndex: col + 1,
+                  }}
+                >
+                  <WorkshopCard
+                    workshop={ws}
+                    coachMap={coachMap}
+                    conflicts={conflictMap?.get(ws.id)?.conflicts ?? []}
+                    onClick={onWorkshopClick}
+                    isFiltered={isFiltered}
+                    height={height}
+                  />
+                </div>
+              );
+            });
+          })()}
         </div>
       </div>
     </div>

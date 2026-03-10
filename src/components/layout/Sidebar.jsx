@@ -110,7 +110,7 @@ export default function Sidebar({ collapsed, onToggle }) {
   const marketItems = WORKSHOP_MARKETS.map((v) => ({ key: v, label: v }));
 
   return (
-    <aside className="col-start-1 row-start-1 row-span-2 bg-ww-navy flex flex-col overflow-hidden">
+    <aside className="bg-ww-navy flex flex-col overflow-hidden">
       {/* Logo / app name */}
       <div className="h-14 flex items-center px-4 shrink-0 border-b border-white/10">
         {collapsed ? (
@@ -173,6 +173,22 @@ export default function Sidebar({ collapsed, onToggle }) {
           />
         </div>
       )}
+
+      {/* User profile */}
+      <div className="shrink-0 border-t border-white/10 px-3 py-3">
+        {collapsed ? (
+          <div className="w-8 h-8 mx-auto rounded-full bg-ww-blue text-white text-xs font-semibold flex items-center justify-center select-none">
+            KT
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-ww-blue text-white text-xs font-semibold flex items-center justify-center select-none shrink-0">
+              KT
+            </div>
+            <span className="text-white/80 text-sm font-medium truncate">Kathleen Toth</span>
+          </div>
+        )}
+      </div>
 
       {/* Collapse toggle */}
       <div className="shrink-0 border-t border-white/10 p-2">
