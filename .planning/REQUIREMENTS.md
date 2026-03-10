@@ -47,13 +47,13 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 - [x] **INTR-03**: T key jumps to current week (today)
 - [x] **INTR-04**: Escape key closes the detail panel (does not fire when focus is in a text input)
 - [x] **INTR-05**: N key opens the create-workshop flow with next available slot pre-filled
-- [ ] **INTR-06**: Workshop cards lift on hover (2px translate-y + shadow elevation)
-- [ ] **INTR-07**: Detail panel uses cubic-bezier easing for slide entrance/exit
-- [ ] **INTR-08**: Conflict status dot pulses subtly to draw attention (2s CSS animation cycle)
+- [x] **INTR-06**: Workshop cards lift on hover (2px translate-y + shadow elevation)
+- [x] **INTR-07**: Detail panel uses cubic-bezier easing for slide entrance/exit
+- [x] **INTR-08**: Conflict status dot pulses subtly to draw attention (2s CSS animation cycle)
 
 ### Empty States
 
-- [ ] **EMPT-01**: Empty calendar week shows "No workshops scheduled" message with "Create Workshop" CTA
+- [x] **EMPT-01**: Empty calendar week shows "No workshops scheduled" message with "Create Workshop" CTA
 - [x] **EMPT-02**: Zero filter results shows "No matching workshops" message with "Clear filters" CTA
 - [x] **EMPT-03**: Coach-specific filter with no results shows personalized "No workshops for [Name]" message
 
@@ -114,10 +114,10 @@ Deferred beyond v1.1. Tracked for future consideration.
 | INTR-03 | Phase 7 | Complete |
 | INTR-04 | Phase 7 | Complete |
 | INTR-05 | Phase 7 | Complete |
-| INTR-06 | Phase 11 | Pending |
-| INTR-07 | Phase 11 | Pending |
-| INTR-08 | Phase 11 | Pending |
-| EMPT-01 | Phase 11 | Pending |
+| INTR-06 | Phase 11 | Complete |
+| INTR-07 | Phase 11 | Complete |
+| INTR-08 | Phase 11 | Complete |
+| EMPT-01 | Phase 11 | Complete |
 | EMPT-02 | Phase 6 | Complete |
 | EMPT-03 | Phase 6 | Complete |
 

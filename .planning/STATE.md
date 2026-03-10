@@ -5,17 +5,17 @@
 See: .planning/PROJECT.md (updated 2026-03-09)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** v1.1 Interactive Polish — Phase 10: Availability Overlay
+**Current focus:** v1.1 Interactive Polish — Phase 11: Micro-Interactions and Empty States (COMPLETE)
 
 ## Current Position
 
-Phase: 10 (Availability Overlay)
+Phase: 11 (Micro-Interactions and Empty States)
 Plan: 1 of 1 complete
-Status: Phase 10 complete — Plan 01 done
-Last activity: 2026-03-10 — Phase 10 Plan 01 complete (toggleable coach availability overlay with per-coach colored bands in CalendarGrid, coach filter integration, pointer-events-none)
+Status: Phase 11 complete — Plan 01 done — v1.1 milestone COMPLETE
+Last activity: 2026-03-10 — Phase 11 Plan 01 complete (CSS animations for card hover lift, conflict pulse, asymmetric panel easing, and empty week state with Create Workshop CTA — all v1.1 requirements satisfied)
 
 ```
-Progress: [##############------] 6/7 phases complete (Phase 10 done)
+Progress: [####################] 7/7 phases complete (Phase 11 done — v1.1 COMPLETE)
 ```
 
 ## Performance Metrics
@@ -45,6 +45,8 @@ Progress: [##############------] 6/7 phases complete (Phase 10 done)
 | 08-coach-roster-page | 01 | 3 min | 2 | 2026-03-09 |
 | 09-draft-manager-page | 01 | 2 min | 1 | 2026-03-09 |
 | 10-availability-overlay | 01 | 2 min | 3 | 2026-03-10 |
+| 11-micro-interactions-empty-states | 01 | 2 min | 4 | 2026-03-10 |
+| Phase 11-micro-interactions-empty-states P01 | 2 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -96,6 +98,12 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 - showOverlay state in ScheduleCalendar (not AppContext) — overlay is calendar-view-local, no cross-page persistence needed
 - Eye/EyeOff icon toggle on Availability button — consistent with lucide-react icons already in nav bar
 
+**Phase 11 Plan 01 decisions:**
+- @keyframes conflict-pulse must be nested inside @theme block for Tailwind v4 to generate the animate-conflict-pulse utility class
+- transition-[transform,box-shadow] replaces transition-all/hover:brightness-95 — GPU-composited, no layout reflow, click target unchanged
+- weekWorkshopsCount is a separate memo from weekMatchCount — weekMatchCount uses -1 sentinel; modifying it would break filter empty state
+- Filter empty state (anyFilterActive && weekMatchCount === 0) checked before empty-week state — !anyFilterActive guard ensures correct priority
+
 ### Pending Todos
 
 - Coach availability data shape confirmed: availability[].day/start/end — verified from coaches.js in Phase 8
@@ -108,5 +116,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-10
-Stopped at: Phase 10 Plan 01 complete. Toggleable coach availability overlay with per-coach colored bands in CalendarGrid, coach filter integration, pointer-events-none. Next: Phase 11 (if any) or milestone complete.
+Stopped at: Phase 11 Plan 01 complete. v1.1 Interactive Polish milestone COMPLETE. CSS animations for card hover lift, conflict pulse, asymmetric panel easing; empty week state with Create Workshop CTA. All 7 v1.1 phases done.
 Resume file: None
