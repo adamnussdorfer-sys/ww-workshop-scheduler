@@ -10,12 +10,16 @@ import {
 } from 'date-fns';
 import WorkshopCard from './WorkshopCard';
 import { getSaturatedSlots } from '../../utils/conflictEngine';
-
-const GRID_START_HOUR = 6;
-const GRID_END_HOUR = 22;
-const PX_PER_HOUR = 64;
-const PX_PER_MIN = PX_PER_HOUR / 60;
-const GRID_HEIGHT = (GRID_END_HOUR - GRID_START_HOUR) * PX_PER_HOUR; // 1024px
+import {
+  GRID_START_HOUR,
+  GRID_END_HOUR,
+  PX_PER_HOUR,
+  PX_PER_MIN,
+  GRID_HEIGHT,
+  getAvailabilityBands,
+  COACH_OVERLAY_COLORS,
+} from '../../utils/availabilityBands';
+import { useApp } from '../../context/AppContext';
 
 function getEventPosition(startTimeISO, endTimeISO) {
   const start = parseISO(startTimeISO);
@@ -42,7 +46,9 @@ const HOUR_LABELS = Array.from(
 // 32 slot lines: one per 30-min slot across 16 hours = 32 slots
 const SLOT_LINES = Array.from({ length: 32 }, (_, i) => i);
 
-export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap, onWorkshopClick, onSlotClick, filteredIds = new Set(), anyFilterActive = false }) {
+export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap, onWorkshopClick, onSlotClick, filteredIds = new Set(), anyFilterActive = false, showOverlay = false }) {
+  const { filters } = useApp();
+
   const coachMap = useMemo(
     () => new Map(coaches.map((c) => [c.id, c])),
     [coaches]
@@ -61,6 +67,23 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
     });
     return result;
   }, [visibleWorkshops, weekDays]);
+
+  // Compute availability bands per day — short-circuits when overlay is off.
+  // Uses full coaches array (preserving stable coachIndex for color) then filters
+  // to active coaches when a coach filter is active.
+  const availabilityBands = useMemo(() => {
+    if (!showOverlay) return new Map();
+    const result = new Map();
+    const coachFilterSet = filters.coaches.length > 0
+      ? new Set(filters.coaches)
+      : null;
+    weekDays.forEach(day => {
+      const bands = getAvailabilityBands(coaches, day)
+        .filter(band => !coachFilterSet || coachFilterSet.has(band.coachId));
+      result.set(day.toISOString(), bands);
+    });
+    return result;
+  }, [showOverlay, coaches, weekDays, filters.coaches]);
 
   return (
     <div className="border border-border rounded-lg overflow-hidden bg-white">
@@ -149,6 +172,16 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                     />
                   );
                 })}
+
+                {/* Availability overlay bands — rendered before workshop cards so they sit below in z-order */}
+                {showOverlay && availabilityBands.get(day.toISOString())?.map((band) => (
+                  <div
+                    key={`avail-${band.coachId}`}
+                    className={`absolute left-0 right-0 pointer-events-none ${COACH_OVERLAY_COLORS[band.coachIndex % COACH_OVERLAY_COLORS.length]}`}
+                    style={{ top: band.top, height: band.height, zIndex: 0 }}
+                    aria-hidden="true"
+                  />
+                ))}
 
                 {/* Saturation bars — amber overlay for 4+ concurrent workshops */}
                 {saturationMap.get(day.toISOString())?.map(({ slotIndex, count }) => (
