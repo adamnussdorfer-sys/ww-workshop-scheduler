@@ -46,7 +46,7 @@ const HOUR_LABELS = Array.from(
 // 32 slot lines: one per 30-min slot across 16 hours = 32 slots
 const SLOT_LINES = Array.from({ length: 32 }, (_, i) => i);
 
-export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap, onWorkshopClick, onSlotClick, filteredIds = new Set(), anyFilterActive = false, showOverlay = false }) {
+export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap, onWorkshopClick, onSlotClick, filteredIds = new Set(), anyFilterActive = false, showOverlay = false, onDayClick }) {
   const { filters } = useApp();
 
   const coachMap = useMemo(
@@ -105,9 +105,12 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                 <span className="uppercase tracking-wide text-[10px]">
                   {format(day, 'EEE')}
                 </span>
-                <span className={`text-base font-semibold leading-tight ${today ? 'text-ww-blue' : 'text-ww-navy'}`}>
+                <button
+                  className={`text-base font-semibold leading-tight hover:text-ww-blue hover:underline cursor-pointer ${today ? 'text-ww-blue' : 'text-ww-navy'}`}
+                  onClick={(e) => { e.stopPropagation(); onDayClick?.(day); }}
+                >
                   {format(day, 'd')}
-                </span>
+                </button>
               </div>
             );
           })}

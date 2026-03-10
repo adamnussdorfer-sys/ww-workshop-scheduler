@@ -5,14 +5,14 @@ import { useEffect } from 'react';
  * Input guard prevents shortcuts from firing when the user is typing in a form field.
  *
  * @param {Object} handlers
- * @param {Function} handlers.onPrevWeek - Navigate to previous week (ArrowLeft)
- * @param {Function} handlers.onNextWeek - Navigate to next week (ArrowRight)
- * @param {Function} handlers.onToday - Jump to current week (T)
+ * @param {Function} handlers.onPrev - Navigate to previous period (ArrowLeft) — view-mode-aware
+ * @param {Function} handlers.onNext - Navigate to next period (ArrowRight) — view-mode-aware
+ * @param {Function} handlers.onToday - Jump to current period (T)
  * @param {Function} handlers.onClosePanel - Close the open panel (Escape)
  * @param {Function} handlers.onNewWorkshop - Open create-workshop with next available slot (N)
  * @param {boolean} handlers.isPanelOpen - Gate for Escape: only fires when panel is open
  */
-export function useKeyboardShortcuts({ onPrevWeek, onNextWeek, onToday, onClosePanel, onNewWorkshop, isPanelOpen }) {
+export function useKeyboardShortcuts({ onPrev, onNext, onToday, onClosePanel, onNewWorkshop, isPanelOpen }) {
   useEffect(() => {
     const controller = new AbortController();
 
@@ -27,11 +27,11 @@ export function useKeyboardShortcuts({ onPrevWeek, onNextWeek, onToday, onCloseP
         switch (e.key) {
           case 'ArrowLeft':
             e.preventDefault();
-            onPrevWeek();
+            onPrev();
             break;
           case 'ArrowRight':
             e.preventDefault();
-            onNextWeek();
+            onNext();
             break;
           case 't':
           case 'T':
@@ -50,5 +50,5 @@ export function useKeyboardShortcuts({ onPrevWeek, onNextWeek, onToday, onCloseP
     );
 
     return () => controller.abort();
-  }, [onPrevWeek, onNextWeek, onToday, onClosePanel, onNewWorkshop, isPanelOpen]);
+  }, [onPrev, onNext, onToday, onClosePanel, onNewWorkshop, isPanelOpen]);
 }
