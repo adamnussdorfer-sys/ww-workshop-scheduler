@@ -115,7 +115,9 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. A toggle control in the calendar navigation bar enables and disables the availability overlay
   2. When the overlay is on, semi-transparent colored bands appear behind workshop cards in each day column showing each coach's available hours — bands do not obscure or interfere with clicking workshop cards
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 10-01-PLAN.md — Toggle button, availability bands utility, and colored band rendering in CalendarGrid
 
 ### Phase 11: Micro-interactions + Empty States
 **Goal**: Every interactive element responds to user action with smooth, purposeful animation and every empty context has a clear message and path forward
