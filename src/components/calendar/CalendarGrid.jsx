@@ -134,8 +134,10 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
     <div className="border border-border rounded-3xl overflow-hidden bg-white flex flex-col flex-1">
       {/* Header row: time gutter spacer + 7 day headers */}
       <div className="flex border-b border-border sticky top-0 bg-white z-10">
-        {/* Time gutter spacer */}
-        <div className="w-16 flex-shrink-0" />
+        {/* Time gutter spacer — timezone label */}
+        <div className="w-16 flex-shrink-0 flex items-center justify-center">
+          <span className="text-[10px] text-slate-400 font-medium tracking-wide">ET</span>
+        </div>
         {/* Day headers */}
         <div className="grid flex-1" style={{ gridTemplateColumns: 'repeat(7, 1fr)' }}>
           {weekDays.map((day) => {

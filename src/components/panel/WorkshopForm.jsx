@@ -29,7 +29,6 @@ const RECURRENCE_OPTIONS = [
 const STATUS_BADGE_STYLES = {
   Draft: 'bg-yellow-100 text-yellow-800',
   Published: 'bg-green-100 text-green-800',
-  Cancelled: 'bg-slate-100 text-slate-600',
 };
 
 // Convert { date, hour, minute } to ISO string

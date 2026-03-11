@@ -10,8 +10,8 @@ export default function NavItem({ to, icon: Icon, label, collapsed }) {
           'flex items-center gap-3 px-3 py-2 rounded-md transition-colors',
           collapsed ? 'justify-center' : '',
           isActive
-            ? 'bg-white/20 text-white'
-            : 'text-white/70 hover:text-white hover:bg-white/10',
+            ? 'bg-ww-blue/10 text-ww-blue font-semibold'
+            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100',
         ].join(' ')
       }
     >

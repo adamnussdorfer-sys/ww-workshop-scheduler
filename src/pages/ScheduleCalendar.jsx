@@ -185,6 +185,21 @@ export default function ScheduleCalendar() {
 
   const clearFilters = () => setFilters({ coaches: [], types: [], statuses: [], markets: [] });
 
+  // Period-aware stats for the stats bar
+  const periodStats = useMemo(() => {
+    const inPeriod = workshops.filter((ws) => {
+      if (ws.status === 'Cancelled') return false;
+      const d = parseISO(ws.startTime);
+      if (viewMode === 'day') return isSameDay(d, currentDate);
+      if (viewMode === 'month') return isSameMonth(d, currentDate);
+      return weekDays.some((wd) => isSameDay(d, wd));
+    });
+    const total = inPeriod.length;
+    const drafts = inPeriod.filter((ws) => ws.status === 'Draft').length;
+    const conflicts = inPeriod.filter((ws) => conflictMap.get(ws.id)?.hasConflicts).length;
+    return { total, drafts, conflicts };
+  }, [workshops, viewMode, currentDate, weekDays, conflictMap]);
+
   // Day drill-down from week header or month cell
   const drillToDay = useCallback((day) => {
     setCurrentDate(day);
@@ -260,6 +275,19 @@ export default function ScheduleCalendar() {
 
       {/* Filter pills strip — only renders when filters are active */}
       {anyFilterActive && <FilterPills />}
+
+      {/* Stats bar */}
+      <div className="flex items-center px-4 py-2 flex-shrink-0">
+        <div className="flex items-center gap-4 text-xs text-slate-500">
+          <span><span className="font-semibold text-ww-navy">{periodStats.total}</span> workshops</span>
+          {periodStats.conflicts > 0 && (
+            <span><span className="font-semibold text-red-600">{periodStats.conflicts}</span> conflicts</span>
+          )}
+          {periodStats.drafts > 0 && (
+            <span><span className="font-semibold text-yellow-600">{periodStats.drafts}</span> drafts</span>
+          )}
+        </div>
+      </div>
 
       {/* Calendar body */}
       <div className="flex-1 overflow-auto p-4 flex flex-col">

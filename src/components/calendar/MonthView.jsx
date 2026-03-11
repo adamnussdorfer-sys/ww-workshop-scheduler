@@ -14,11 +14,11 @@ import {
 
 // ── Type-colored pill styles (mirrors WorkshopCard TYPE_CARD_STYLES) ─────────
 const TYPE_PILL_STYLES = {
-  'Weekly Connection': 'bg-blue-50 border-l-2 border-ww-blue',
-  'All In': 'bg-purple-50 border-l-2 border-purple-600',
-  'Special Event': 'bg-rose-50 border-l-2 border-ww-coral',
-  'Coaching Corner': 'bg-teal-50 border-l-2 border-teal-500',
-  'Movement/Fitness': 'bg-green-50 border-l-2 border-green-500',
+  'Weekly Connection': 'bg-sky-100 border-l-2 border-sky-500',
+  'All In': 'bg-fuchsia-100 border-l-2 border-fuchsia-500',
+  'Special Event': 'bg-pink-100 border-l-2 border-pink-500',
+  'Coaching Corner': 'bg-slate-200 border-l-2 border-slate-500',
+  'Movement/Fitness': 'bg-violet-200 border-l-2 border-violet-500',
 };
 
 const MAX_VISIBLE_PILLS = 3;

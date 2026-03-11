@@ -3,29 +3,27 @@ import { AlertTriangle } from 'lucide-react';
 import Tooltip from '../ui/Tooltip';
 
 const TYPE_CARD_STYLES = {
-  'Weekly Connection': 'bg-blue-50',
-  'All In': 'bg-purple-50',
-  'Special Event': 'bg-rose-50',
-  'Coaching Corner': 'bg-teal-50',
-  'Movement/Fitness': 'bg-green-50',
+  'Weekly Connection': 'bg-sky-100',
+  'All In': 'bg-fuchsia-100',
+  'Special Event': 'bg-pink-100',
+  'Coaching Corner': 'bg-slate-200',
+  'Movement/Fitness': 'bg-violet-200',
 };
 
-const STATUS_DOT_COLORS = {
-  Published: 'bg-ww-success',
-  Draft: 'bg-ww-warning',
-  Cancelled: 'bg-slate-400',
+const STATUS_LABEL_STYLES = {
+  Draft: 'text-yellow-700 bg-yellow-50',
 };
 
 // Static lookup prevents Tailwind JIT from purging these classes (same pattern as TYPE_CARD_STYLES)
 const CONFLICT_RING = {
-  red: 'ring-2 ring-red-500',
-  orange: 'ring-2 ring-orange-400',
+  red: 'ring-2 ring-red-600',
+  orange: 'ring-2 ring-red-400',
 };
 
 export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999 }) {
   const compact = height < 42;
   const cardStyle = TYPE_CARD_STYLES[workshop.type] ?? 'bg-slate-50';
-  const dotColor = STATUS_DOT_COLORS[workshop.status] ?? 'bg-slate-400';
+  const statusLabel = STATUS_LABEL_STYLES[workshop.status] ?? null;
 
   const startLabel = format(parseISO(workshop.startTime), 'h:mm a');
 
@@ -45,7 +43,7 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
     : null;
   const ringClass = ringColor ? CONFLICT_RING[ringColor] : '';
   const hasConflicts = conflicts.length > 0;
-  const iconColor = ringColor === 'red' ? 'text-red-500' : 'text-orange-400';
+  const iconColor = ringColor === 'red' ? 'text-red-600' : 'text-red-400';
 
   return (
     <div
@@ -75,8 +73,12 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
       ) : (
         <>
           <div className="flex items-center gap-1 mb-0.5">
-            <span className={`flex-shrink-0 w-2 h-2 rounded-full ${dotColor}`} />
             <span className="text-slate-500 truncate">{startLabel}</span>
+            {statusLabel && (
+              <span className={`ml-auto text-[9px] font-semibold uppercase leading-none px-1 py-0.5 rounded ${statusLabel} shrink-0`}>
+                {workshop.status}
+              </span>
+            )}
           </div>
           <p className="font-semibold text-ww-navy leading-tight truncate">{workshop.title}</p>
           {coachLine && (
