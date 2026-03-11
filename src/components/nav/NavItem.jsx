@@ -7,7 +7,7 @@ export default function NavItem({ to, icon: Icon, label, collapsed }) {
       end={to === '/'}
       className={({ isActive }) =>
         [
-          'flex items-center gap-3 px-3 py-2 rounded-md transition-colors',
+          'flex items-center gap-3 px-3 py-2 rounded-full transition-colors',
           collapsed ? 'justify-center' : '',
           isActive
             ? 'bg-ww-blue/10 text-ww-blue font-semibold'
