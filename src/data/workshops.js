@@ -1,10 +1,10 @@
 // WW Workshop Scheduler — Mock Workshop Data
 // 48 workshops spread across Mon-Sun, anchored to current week dynamically
 //
-// INTENTIONAL CONFLICTS (for Phase 4 conflict detection demo):
-// Conflict A: coach-005 double-booked Tue 10:00-11:00 (ws-021) & Tue 10:30-11:30 (ws-022)
-// Conflict B: coach-008 double-booked Thu 14:00-15:00 (ws-033) & Thu 14:30-15:30 (ws-034)
-// Conflict C: coach-012 buffer violation Wed 11:00-12:00 (ws-027) & Wed 12:05-13:00 (ws-028)
+// INTENTIONAL CONFLICTS (realistic edge cases from edits):
+// Buffer: coach-012 Wed 11:00-12:00 (ws-027) & Wed 12:05-13:00 (ws-028) — 5 min gap
+// Double: coach-003 Tue 12:00-13:30 (ws-011) & Tue 13:00-13:30 (ws-048) — time edit overlap
+// Double: coach-008 Wed 18:00-19:30 (ws-023) & Wed 19:00-20:00 (ws-049) — time edit overlap
 
 import { startOfWeek, addDays, setHours, setMinutes } from 'date-fns';
 
@@ -301,7 +301,6 @@ export const workshops = [
     attendance: null,
   },
 
-  // ── CONFLICT A: coach-005 double-booked Tuesday ──────────────────────────
   {
     id: 'ws-021',
     title: 'Tuesday Focus Group',
@@ -321,7 +320,7 @@ export const workshops = [
     title: 'Restart & Recommit',
     type: 'Weekly Connection',
     status: 'Draft',
-    coachId: 'coach-005',
+    coachId: 'coach-011',
     coCoachId: null,
     startTime: getWeekDay(1, 10, 30).toISOString(),
     endTime: getWeekDay(1, 11, 30).toISOString(),
@@ -419,7 +418,6 @@ export const workshops = [
     attendance: null,
   },
 
-  // ── CONFLICT B: coach-008 double-booked Thursday ─────────────────────────
   {
     id: 'ws-033',
     title: 'Afternoon Boost',
@@ -439,7 +437,7 @@ export const workshops = [
     title: 'Thursday Power Reset',
     type: 'All In',
     status: 'Published',
-    coachId: 'coach-008',
+    coachId: 'coach-011',
     coCoachId: 'coach-007',
     startTime: getWeekDay(3, 14, 30).toISOString(),
     endTime: getWeekDay(3, 15, 30).toISOString(),
@@ -680,5 +678,39 @@ export const workshops = [
     description: 'Quick Sunday night coaching to prepare for the week ahead.',
     recurrence: 'weekly',
     attendance: null,
+  },
+
+  // ── DOUBLE-BOOKINGS (caused by time edits) ─────────────────────────────
+  // Coach-003 (Priya Kapoor) booked a Coaching Corner at 13:00 but her
+  // All In Tuesday Power Hour (ws-011) runs 12:00–13:30
+  {
+    id: 'ws-048',
+    title: 'Coaching Corner: Lunchtime Momentum',
+    type: 'Coaching Corner',
+    status: 'Published',
+    coachId: 'coach-003',
+    coCoachId: null,
+    startTime: getWeekDay(1, 13, 0).toISOString(),
+    endTime: getWeekDay(1, 13, 30).toISOString(),
+    markets: ['US'],
+    description: 'Quick midday coaching on maintaining momentum through the afternoon.',
+    recurrence: 'weekly',
+    attendance: [31, 28, 35, 33, 30],
+  },
+  // Coach-008 (Alicia Fontaine) Wed Evening All In (ws-023) runs 18:00–19:30
+  // but someone moved this check-in to 19:00 not realizing the overlap
+  {
+    id: 'ws-049',
+    title: 'Wednesday Wind Down',
+    type: 'Weekly Connection',
+    status: 'Published',
+    coachId: 'coach-008',
+    coCoachId: null,
+    startTime: getWeekDay(2, 19, 0).toISOString(),
+    endTime: getWeekDay(2, 20, 0).toISOString(),
+    markets: ['US', 'CA'],
+    description: 'Midweek evening reflection and community connection.',
+    recurrence: 'weekly',
+    attendance: [86, 91, 82, 95, 88],
   },
 ];

@@ -10,9 +10,7 @@ const TYPE_CARD_STYLES = {
   'Movement/Fitness': 'bg-violet-200',
 };
 
-const STATUS_LABEL_STYLES = {
-  Draft: 'text-yellow-700 bg-yellow-50',
-};
+const DRAFT_BORDER = 'border-2 border-dashed border-slate-300';
 
 // Static lookup prevents Tailwind JIT from purging these classes (same pattern as TYPE_CARD_STYLES)
 const CONFLICT_RING = {
@@ -23,7 +21,7 @@ const CONFLICT_RING = {
 export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999 }) {
   const compact = height < 42;
   const cardStyle = TYPE_CARD_STYLES[workshop.type] ?? 'bg-slate-50';
-  const statusLabel = STATUS_LABEL_STYLES[workshop.status] ?? null;
+  const isDraft = workshop.status === 'Draft';
 
   const startLabel = format(parseISO(workshop.startTime), 'h:mm a');
 
@@ -51,7 +49,7 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
         transition-[transform,box-shadow] duration-150 ease-out
         hover:-translate-y-0.5 hover:shadow-md
         motion-reduce:transition-none motion-reduce:hover:transform-none
-        ${cardStyle} ${ringClass || 'ring-[1.5px] ring-border'}${isFiltered ? ' opacity-25 pointer-events-none' : ''}`}
+        ${cardStyle} ${ringClass || (isDraft ? DRAFT_BORDER : 'ring-[1.5px] ring-border')}${isFiltered ? ' opacity-25 pointer-events-none' : ''}`}
       onClick={(e) => {
         e.stopPropagation();
         onClick?.(workshop.id);
@@ -74,11 +72,6 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
         <>
           <div className="flex items-center gap-1 mb-0.5">
             <span className="text-slate-500 truncate">{startLabel}</span>
-            {statusLabel && (
-              <span className={`ml-auto text-[9px] font-semibold uppercase leading-none px-1 py-0.5 rounded ${statusLabel} shrink-0`}>
-                {workshop.status}
-              </span>
-            )}
           </div>
           <p className="font-semibold text-ww-navy leading-tight truncate">{workshop.title}</p>
           {coachLine && (

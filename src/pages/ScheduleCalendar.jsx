@@ -6,6 +6,7 @@ import CalendarGrid from '../components/calendar/CalendarGrid';
 import DayView from '../components/calendar/DayView';
 import MonthView from '../components/calendar/MonthView';
 import WorkshopPanel from '../components/panel/WorkshopPanel';
+import FilterBar from '../components/filters/FilterBar';
 import FilterPills from '../components/filters/FilterPills';
 import { buildConflictMap } from '../utils/conflictEngine';
 import { getMatchedWorkshopIds, hasActiveFilters } from '../utils/filterEngine';
@@ -201,7 +202,14 @@ export default function ScheduleCalendar() {
     <div className="flex flex-col h-full">
       {/* Navigation bar */}
       <div className="flex items-center gap-3 py-3 px-4 flex-shrink-0">
-        {/* Left: nav arrows + date */}
+        {/* Left: today, nav arrows + date */}
+        <button
+          onClick={goToToday}
+          className="px-3 py-1.5 text-sm font-medium rounded-full bg-white border border-border text-slate-700 hover:bg-surface-2 transition-colors"
+        >
+          Today
+        </button>
+
         <button
           onClick={prevPeriod}
           className="text-slate-600 hover:text-ww-navy p-1 rounded hover:bg-surface-2 transition-colors"
@@ -220,17 +228,12 @@ export default function ScheduleCalendar() {
           <ChevronRight size={20} />
         </button>
 
-        {/* Right: today, view toggle, create — pinned right */}
+        {/* Right: filters, view toggle, create — pinned right */}
         <div className="flex items-center gap-3 ml-auto">
-          <button
-            onClick={goToToday}
-            disabled={isCurrentPeriod}
-            className={`px-3 py-1.5 text-sm font-medium rounded border border-border hover:bg-surface-2 transition-colors ${
-              isCurrentPeriod ? 'opacity-50 cursor-default' : ''
-            }`}
-          >
-            Today
-          </button>
+          {/* Filter dropdowns */}
+          <FilterBar />
+
+          <div className="h-5 w-px bg-slate-200" />
 
           <div className="flex items-center bg-surface-2 rounded-full p-1">
             {VIEW_TABS.map(({ label, value }) => (
@@ -248,12 +251,14 @@ export default function ScheduleCalendar() {
             ))}
           </div>
 
+          <div className="h-5 w-px bg-slate-200" />
+
           <button
             onClick={openNewWithNextSlot}
             className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
           >
             <Plus size={16} />
-            Create Workshop
+            Create
           </button>
         </div>
       </div>
