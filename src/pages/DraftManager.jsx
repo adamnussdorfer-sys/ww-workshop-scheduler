@@ -1,14 +1,24 @@
 import { useState, useMemo, useCallback } from 'react';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, Plus } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { useApp } from '../context/AppContext';
 import { buildConflictMap } from '../utils/conflictEngine';
+import WorkshopPanel from '../components/panel/WorkshopPanel';
+
+const TYPE_PILL_STYLES = {
+  'Weekly Connection': 'bg-sky-100 text-sky-800',
+  'All In': 'bg-fuchsia-100 text-fuchsia-800',
+  'Special Event': 'bg-pink-100 text-pink-800',
+  'Coaching Corner': 'bg-slate-200 text-slate-700',
+  'Movement/Fitness': 'bg-violet-200 text-violet-800',
+};
 
 export default function DraftManager() {
   const { workshops, coaches, setWorkshops, toast } = useApp();
 
   const [selectedIds, setSelectedIds] = useState(new Set());
   const [modalOpen, setModalOpen] = useState(false);
+  const [createPanelOpen, setCreatePanelOpen] = useState(false);
 
   // Derived data
   const draftWorkshops = useMemo(
@@ -81,19 +91,32 @@ export default function DraftManager() {
           <p className="text-sm text-slate-500 mt-0.5">{draftWorkshops.length} drafts</p>
         </div>
 
-        {/* Publish button */}
-        <button
-          onClick={() => setModalOpen(true)}
-          disabled={effectiveSelectedIds.size === 0}
-          className="flex items-center px-4 py-2 text-sm font-medium text-white bg-ww-blue rounded-full hover:bg-ww-blue/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Publish
-          {selectedConflictCount > 0 && (
-            <span className="bg-ww-coral text-white text-xs px-1.5 py-0.5 rounded-full ml-2">
-              {selectedConflictCount} conflict{selectedConflictCount !== 1 ? 's' : ''}
-            </span>
+        <div className="flex items-center gap-3">
+          {/* Publish button — only when items selected */}
+          {effectiveSelectedIds.size > 0 && (
+            <button
+              onClick={() => setModalOpen(true)}
+              className="flex items-center px-4 py-2 text-sm font-medium text-white bg-ww-blue rounded-full hover:bg-ww-blue/90 transition-colors"
+            >
+              Publish {effectiveSelectedIds.size}
+              {selectedConflictCount > 0 && (
+                <span className="inline-flex items-center gap-1 bg-white/30 text-white text-xs px-1.5 py-0.5 rounded-full ml-2">
+                  <AlertTriangle size={10} />
+                  {selectedConflictCount}
+                </span>
+              )}
+            </button>
           )}
-        </button>
+
+          {/* Add Draft button */}
+          <button
+            onClick={() => setCreatePanelOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-full bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
+          >
+            <Plus size={16} />
+            Add Draft
+          </button>
+        </div>
       </div>
 
       {/* Table area */}
@@ -151,7 +174,11 @@ export default function DraftManager() {
                   <td className="px-4 py-3 text-sm text-slate-600">
                     {format(parseISO(w.startTime), 'EEE MMM d, h:mm a')}
                   </td>
-                  <td className="px-4 py-3 text-sm text-slate-600">{w.type}</td>
+                  <td className="px-4 py-3">
+                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${TYPE_PILL_STYLES[w.type] ?? 'bg-slate-100 text-slate-600'}`}>
+                      {w.type}
+                    </span>
+                  </td>
                   <td className="px-4 py-3 text-center">
                     {conflictMap.get(w.id)?.hasConflicts && (
                       <span className="relative group inline-flex">
@@ -179,6 +206,17 @@ export default function DraftManager() {
           </div>
         )}
       </div>
+
+      {/* Create draft panel */}
+      <WorkshopPanel
+        isOpen={createPanelOpen}
+        onClose={() => setCreatePanelOpen(false)}
+        workshop={null}
+        coaches={coaches}
+        mode="create"
+        slotContext={null}
+        conflicts={[]}
+      />
 
       {/* Publish confirmation modal */}
       {modalOpen && (
