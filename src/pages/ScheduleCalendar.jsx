@@ -250,7 +250,7 @@ export default function ScheduleCalendar() {
 
           <button
             onClick={openNewWithNextSlot}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
           >
             <Plus size={16} />
             Create Workshop
@@ -262,7 +262,7 @@ export default function ScheduleCalendar() {
       {anyFilterActive && <FilterPills />}
 
       {/* Calendar body */}
-      <div className="flex-1 overflow-auto p-4">
+      <div className="flex-1 overflow-auto p-4 flex flex-col">
         {viewMode === 'week' && (
           <CalendarGrid
             weekDays={weekDays}

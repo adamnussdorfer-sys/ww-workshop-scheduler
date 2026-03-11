@@ -7,7 +7,6 @@ import {
 import { AlertTriangle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { useApp } from '../../context/AppContext';
-import AttendanceSparkline from './AttendanceSparkline';
 import { getCoachAvailability } from '../../utils/coachAvailability';
 
 const WORKSHOP_TYPES = [
@@ -402,9 +401,6 @@ export default function WorkshopForm({
     onClose();
   };
 
-  const showSparkline =
-    mode === 'view' && draft.status === 'Published' && draft.attendance;
-
   // Find selected coach name for trigger display
   const selectedCoach = coaches.find((c) => c.id === draft.coachId);
   const selectedCoCoach = coaches.find((c) => c.id === draft.coCoachId);
@@ -438,17 +434,6 @@ export default function WorkshopForm({
                 </li>
               ))}
           </ul>
-        </div>
-      )}
-
-      {/* Attendance sparkline (PANEL-04) */}
-      {showSparkline && (
-        <div className="flex items-center gap-3 py-2 px-3 bg-slate-50 rounded-lg">
-          <span className="text-xs text-slate-500">Attendance (last 5 weeks)</span>
-          <AttendanceSparkline data={draft.attendance} />
-          <span className="text-sm font-medium text-ww-navy ml-auto">
-            {draft.attendance[draft.attendance.length - 1]}
-          </span>
         </div>
       )}
 
@@ -681,29 +666,30 @@ export default function WorkshopForm({
       </div>
 
       {/* Action buttons */}
-      <div className="flex gap-3 pt-4 border-t border-border mt-6">
-        <button
-          onClick={handleSaveDraft}
-          className="flex-1 px-4 py-2 text-sm font-medium bg-surface-2 text-ww-navy rounded-lg hover:bg-slate-200 transition-colors"
-        >
-          Save Draft
-        </button>
+      <div className="pt-4 border-t border-border mt-6 space-y-3">
+        <div className="flex gap-3">
+          <button
+            onClick={handleSaveDraft}
+            className="flex-1 px-4 py-2 text-sm font-medium bg-surface-2 text-ww-navy rounded-full hover:bg-slate-200 transition-colors"
+          >
+            Save Draft
+          </button>
+          <button
+            onClick={handlePublish}
+            className="flex-1 px-4 py-2 text-sm font-medium bg-ww-blue text-white rounded-full hover:bg-ww-navy transition-colors"
+          >
+            Publish
+          </button>
+        </div>
 
         {mode === 'view' && (
           <button
             onClick={handleRemove}
-            className="px-4 py-2 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors"
+            className="w-full text-sm text-red-500 hover:text-red-700 transition-colors"
           >
             Remove from Schedule
           </button>
         )}
-
-        <button
-          onClick={handlePublish}
-          className="flex-1 px-4 py-2 text-sm font-medium bg-ww-blue text-white rounded-lg hover:bg-ww-navy transition-colors"
-        >
-          Publish
-        </button>
       </div>
     </div>
   );

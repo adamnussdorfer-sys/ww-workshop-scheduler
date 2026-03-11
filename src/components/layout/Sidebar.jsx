@@ -114,9 +114,9 @@ export default function Sidebar({ collapsed, onToggle }) {
       {/* Logo */}
       <div className="h-14 flex items-center px-3 shrink-0 border-b border-white/10">
         {collapsed ? (
-          <img src="/ww-glyph.svg" alt="WeightWatchers" className="h-5 mx-auto" />
+          <img src="/ww-glyph.svg" alt="WeightWatchers" className="h-6 mx-auto" />
         ) : (
-          <img src="/ww-logo.svg" alt="WeightWatchers" className="h-5" />
+          <img src="/ww-logo.svg" alt="WeightWatchers" className="h-6" />
         )}
       </div>
 

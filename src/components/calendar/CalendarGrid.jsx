@@ -131,7 +131,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
   }, [showOverlay, coaches, weekDays, filters.coaches]);
 
   return (
-    <div className="border border-border rounded-lg overflow-hidden bg-white flex flex-col flex-1">
+    <div className="border border-border rounded-3xl overflow-hidden bg-white flex flex-col flex-1">
       {/* Header row: time gutter spacer + 7 day headers */}
       <div className="flex border-b border-border sticky top-0 bg-white z-10">
         {/* Time gutter spacer */}

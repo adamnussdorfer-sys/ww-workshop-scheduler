@@ -164,7 +164,7 @@ export default function CoachRoster() {
           {/* Add Coach button */}
           <button
             onClick={openCreate}
-            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-full bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
           >
             <Plus size={16} />
             Add Coach

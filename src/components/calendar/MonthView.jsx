@@ -72,7 +72,7 @@ export default function MonthView({
   }, [visibleWorkshops]);
 
   return (
-    <div className="border border-border rounded-lg overflow-hidden bg-white">
+    <div className="border border-border rounded-3xl overflow-hidden bg-white flex flex-col flex-1">
       {/* Column headers: Mon–Sun */}
       <div className="grid grid-cols-7 border-b border-border">
         {DAY_LABELS.map((label) => (
@@ -87,7 +87,7 @@ export default function MonthView({
 
       {/* Week rows */}
       {weeks.map((week, weekIdx) => (
-        <div key={weekIdx} className="grid grid-cols-7">
+        <div key={weekIdx} className="grid grid-cols-7 flex-1">
           {week.map((day) => {
             const dateKey = format(day, 'yyyy-MM-dd');
             const dayWorkshops = workshopsByDay.get(dateKey) ?? [];

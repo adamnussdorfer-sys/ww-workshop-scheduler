@@ -132,7 +132,7 @@ export default function DayView({
   const today = isToday(date);
 
   return (
-    <div className="border border-border rounded-lg overflow-hidden bg-white">
+    <div className="border border-border rounded-3xl overflow-hidden bg-white flex flex-col flex-1">
       {/* Header: full day name + date */}
       <div className="flex border-b border-border sticky top-0 bg-white z-10">
         {/* Time gutter spacer */}
@@ -152,7 +152,7 @@ export default function DayView({
       </div>
 
       {/* Body: time gutter + single day column */}
-      <div className="flex overflow-y-auto" style={{ maxHeight: '600px' }}>
+      <div className="flex overflow-y-auto flex-1">
         {/* Time gutter */}
         <div className="w-16 flex-shrink-0 relative" style={{ height: GRID_HEIGHT }}>
           {HOUR_LABELS.map((h) => (

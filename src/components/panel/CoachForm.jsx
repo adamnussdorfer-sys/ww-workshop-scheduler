@@ -255,7 +255,7 @@ export default function CoachForm({ coach, mode, onClose }) {
           type="button"
           onClick={handleSave}
           disabled={!isValid}
-          className={`flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+          className={`flex-1 px-4 py-2 text-sm font-medium rounded-full transition-colors ${
             isValid
               ? 'bg-ww-blue text-white hover:bg-ww-blue/90'
               : 'bg-slate-100 text-slate-400 cursor-not-allowed'
@@ -266,7 +266,7 @@ export default function CoachForm({ coach, mode, onClose }) {
         <button
           type="button"
           onClick={onClose}
-          className="px-4 py-2 text-sm font-medium text-slate-600 border border-border rounded-lg hover:bg-surface-2 transition-colors"
+          className="px-4 py-2 text-sm font-medium text-slate-600 border border-border rounded-full hover:bg-surface-2 transition-colors"
         >
           Cancel
         </button>
