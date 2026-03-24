@@ -21,6 +21,15 @@ const TYPE_PILL_STYLES = {
   'Movement/Fitness': 'bg-violet-200 border-l-2 border-violet-500',
 };
 
+// ── Type-to-dot color mapping for mobile ─────────────────────────────────────
+const TYPE_DOT_COLORS = {
+  'Weekly Connection': 'bg-sky-500',
+  'All In': 'bg-fuchsia-500',
+  'Special Event': 'bg-pink-500',
+  'Coaching Corner': 'bg-slate-500',
+  'Movement/Fitness': 'bg-violet-500',
+};
+
 const MAX_VISIBLE_PILLS = 3;
 const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -102,7 +111,7 @@ export default function MonthView({
             return (
               <div
                 key={day.toISOString()}
-                className={`relative min-h-[120px] border-t border-l border-border p-1.5 cursor-pointer
+                className={`relative min-h-[80px] md:min-h-[120px] border-t border-l border-border p-1.5 cursor-pointer
                   hover:bg-surface-2/50 transition-colors
                   ${!inMonth ? 'bg-slate-50/50' : ''}`}
                 onClick={() => onDayClick(day)}
@@ -129,8 +138,26 @@ export default function MonthView({
                   )}
                 </div>
 
-                {/* Workshop pills */}
-                <div className="flex flex-col gap-0.5">
+                {/* Mobile: colored dots (horizontal row) */}
+                <div className="flex md:hidden flex-row flex-wrap gap-1">
+                  {pillWorkshops.map((ws) => {
+                    const dotColor = TYPE_DOT_COLORS[ws.type] ?? 'bg-slate-400';
+                    const isDimmed = anyFilterActive && !filteredIds.has(ws.id);
+                    return (
+                      <span
+                        key={ws.id}
+                        className={`w-2 h-2 rounded-full shrink-0 ${dotColor} ${isDimmed ? 'opacity-25' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onWorkshopClick(ws.id);
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+
+                {/* Desktop: text pills (stacked column) */}
+                <div className="hidden md:flex flex-col gap-0.5">
                   {pillWorkshops.map((ws) => {
                     const pillStyle =
                       TYPE_PILL_STYLES[ws.type] ?? 'bg-slate-50 border-l-2 border-slate-400';
@@ -156,7 +183,7 @@ export default function MonthView({
                     );
                   })}
 
-                  {/* Overflow link */}
+                  {/* Overflow link — desktop only */}
                   {overflowCount > 0 && (
                     <button
                       className="text-[10px] text-ww-blue hover:underline cursor-pointer mt-0.5 text-left"

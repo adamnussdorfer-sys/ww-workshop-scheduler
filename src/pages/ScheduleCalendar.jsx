@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { startOfWeek, addWeeks, subWeeks, addDays, subDays, addMonths, subMonths, format, isSameWeek, isSameDay, isSameMonth, parseISO } from 'date-fns';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -25,6 +25,17 @@ export default function ScheduleCalendar() {
   const [currentDate, setCurrentDate] = useState(() => new Date());
   const [viewMode, setViewMode] = useState('week');
   const [showOverlay, setShowOverlay] = useState(false);
+
+  // Auto-switch week view to day view on mobile
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 767px)');
+    function handleChange(e) {
+      if (e.matches && viewMode === 'week') setViewMode('day');
+    }
+    handleChange(mql); // check on mount
+    mql.addEventListener('change', handleChange);
+    return () => mql.removeEventListener('change', handleChange);
+  }, [viewMode]);
 
   // Derive week start from currentDate
   const currentWeekStart = useMemo(
@@ -111,6 +122,13 @@ export default function ScheduleCalendar() {
     if (viewMode === 'day') return format(currentDate, 'EEEE, MMMM d, yyyy');
     if (viewMode === 'month') return format(currentDate, 'MMMM yyyy');
     return 'Week of ' + format(currentWeekStart, 'MMM d') + ' \u2013 ' + format(weekEnd, 'MMM d, yyyy');
+  }, [viewMode, currentDate, currentWeekStart, weekEnd]);
+
+  // Mobile-shortened header text
+  const headerTextShort = useMemo(() => {
+    if (viewMode === 'day') return format(currentDate, 'EEE, MMM d');
+    if (viewMode === 'month') return format(currentDate, 'MMM yyyy');
+    return format(currentWeekStart, 'MMM d') + '\u2013' + format(weekEnd, 'MMM d');
   }, [viewMode, currentDate, currentWeekStart, weekEnd]);
 
   // View-mode-aware aria labels for nav buttons
@@ -200,47 +218,54 @@ export default function ScheduleCalendar() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Navigation bar */}
-      <div className="flex items-center gap-3 py-3 px-4 flex-shrink-0">
-        {/* Left: today, nav arrows + date */}
-        <button
-          onClick={goToToday}
-          className="px-3 py-1.5 text-sm font-medium rounded-full bg-white border border-border text-slate-700 hover:bg-surface-2 transition-colors"
-        >
-          Today
-        </button>
+      {/* Navigation bar — wraps to 2 rows on mobile */}
+      <div className="flex flex-wrap items-center gap-2 md:gap-3 py-3 px-4 flex-shrink-0">
+        {/* Row 1: today + arrows + date — full width on mobile */}
+        <div className="flex items-center gap-2 md:gap-3 w-full md:w-auto">
+          <button
+            onClick={goToToday}
+            className="px-3 py-1.5 text-sm font-medium rounded-full bg-white border border-border text-slate-700 hover:bg-surface-2 transition-colors"
+          >
+            Today
+          </button>
 
-        <button
-          onClick={prevPeriod}
-          className="text-slate-600 hover:text-ww-navy p-1 rounded hover:bg-surface-2 transition-colors"
-          aria-label={`Previous ${periodLabel}`}
-        >
-          <ChevronLeft size={20} />
-        </button>
+          <button
+            onClick={prevPeriod}
+            className="text-slate-600 hover:text-ww-navy p-1 rounded hover:bg-surface-2 transition-colors"
+            aria-label={`Previous ${periodLabel}`}
+          >
+            <ChevronLeft size={20} />
+          </button>
 
-        <span className="text-lg font-semibold text-ww-navy">{headerText}</span>
+          <span className="text-sm md:text-lg font-semibold text-ww-navy">
+            <span className="hidden md:inline">{headerText}</span>
+            <span className="md:hidden">{headerTextShort}</span>
+          </span>
 
-        <button
-          onClick={nextPeriod}
-          className="text-slate-600 hover:text-ww-navy p-1 rounded hover:bg-surface-2 transition-colors"
-          aria-label={`Next ${periodLabel}`}
-        >
-          <ChevronRight size={20} />
-        </button>
+          <button
+            onClick={nextPeriod}
+            className="text-slate-600 hover:text-ww-navy p-1 rounded hover:bg-surface-2 transition-colors"
+            aria-label={`Next ${periodLabel}`}
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
 
-        {/* Right: filters, view toggle, create — pinned right */}
-        <div className="flex items-center gap-3 ml-auto">
-          {/* Filter dropdowns */}
+        {/* Row 2: filters + view tabs + create — full width on mobile */}
+        <div className="flex items-center gap-2 md:gap-3 w-full md:w-auto md:ml-auto mt-1 md:mt-0">
+          {/* Filter dropdowns / mobile filter button */}
           <FilterBar />
 
-          <div className="h-5 w-px bg-slate-200" />
+          <div className="h-5 w-px bg-slate-200 hidden md:block" />
 
           <div className="flex items-center bg-surface-2 rounded-full p-1">
             {VIEW_TABS.map(({ label, value }) => (
               <button
                 key={value}
                 onClick={() => setViewMode(value)}
-                className={`px-5 py-1.5 text-sm font-medium rounded-full transition-all ${
+                className={`px-3 md:px-5 py-1 md:py-1.5 text-xs md:text-sm font-medium rounded-full transition-all ${
+                  value === 'week' ? 'hidden md:block' : ''
+                } ${
                   viewMode === value
                     ? 'bg-white text-ww-navy shadow-sm ring-1 ring-border'
                     : 'text-slate-500 hover:text-slate-700'
@@ -251,14 +276,14 @@ export default function ScheduleCalendar() {
             ))}
           </div>
 
-          <div className="h-5 w-px bg-slate-200" />
+          <div className="h-5 w-px bg-slate-200 hidden md:block" />
 
           <button
             onClick={openNewWithNextSlot}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
+            className="flex items-center gap-1.5 px-2 md:px-3 py-1.5 text-sm font-medium rounded-full bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
           >
             <Plus size={16} />
-            Create
+            <span className="hidden md:inline">Create</span>
           </button>
         </div>
       </div>
