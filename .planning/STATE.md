@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-03-09)
 Phase: 12 (Day and Month Calendar Views)
 Plan: 2 of 2 complete
 Status: Phase 12 complete — All three calendar views (Day, Week, Month) fully functional
-Last activity: 2026-03-10 — Phase 12 Plan 02 complete (MonthView.jsx with pills, overflow, conflict dots, drill-to-day)
+Last activity: 2026-03-24 - Completed quick task 1: Make the app responsive
 
 ```
 Progress: [####################] 2/2 plans complete (Phase 12 done)
@@ -129,6 +129,12 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 ### Blockers/Concerns
 
 None.
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 1 | Make the app responsive | 2026-03-24 | 43882fa | [1-make-the-app-responsive](./quick/1-make-the-app-responsive/) |
 
 ## Session Continuity
 
