@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { AlertTriangle, Plus } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { useApp } from '../context/AppContext';
+import Checkbox from '../components/ui/Checkbox';
 import { buildConflictMap } from '../utils/conflictEngine';
 import WorkshopPanel from '../components/panel/WorkshopPanel';
 
@@ -126,14 +127,10 @@ export default function DraftManager() {
             <thead>
               <tr className="border-b border-border bg-slate-50/60">
                 <th className="w-12 px-4 py-3">
-                  <input
-                    type="checkbox"
-                    ref={(el) => {
-                      if (el) el.indeterminate = someSelected;
-                    }}
+                  <Checkbox
                     checked={allSelected}
+                    indeterminate={someSelected}
                     onChange={toggleAll}
-                    className="rounded border-slate-300 text-ww-blue focus:ring-ww-blue/30 cursor-pointer"
                   />
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -160,11 +157,9 @@ export default function DraftManager() {
                   className="hover:bg-surface-2 transition-colors border-b border-border last:border-0 even:bg-slate-50/40"
                 >
                   <td className="px-4 py-3">
-                    <input
-                      type="checkbox"
+                    <Checkbox
                       checked={effectiveSelectedIds.has(w.id)}
                       onChange={() => toggleOne(w.id)}
-                      className="rounded border-slate-300 text-ww-blue focus:ring-ww-blue/30 cursor-pointer"
                     />
                   </td>
                   <td className="px-4 py-3 text-sm font-medium text-ww-navy">{w.title}</td>

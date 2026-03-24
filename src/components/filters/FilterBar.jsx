@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import Checkbox from '../ui/Checkbox';
 
 const WORKSHOP_TYPES = ['All In', 'Coaching Corner', 'Movement/Fitness', 'Special Event', 'Weekly Connection'];
 const WORKSHOP_STATUSES = ['Published', 'Draft'];
@@ -83,11 +84,9 @@ function FilterDropdown({ title, items, dimension, filters, toggleFilter, colorM
                     <ColoredCheckbox checked={isChecked} colors={colors} />
                   </>
                 ) : (
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     checked={isChecked}
                     onChange={() => toggleFilter(dimension, item.key)}
-                    className="accent-ww-blue shrink-0"
                   />
                 )}
                 <span className="text-slate-700 text-xs truncate">{item.label}</span>

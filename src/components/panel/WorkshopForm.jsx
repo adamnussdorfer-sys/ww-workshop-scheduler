@@ -7,6 +7,7 @@ import {
 import { AlertTriangle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { useApp } from '../../context/AppContext';
+import Checkbox from '../ui/Checkbox';
 import { getCoachAvailability } from '../../utils/coachAvailability';
 
 const WORKSHOP_TYPES = [
@@ -652,11 +653,9 @@ export default function WorkshopForm({
         <div className="flex gap-4 flex-wrap">
           {MARKETS.map((market) => (
             <label key={market} className="flex items-center gap-1.5 cursor-pointer">
-              <input
-                type="checkbox"
+              <Checkbox
                 checked={draft.markets.includes(market)}
                 onChange={() => toggleMarket(market)}
-                className="rounded border-border text-ww-blue focus:ring-ww-blue/30"
               />
               <span className="text-sm text-slate-700">{market}</span>
             </label>
