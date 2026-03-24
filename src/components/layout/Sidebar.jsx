@@ -10,7 +10,7 @@ const NAV_ITEMS = [
 
 export default function Sidebar({ collapsed, onToggle }) {
   return (
-    <aside className="bg-white flex flex-col overflow-hidden border-r border-border">
+    <aside className="hidden md:flex bg-white flex-col overflow-hidden border-r border-border">
       {/* Logo */}
       <div className="h-14 flex items-center px-3 shrink-0 border-b border-border">
         {collapsed ? (

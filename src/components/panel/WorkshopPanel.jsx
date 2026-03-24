@@ -16,12 +16,19 @@ export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode
         onClick={onClose}
       />
 
-      {/* Slide panel — always in DOM, translate-x-full when closed so exit animation plays */}
+      {/* Panel — bottom sheet on mobile, right slide on desktop */}
       <div
-        className={`fixed right-0 top-0 h-screen w-[400px] bg-white z-30 shadow-2xl
-          flex flex-col transition-transform duration-200 ${isOpen ? 'ease-panel-open' : 'ease-panel-close'}
-          ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed z-30 bg-white shadow-2xl flex flex-col transition-transform duration-200
+          inset-x-0 bottom-0 max-h-[85vh] rounded-t-2xl
+          md:inset-auto md:right-0 md:top-0 md:h-screen md:w-[400px] md:max-h-none md:rounded-none
+          ${isOpen ? 'ease-panel-open' : 'ease-panel-close'}
+          ${isOpen ? 'translate-y-0 md:translate-x-0' : 'translate-y-full md:translate-y-0 md:translate-x-full'}`}
       >
+        {/* Drag handle — mobile only */}
+        <div className="md:hidden flex justify-center pt-2 pb-1">
+          <div className="w-10 h-1 rounded-full bg-slate-300" />
+        </div>
+
         {/* Panel header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border flex-shrink-0">
           <h2 className="text-base font-semibold text-ww-navy">{panelTitle}</h2>

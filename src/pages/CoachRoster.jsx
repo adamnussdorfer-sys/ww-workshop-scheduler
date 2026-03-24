@@ -3,6 +3,7 @@ import { ChevronUp, ChevronDown, ChevronsUpDown, X, Plus } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import CoachDetailPanel from '../components/panel/CoachDetailPanel';
 import CoachForm from '../components/panel/CoachForm';
+
 const COACH_STATUS_BADGE = {
   active: 'bg-green-100 text-green-800',
   inactive: 'bg-slate-100 text-slate-600',
@@ -139,64 +140,90 @@ export default function CoachRoster() {
         </button>
       </div>
 
-      {/* Table container */}
+      {/* Table / cards container */}
       <div className="flex-1 overflow-auto px-6 py-4">
         <div className="rounded-2xl border border-border bg-white overflow-hidden">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-border bg-slate-50/60">
-                <SortHeader
-                  label="Name"
-                  sortKey="name"
-                  sort={sort}
-                  onSort={handleSort}
-                  align="left"
-                />
-                <SortHeader
-                  label="Workshops"
-                  sortKey="workshopsThisWeek"
-                  sort={sort}
-                  onSort={handleSort}
-                  align="center"
-                />
-                <SortHeader
-                  label="Status"
-                  sortKey="status"
-                  sort={sort}
-                  onSort={handleSort}
-                  align="left"
-                />
-              </tr>
-            </thead>
-            <tbody>
-              {visibleCoaches.map((coach) => (
-                <tr
-                  key={coach.id}
-                  onClick={() => openCoach(coach.id)}
-                  className="cursor-pointer hover:bg-surface-2 transition-colors border-b border-border last:border-0 even:bg-slate-50/40"
-                >
-                  <td className="px-4 py-3 text-sm font-medium text-ww-navy">
-                    {coach.name}
-                  </td>
-                  <td className="px-4 py-3 text-sm text-slate-600 text-center">
-                    {coach.workshopsThisWeek}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        COACH_STATUS_BADGE[coach.status] ?? 'bg-slate-100 text-slate-600'
-                      }`}
-                    >
-                      {coach.status.charAt(0).toUpperCase() + coach.status.slice(1)}
-                    </span>
-                  </td>
+          {/* Desktop: table */}
+          <div className="hidden md:block">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-border bg-slate-50/60">
+                  <SortHeader
+                    label="Name"
+                    sortKey="name"
+                    sort={sort}
+                    onSort={handleSort}
+                    align="left"
+                  />
+                  <SortHeader
+                    label="Workshops"
+                    sortKey="workshopsThisWeek"
+                    sort={sort}
+                    onSort={handleSort}
+                    align="center"
+                  />
+                  <SortHeader
+                    label="Status"
+                    sortKey="status"
+                    sort={sort}
+                    onSort={handleSort}
+                    align="left"
+                  />
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {visibleCoaches.map((coach) => (
+                  <tr
+                    key={coach.id}
+                    onClick={() => openCoach(coach.id)}
+                    className="cursor-pointer hover:bg-surface-2 transition-colors border-b border-border last:border-0 even:bg-slate-50/40"
+                  >
+                    <td className="px-4 py-3 text-sm font-medium text-ww-navy">
+                      {coach.name}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-slate-600 text-center">
+                      {coach.workshopsThisWeek}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span
+                        className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          COACH_STATUS_BADGE[coach.status] ?? 'bg-slate-100 text-slate-600'
+                        }`}
+                      >
+                        {coach.status.charAt(0).toUpperCase() + coach.status.slice(1)}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
+          {/* Mobile: card list */}
+          <div className="md:hidden divide-y divide-border">
+            {visibleCoaches.map((coach) => (
+              <div
+                key={coach.id}
+                onClick={() => openCoach(coach.id)}
+                className="flex items-center justify-between p-4 cursor-pointer active:bg-surface-2"
+              >
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-sm font-medium text-ww-navy">{coach.name}</span>
+                  <span className="text-xs text-slate-500">
+                    {coach.workshopsThisWeek} workshops this week
+                  </span>
+                </div>
+                <span
+                  className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                    COACH_STATUS_BADGE[coach.status] ?? 'bg-slate-100 text-slate-600'
+                  }`}
+                >
+                  {coach.status.charAt(0).toUpperCase() + coach.status.slice(1)}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
-
       </div>
 
       {/* Overlay */}
@@ -207,12 +234,18 @@ export default function CoachRoster() {
         onClick={closePanel}
       />
 
-      {/* Slide panel */}
+      {/* Slide panel — bottom sheet on mobile, right slide on desktop */}
       <div
-        className={`fixed right-0 top-0 h-screen w-[400px] bg-white z-30 shadow-2xl flex flex-col transition-transform duration-200 ease-in-out ${
-          isPanelOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed z-30 bg-white shadow-2xl flex flex-col transition-transform duration-200 ease-in-out
+          inset-x-0 bottom-0 max-h-[85vh] rounded-t-2xl
+          md:inset-auto md:right-0 md:top-0 md:h-screen md:w-[400px] md:max-h-none md:rounded-none
+          ${isPanelOpen ? 'translate-y-0 md:translate-x-0' : 'translate-y-full md:translate-y-0 md:translate-x-full'}`}
       >
+        {/* Drag handle — mobile only */}
+        <div className="md:hidden flex justify-center pt-2 pb-1">
+          <div className="w-10 h-1 rounded-full bg-slate-300" />
+        </div>
+
         {/* Panel header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border flex-shrink-0">
           <h2 className="text-base font-semibold text-ww-navy">{panelTitle}</h2>
