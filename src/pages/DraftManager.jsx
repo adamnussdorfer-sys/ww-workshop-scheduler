@@ -86,7 +86,7 @@ export default function DraftManager() {
   return (
     <div className="flex flex-col h-full">
       {/* Page header */}
-      <div className="flex items-center justify-between px-6 py-4 flex-shrink-0">
+      <div className="flex flex-wrap items-center justify-between gap-2 px-6 py-4 flex-shrink-0">
         <div>
           <h1 className="text-xl font-semibold text-ww-navy">Draft Manager</h1>
           <p className="text-sm text-slate-500 mt-0.5">{draftWorkshops.length} drafts</p>
@@ -120,77 +120,116 @@ export default function DraftManager() {
         </div>
       </div>
 
-      {/* Table area */}
+      {/* Table / cards area */}
       <div className="flex-1 overflow-auto px-6 py-4">
         <div className="rounded-2xl border border-border bg-white overflow-hidden">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-border bg-slate-50/60">
-                <th className="w-12 px-4 py-3">
-                  <Checkbox
-                    checked={allSelected}
-                    indeterminate={someSelected}
-                    onChange={toggleAll}
-                  />
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  Title
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  Coach
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  Day &amp; Time
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  Type
-                </th>
-                <th className="px-4 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  Conflicts
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+
+          {/* Desktop: table */}
+          <div className="hidden md:block">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-border bg-slate-50/60">
+                  <th className="w-12 px-4 py-3">
+                    <Checkbox
+                      checked={allSelected}
+                      indeterminate={someSelected}
+                      onChange={toggleAll}
+                    />
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Title
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Coach
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Day &amp; Time
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Type
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Conflicts
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {draftWorkshops.map((w) => (
+                  <tr
+                    key={w.id}
+                    className="hover:bg-surface-2 transition-colors border-b border-border last:border-0 even:bg-slate-50/40"
+                  >
+                    <td className="px-4 py-3">
+                      <Checkbox
+                        checked={effectiveSelectedIds.has(w.id)}
+                        onChange={() => toggleOne(w.id)}
+                      />
+                    </td>
+                    <td className="px-4 py-3 text-sm font-medium text-ww-navy">{w.title}</td>
+                    <td className="px-4 py-3 text-sm text-slate-600">
+                      {coachMap.get(w.coachId)?.name ?? 'Unknown'}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-slate-600">
+                      {format(parseISO(w.startTime), 'EEE MMM d, h:mm a')}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${TYPE_PILL_STYLES[w.type] ?? 'bg-slate-100 text-slate-600'}`}>
+                        {w.type}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      {conflictMap.get(w.id)?.hasConflicts && (
+                        <span className="relative group inline-flex">
+                          <AlertTriangle size={14} className="text-ww-coral" />
+                          <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-max max-w-xs px-3 py-2 text-xs text-white bg-ww-navy rounded-lg shadow-lg z-10 pointer-events-none">
+                            {conflictMap.get(w.id).conflicts.map((c, i) => (
+                              <span key={i} className="block">{c.message}</span>
+                            ))}
+                          </span>
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile: card list */}
+          <div className="md:hidden">
+            {/* Select-all header */}
+            <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-slate-50/60">
+              <Checkbox checked={allSelected} indeterminate={someSelected} onChange={toggleAll} />
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Select all</span>
+            </div>
+
+            <div className="divide-y divide-border">
               {draftWorkshops.map((w) => (
-                <tr
-                  key={w.id}
-                  className="hover:bg-surface-2 transition-colors border-b border-border last:border-0 even:bg-slate-50/40"
-                >
-                  <td className="px-4 py-3">
+                <div key={w.id} className="p-4 flex items-start gap-3">
+                  <div className="pt-0.5">
                     <Checkbox
                       checked={effectiveSelectedIds.has(w.id)}
                       onChange={() => toggleOne(w.id)}
                     />
-                  </td>
-                  <td className="px-4 py-3 text-sm font-medium text-ww-navy">{w.title}</td>
-                  <td className="px-4 py-3 text-sm text-slate-600">
-                    {coachMap.get(w.coachId)?.name ?? 'Unknown'}
-                  </td>
-                  <td className="px-4 py-3 text-sm text-slate-600">
-                    {format(parseISO(w.startTime), 'EEE MMM d, h:mm a')}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${TYPE_PILL_STYLES[w.type] ?? 'bg-slate-100 text-slate-600'}`}>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-ww-navy truncate">{w.title}</span>
+                      {conflictMap.get(w.id)?.hasConflicts && (
+                        <AlertTriangle size={14} className="text-ww-coral shrink-0" />
+                      )}
+                    </div>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      {coachMap.get(w.coachId)?.name ?? 'Unknown'} &middot; {format(parseISO(w.startTime), 'EEE MMM d, h:mm a')}
+                    </p>
+                    <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${TYPE_PILL_STYLES[w.type] ?? 'bg-slate-100 text-slate-600'}`}>
                       {w.type}
                     </span>
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    {conflictMap.get(w.id)?.hasConflicts && (
-                      <span className="relative group inline-flex">
-                        <AlertTriangle size={14} className="text-ww-coral" />
-                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-max max-w-xs px-3 py-2 text-xs text-white bg-ww-navy rounded-lg shadow-lg z-10 pointer-events-none">
-                          {conflictMap.get(w.id).conflicts.map((c, i) => (
-                            <span key={i} className="block">{c.message}</span>
-                          ))}
-                        </span>
-                      </span>
-                    )}
-                  </td>
-                </tr>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-
+            </div>
+          </div>
         </div>
 
         {/* Empty state */}
