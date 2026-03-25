@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { Calendar, Users, FileText, PanelLeftClose, PanelLeftOpen, LogOut } from 'lucide-react';
 import NavItem from '../nav/NavItem';
+import { AppContext } from '../../context/AppContext';
 
 const NAV_ITEMS = [
   { to: '/', icon: Calendar, label: 'Calendar' },
@@ -13,6 +14,7 @@ export default function Sidebar({ collapsed, onToggle }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const { logout } = useContext(AppContext);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -25,6 +27,7 @@ export default function Sidebar({ collapsed, onToggle }) {
 
   function handleSignOut() {
     setMenuOpen(false);
+    logout();
     navigate('/login');
   }
 

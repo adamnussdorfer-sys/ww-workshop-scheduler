@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Routes, Route } from 'react-router'
+import { Routes, Route, Navigate } from 'react-router'
 import { Toaster, toast } from 'sonner'
 import { AppContext } from './context/AppContext'
 import AppShell from './components/layout/AppShell'
@@ -11,6 +11,7 @@ import { coaches as initialCoaches } from './data/coaches'
 import { workshops as initialWorkshops } from './data/workshops'
 
 export default function App() {
+  const [authed, setAuthed] = useState(() => sessionStorage.getItem('authenticated') === 'true')
   const [coaches, setCoaches] = useState(initialCoaches)
   const [workshops, setWorkshops] = useState(initialWorkshops)
   const [filters, setFilters] = useState({
@@ -20,8 +21,18 @@ export default function App() {
     markets: [],
   })
 
+  function login() {
+    sessionStorage.setItem('authenticated', 'true')
+    setAuthed(true)
+  }
+
+  function logout() {
+    sessionStorage.removeItem('authenticated')
+    setAuthed(false)
+  }
+
   const contextValue = useMemo(
-    () => ({ coaches, setCoaches, workshops, setWorkshops, filters, setFilters, toast }),
+    () => ({ coaches, setCoaches, workshops, setWorkshops, filters, setFilters, toast, logout }),
     [coaches, workshops, filters]
   )
 
@@ -40,15 +51,19 @@ export default function App() {
         }}
       />
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login onLogin={login} />} />
         <Route path="/*" element={
-          <AppShell>
-            <Routes>
-              <Route path="/" element={<ScheduleCalendar />} />
-              <Route path="/roster" element={<CoachRoster />} />
-              <Route path="/drafts" element={<DraftManager />} />
-            </Routes>
-          </AppShell>
+          authed ? (
+            <AppShell>
+              <Routes>
+                <Route path="/" element={<ScheduleCalendar />} />
+                <Route path="/roster" element={<CoachRoster />} />
+                <Route path="/drafts" element={<DraftManager />} />
+              </Routes>
+            </AppShell>
+          ) : (
+            <Navigate to="/login" replace />
+          )
         } />
       </Routes>
     </AppContext.Provider>

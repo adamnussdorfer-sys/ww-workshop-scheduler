@@ -1,11 +1,13 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { Bell, LogOut } from 'lucide-react';
+import { AppContext } from '../../context/AppContext';
 
 export default function TopBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const { logout } = useContext(AppContext);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -18,6 +20,7 @@ export default function TopBar() {
 
   function handleSignOut() {
     setMenuOpen(false);
+    logout();
     navigate('/login');
   }
 

@@ -133,24 +133,13 @@ export default function DayView({
 
   return (
     <div className="border border-border rounded-3xl overflow-hidden bg-white flex flex-col flex-1">
-      {/* Header: full day name + date */}
+      {/* Header spacer — no date banner in day view */}
       <div className="flex border-b border-border sticky top-0 bg-white z-10">
         {/* Time gutter spacer — timezone label */}
-        <div className="w-16 flex-shrink-0 flex items-center justify-center">
+        <div className="w-16 flex-shrink-0 flex items-center justify-center h-6">
           <span className="text-[10px] text-slate-400 font-medium tracking-wide">ET</span>
         </div>
-        {/* Day header — single column fills remaining width */}
-        <div className="flex-1">
-          <div
-            className={`flex flex-col items-center justify-center h-10 border-l border-border text-xs ${
-              today ? 'bg-ww-blue/10 text-ww-blue font-bold' : 'text-slate-600'
-            }`}
-          >
-            <span className={`text-base font-semibold leading-tight ${today ? 'text-ww-blue' : 'text-ww-navy'}`}>
-              {format(date, 'EEEE, MMMM d, yyyy')}
-            </span>
-          </div>
-        </div>
+        <div className="flex-1 border-l border-border" />
       </div>
 
       {/* Body: time gutter + single day column */}

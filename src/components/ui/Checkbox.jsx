@@ -13,7 +13,7 @@ export default function Checkbox({ checked, indeterminate, onChange, className =
           onChange?.(e);
         }
       }}
-      className={`w-[18px] h-[18px] rounded-[4px] border-[2.5px] shrink-0 flex items-center justify-center transition-colors cursor-pointer ${
+      className={`w-[18px] h-[18px] rounded-[4px] border-2 shrink-0 flex items-center justify-center transition-colors cursor-pointer ${
         checked || indeterminate
           ? 'bg-ww-blue border-ww-blue'
           : 'bg-white border-ww-blue'

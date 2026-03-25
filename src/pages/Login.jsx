@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { Eye, EyeOff, Loader2, Check } from 'lucide-react';
 import Input from '../components/ui/Input';
 
-export default function Login() {
+export default function Login({ onLogin }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,14 +11,21 @@ export default function Login() {
   const [error, setError] = useState('');
   const [loginState, setLoginState] = useState('idle'); // idle | loading | success
 
+  const [bgLoaded, setBgLoaded] = useState(false);
   const fullText = 'Workshop Scheduler';
   const [typedCount, setTypedCount] = useState(0);
 
   useEffect(() => {
-    if (typedCount >= fullText.length) return;
+    const img = new Image();
+    img.src = '/login-bg.png';
+    img.onload = () => setBgLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!bgLoaded || typedCount >= fullText.length) return;
     const timeout = setTimeout(() => setTypedCount((c) => c + 1), 60);
     return () => clearTimeout(timeout);
-  }, [typedCount]);
+  }, [bgLoaded, typedCount]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -32,6 +39,7 @@ export default function Login() {
     setLoginState('loading');
 
     setTimeout(() => {
+      onLogin();
       setLoginState('success');
       setTimeout(() => navigate('/'), 800);
     }, 1200);
@@ -39,10 +47,19 @@ export default function Login() {
 
   const isSubmitting = loginState !== 'idle';
 
+  if (!bgLoaded) {
+    return (
+      <div className="min-h-dvh flex flex-col items-center justify-center bg-[#020B46]">
+        <img src="/ww-glyph.svg" alt="WeightWatchers" className="h-28 mb-6" />
+        <Loader2 size={24} className="animate-spin text-white/40" />
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-dvh flex flex-col items-center justify-center bg-[#020B46] bg-[url('/login-bg.png')] bg-cover bg-center px-4">
+    <div className="min-h-dvh flex flex-col items-center justify-center bg-[#020B46] bg-[url('/login-bg.png')] bg-cover bg-center px-4 animate-[fadeIn_0.4s_ease-out]">
       {/* Logo */}
-      <img src="/ww-glyph.svg" alt="WeightWatchers" className="h-28 mb-3 brightness-0 invert" />
+      <img src="/ww-glyph.svg" alt="WeightWatchers" className="h-28 mb-3" />
       <p className="text-white/60 text-sm mb-10">
         {fullText.slice(0, typedCount)}
         {typedCount < fullText.length && <span className="animate-pulse">|</span>}
