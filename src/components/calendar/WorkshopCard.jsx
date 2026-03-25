@@ -66,6 +66,13 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
           </Tooltip>
         </div>
       )}
+      {isDraft && !hasConflicts && (
+        <div className="absolute top-0.5 right-0.5 text-slate-400 cursor-help">
+          <Tooltip content="Draft">
+            <span className="text-[10px] font-medium uppercase tracking-wide">Draft</span>
+          </Tooltip>
+        </div>
+      )}
       {compact ? (
         <p className="font-semibold text-ww-navy leading-tight truncate">{workshop.title}</p>
       ) : (

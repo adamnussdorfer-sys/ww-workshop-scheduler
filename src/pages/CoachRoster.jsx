@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import { ChevronUp, ChevronDown, ChevronsUpDown, X, Plus } from 'lucide-react';
+import { ChevronUp, ChevronDown, ChevronsUpDown, X, Plus, Mail, Clock } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import CoachDetailPanel from '../components/panel/CoachDetailPanel';
 import CoachForm from '../components/panel/CoachForm';
@@ -152,7 +152,14 @@ export default function CoachRoster() {
         <div className="rounded-2xl border border-border bg-white overflow-hidden">
           {/* Desktop: table */}
           <div className="hidden md:block">
-            <table className="w-full">
+            <table className="w-full table-fixed">
+              <colgroup>
+                <col className="w-[25%]" />
+                <col className="w-[30%]" />
+                <col className="w-[15%]" />
+                <col className="w-[15%]" />
+                <col className="w-[15%]" />
+              </colgroup>
               <thead>
                 <tr className="border-b border-border bg-slate-50/60">
                   <SortHeader
@@ -200,13 +207,24 @@ export default function CoachRoster() {
                     className="cursor-pointer hover:bg-surface-2 transition-colors border-b border-border last:border-0 even:bg-slate-50/40"
                   >
                     <td className="px-4 py-3 text-sm font-medium text-ww-navy">
-                      {coach.name}
+                      <div className="flex items-center gap-2.5">
+                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-ww-blue/10 text-ww-blue text-xs font-semibold flex items-center justify-center">
+                          {coach.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}
+                        </span>
+                        <span className="truncate">{coach.name}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-sm text-slate-600 truncate">
+                      <div className="flex items-center gap-2">
+                        <Mail size={14} className="flex-shrink-0 text-slate-400" />
+                        <span className="truncate">{coach.email}</span>
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-sm text-slate-600">
-                      {coach.email}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-slate-600">
-                      {TZ_SHORT[coach.timezone] ?? coach.timezone}
+                      <div className="flex items-center gap-2">
+                        <Clock size={14} className="flex-shrink-0 text-slate-400" />
+                        {TZ_SHORT[coach.timezone] ?? coach.timezone}
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-sm text-slate-600 text-center">
                       {coach.workshopsThisWeek}

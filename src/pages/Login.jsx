@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Loader2, Check } from 'lucide-react';
+import Input from '../components/ui/Input';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -8,6 +9,16 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [loginState, setLoginState] = useState('idle'); // idle | loading | success
+
+  const fullText = 'Workshop Scheduler';
+  const [typedCount, setTypedCount] = useState(0);
+
+  useEffect(() => {
+    if (typedCount >= fullText.length) return;
+    const timeout = setTimeout(() => setTypedCount((c) => c + 1), 60);
+    return () => clearTimeout(timeout);
+  }, [typedCount]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -18,37 +29,44 @@ export default function Login() {
       return;
     }
 
-    // Mock auth — accept any credentials
-    navigate('/');
+    setLoginState('loading');
+
+    setTimeout(() => {
+      setLoginState('success');
+      setTimeout(() => navigate('/'), 800);
+    }, 1200);
   }
 
+  const isSubmitting = loginState !== 'idle';
+
   return (
-    <div className="min-h-dvh flex flex-col items-center justify-center bg-[#020B46] px-4">
+    <div className="min-h-dvh flex flex-col items-center justify-center bg-[#020B46] bg-[url('/login-bg.png')] bg-cover bg-center px-4">
       {/* Logo */}
       <img src="/ww-glyph.svg" alt="WeightWatchers" className="h-28 mb-3 brightness-0 invert" />
-      <p className="text-white/60 text-sm mb-10">Workshop Scheduler</p>
+      <p className="text-white/60 text-sm mb-10">
+        {fullText.slice(0, typedCount)}
+        {typedCount < fullText.length && <span className="animate-pulse">|</span>}
+      </p>
 
       {/* Card */}
-      <div className="w-full max-w-sm bg-white rounded-3xl p-8 shadow-xl">
+      <div className="w-full max-w-sm bg-gray-50 rounded-3xl p-8 shadow-xl">
         <h1 className="text-xl font-semibold text-ww-navy text-center mb-6">Sign in</h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Email */}
-          <InputField
+          <Input
             label="Email"
             type="email"
             value={email}
-            onChange={setEmail}
+            onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             autoFocus
           />
 
-          {/* Password */}
-          <InputField
+          <Input
             label="Password"
             type={showPassword ? 'text' : 'password'}
             value={password}
-            onChange={setPassword}
+            onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
             trailing={
               <button
@@ -68,55 +86,37 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full h-12 mt-2 bg-ww-blue text-white font-semibold rounded-full hover:bg-ww-navy transition-colors cursor-pointer"
+            disabled={isSubmitting}
+            className={`w-full h-12 mt-2 font-semibold rounded-full transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${
+              loginState === 'success'
+                ? 'bg-emerald-700 text-white'
+                : 'bg-ww-blue text-white hover:bg-[#1a3ad8]'
+            } ${isSubmitting ? 'pointer-events-none' : ''}`}
           >
-            Sign in
+            {loginState === 'idle' && 'Sign in'}
+            {loginState === 'loading' && (
+              <>
+                <Loader2 size={18} className="animate-spin" />
+                Signing you in...
+              </>
+            )}
+            {loginState === 'success' && (
+              <>
+                <Check size={18} strokeWidth={3} />
+                Welcome!
+              </>
+            )}
           </button>
         </form>
 
-        <p className="text-center text-xs text-slate-400 mt-6">
-          Forgot password?{' '}
+        <p className="text-center text-xs mt-6">
           <button type="button" className="text-ww-blue hover:underline cursor-pointer">
-            Reset it
+            Forgot password?
           </button>
         </p>
       </div>
 
       <p className="text-white/30 text-xs mt-8">&copy; 2026 WeightWatchers</p>
-    </div>
-  );
-}
-
-function InputField({ label, value, onChange, trailing, ...props }) {
-  const [focused, setFocused] = useState(false);
-  const hasValue = value !== '';
-  const showLabel = focused || hasValue;
-
-  return (
-    <div
-      className={`w-full h-[54px] rounded-2xl border px-4 flex items-center gap-2 transition-all bg-white ${
-        focused
-          ? 'border-ww-blue shadow-[0_0_0_3px_rgba(2,34,208,0.1)]'
-          : hasValue
-            ? 'border-ww-blue'
-            : 'border-slate-200'
-      }`}
-    >
-      <div className="flex-1 flex flex-col justify-center">
-        {showLabel && (
-          <label className="text-[11px] text-ww-blue leading-tight">{label}</label>
-        )}
-        <input
-          {...props}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          placeholder={showLabel ? '' : label}
-          className="w-full outline-none text-sm font-medium bg-transparent text-ww-navy placeholder:text-slate-400"
-        />
-      </div>
-      {trailing}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import {
   format, parseISO, setHours, setMinutes, addHours, getHours, getMinutes,
   startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, addMonths, subMonths,
-  isSameMonth, isSameDay, isToday,
+  isSameMonth, isSameDay, isToday, getDay, addWeeks, differenceInMinutes, addMinutes,
 } from 'date-fns';
 import { AlertTriangle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
@@ -32,12 +32,47 @@ const TIMEZONE_OPTIONS = [
   { value: 'AEST', label: 'Australian Eastern (AEST)' },
 ];
 
-const RECURRENCE_OPTIONS = [
-  { value: 'weekly', label: 'Weekly' },
-  { value: 'biweekly', label: 'Biweekly' },
-  { value: 'monthly', label: 'Monthly' },
-  { value: 'one-time', label: 'One-time' },
-];
+const RECURRING_DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+const RECURRING_DAY_LABELS = { monday: 'Mon', tuesday: 'Tue', wednesday: 'Wed', thursday: 'Thu', friday: 'Fri', saturday: 'Sat', sunday: 'Sun' };
+const DAY_INDICES = { sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6 };
+const INDEX_TO_DAY = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
+function generateRecurringInstances(baseDraft) {
+  const instances = [];
+  const baseDate = parseISO(baseDraft.startTime);
+  const baseDayIndex = getDay(baseDate);
+  const duration = differenceInMinutes(parseISO(baseDraft.endTime), baseDate);
+  const endType = baseDraft.recurrenceEndType || 'never';
+  const maxOccurrences = endType === 'after' ? baseDraft.recurrenceOccurrences : 52; // cap "never" at 52 weeks
+  const interval = baseDraft.recurringWeeks || 1;
+
+  let count = 1; // the original counts as 1
+  for (let week = 0; count < maxOccurrences; week += interval) {
+    for (const day of baseDraft.recurringDays) {
+      if (count >= maxOccurrences) break;
+      const dayIndex = DAY_INDICES[day];
+      if (week === 0 && dayIndex === baseDayIndex) continue; // skip the original
+
+      const dayOffset = dayIndex - baseDayIndex;
+      const targetDate = addWeeks(addDays(baseDate, dayOffset), week);
+      const newStart = targetDate;
+      const newEnd = addMinutes(newStart, duration);
+
+      instances.push({
+        ...baseDraft,
+        id: `ws-${Date.now()}-${instances.length}`,
+        startTime: newStart.toISOString(),
+        endTime: newEnd.toISOString(),
+        recurring: false,
+        recurringDays: [],
+        recurringWeeks: 1,
+        recurrence: 'none',
+      });
+      count++;
+    }
+  }
+  return instances;
+}
 
 const STATUS_BADGE_STYLES = {
   Draft: 'bg-yellow-100 text-yellow-800',
@@ -56,9 +91,22 @@ function buildEndISO({ date, hour, minute }) {
   return addHours(d, 1).toISOString();
 }
 
+function getDayFromSlot(slotContext) {
+  if (!slotContext) return [];
+  const d = setMinutes(setHours(new Date(slotContext.date), slotContext.hour), slotContext.minute);
+  return [INDEX_TO_DAY[getDay(d)]];
+}
+
 function initDraft(workshop, mode, slotContext) {
   if (mode === 'view' && workshop) {
-    return { ...workshop };
+    return {
+      recurring: false,
+      recurringDays: [],
+      recurringWeeks: 1,
+      recurrenceEndType: 'never',
+      recurrenceOccurrences: 13,
+      ...workshop,
+    };
   }
   // mode === 'create'
   return {
@@ -68,7 +116,12 @@ function initDraft(workshop, mode, slotContext) {
     coachId: '',
     coCoachId: null,
     description: '',
-    recurrence: 'weekly',
+    recurrence: 'none',
+    recurring: false,
+    recurringDays: getDayFromSlot(slotContext),
+    recurringWeeks: 1,
+    recurrenceEndType: 'never',
+    recurrenceOccurrences: 13,
     timezone: 'ET',
     markets: ['US'],
     startTime: slotContext ? buildISO(slotContext) : '',
@@ -234,6 +287,231 @@ function DateTimeRow({ draft, updateField }) {
   );
 }
 
+function getRecurrencePresets(startTime) {
+  if (!startTime) return [{ value: 'none', label: 'Does not repeat' }, { value: 'custom', label: 'Custom...' }];
+  const date = parseISO(startTime);
+  const dayName = format(date, 'EEEE');
+  return [
+    { value: 'none', label: 'Does not repeat' },
+    { value: 'daily', label: 'Daily' },
+    { value: 'weekly', label: `Weekly on ${dayName}` },
+    { value: 'weekdays', label: 'Every weekday (Mon–Fri)' },
+    { value: 'custom', label: 'Custom...' },
+  ];
+}
+
+function recurrenceLabel(draft) {
+  if (!draft.recurring) return 'Does not repeat';
+  const { recurringDays, recurringWeeks, recurrenceEndType, recurrenceOccurrences } = draft;
+  const days = recurringDays.map((d) => RECURRING_DAY_LABELS[d]).join(', ');
+  const endLabel = recurrenceEndType === 'after' ? `, ${recurrenceOccurrences}x` : recurrenceEndType === 'never' ? '' : '';
+  return `Weekly on ${days}${recurringWeeks > 1 ? ` (every ${recurringWeeks} wks)` : ''}${endLabel}`;
+}
+
+function CustomRecurrenceModal({ draft, onSave, onClose }) {
+  const [localDays, setLocalDays] = useState(draft.recurringDays.length > 0 ? [...draft.recurringDays] : (draft.startTime ? [INDEX_TO_DAY[getDay(parseISO(draft.startTime))]] : ['monday']));
+  const [localWeeks, setLocalWeeks] = useState(draft.recurringWeeks || 1);
+  const [endType, setEndType] = useState(draft.recurrenceEndType || 'after');
+  const [occurrences, setOccurrences] = useState(draft.recurrenceOccurrences || 13);
+
+  const toggleDay = (day) => {
+    setLocalDays((prev) => prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]);
+  };
+
+  return (
+    <>
+      <div className="fixed inset-0 bg-black/30 z-40" onClick={onClose} />
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6" onClick={(e) => e.stopPropagation()}>
+          <h2 className="text-lg font-semibold text-ww-navy mb-5">Custom recurrence</h2>
+
+          {/* Repeat every N weeks */}
+          <div className="mb-5">
+            <p className="text-sm text-slate-600 mb-2">Repeat every</p>
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                min={1}
+                max={52}
+                value={localWeeks}
+                onChange={(e) => setLocalWeeks(Math.max(1, Math.min(52, parseInt(e.target.value) || 1)))}
+                className="w-16 h-10 text-center text-sm font-semibold text-[#031AA1] border border-[#84ABFF] rounded-xl outline-none focus:border-ww-blue transition-colors"
+              />
+              <span className="text-sm text-slate-600">{localWeeks === 1 ? 'week' : 'weeks'}</span>
+            </div>
+          </div>
+
+          {/* Repeat on days */}
+          <div className="mb-5">
+            <p className="text-sm text-slate-600 mb-2">Repeat on</p>
+            <div className="flex gap-1.5">
+              {RECURRING_DAYS.map((day) => {
+                const selected = localDays.includes(day);
+                return (
+                  <button
+                    key={day}
+                    type="button"
+                    onClick={() => toggleDay(day)}
+                    className={`w-9 h-9 text-xs font-semibold rounded-full border transition-colors cursor-pointer flex items-center justify-center ${
+                      selected
+                        ? 'bg-ww-blue text-white border-ww-blue'
+                        : 'bg-white text-slate-600 border-border hover:border-slate-400'
+                    }`}
+                  >
+                    {RECURRING_DAY_LABELS[day].charAt(0)}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Ends */}
+          <div className="mb-6">
+            <p className="text-sm text-slate-600 mb-2">Ends</p>
+            <div className="space-y-3">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input type="radio" name="endType" checked={endType === 'never'} onChange={() => setEndType('never')} className="accent-ww-blue w-4 h-4" />
+                <span className="text-sm text-ww-navy">Never</span>
+              </label>
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input type="radio" name="endType" checked={endType === 'after'} onChange={() => setEndType('after')} className="accent-ww-blue w-4 h-4" />
+                <span className="text-sm text-ww-navy">After</span>
+                <input
+                  type="number"
+                  min={1}
+                  max={100}
+                  value={occurrences}
+                  onChange={(e) => setOccurrences(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
+                  disabled={endType !== 'after'}
+                  className="w-14 h-9 text-center text-sm font-semibold text-[#031AA1] border border-[#84ABFF] rounded-xl outline-none focus:border-ww-blue transition-colors disabled:opacity-40"
+                />
+                <span className="text-sm text-slate-600">occurrences</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex justify-end gap-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-800 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={() => onSave({
+                recurringDays: localDays,
+                recurringWeeks: localWeeks,
+                recurrenceEndType: endType,
+                recurrenceOccurrences: occurrences,
+              })}
+              disabled={localDays.length === 0}
+              className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
+                localDays.length > 0
+                  ? 'bg-ww-blue text-white hover:bg-[#1a3ad8]'
+                  : 'bg-slate-100 text-slate-400 cursor-not-allowed'
+              }`}
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function RecurrenceField({ draft, setDraft }) {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [customModalOpen, setCustomModalOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    function handleMouseDown(e) {
+      if (ref.current && !ref.current.contains(e.target)) setDropdownOpen(false);
+    }
+    document.addEventListener('mousedown', handleMouseDown);
+    return () => document.removeEventListener('mousedown', handleMouseDown);
+  }, [dropdownOpen]);
+
+  const presets = getRecurrencePresets(draft.startTime);
+  const currentDay = draft.startTime ? INDEX_TO_DAY[getDay(parseISO(draft.startTime))] : 'monday';
+
+  const handlePreset = (value) => {
+    setDropdownOpen(false);
+    if (value === 'none') {
+      setDraft((prev) => ({ ...prev, recurring: false, recurringDays: [], recurringWeeks: 1, recurrenceEndType: 'never', recurrenceOccurrences: 13 }));
+    } else if (value === 'daily') {
+      setDraft((prev) => ({ ...prev, recurring: true, recurringDays: [...RECURRING_DAYS], recurringWeeks: 1, recurrenceEndType: 'never', recurrenceOccurrences: 13 }));
+    } else if (value === 'weekly') {
+      setDraft((prev) => ({ ...prev, recurring: true, recurringDays: [currentDay], recurringWeeks: 1, recurrenceEndType: 'never', recurrenceOccurrences: 13 }));
+    } else if (value === 'weekdays') {
+      setDraft((prev) => ({ ...prev, recurring: true, recurringDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'], recurringWeeks: 1, recurrenceEndType: 'never', recurrenceOccurrences: 13 }));
+    } else if (value === 'custom') {
+      setCustomModalOpen(true);
+    }
+  };
+
+  const handleCustomSave = (settings) => {
+    setDraft((prev) => ({
+      ...prev,
+      recurring: true,
+      ...settings,
+    }));
+    setCustomModalOpen(false);
+  };
+
+  const displayLabel = draft.recurring ? recurrenceLabel(draft) : 'Does not repeat';
+
+  return (
+    <>
+      <div ref={ref} className="relative w-full">
+        <button
+          type="button"
+          onClick={() => setDropdownOpen((o) => !o)}
+          className={`w-full h-[62px] px-4 flex items-center justify-between cursor-pointer rounded-2xl border bg-white transition-all ${
+            dropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : draft.recurring ? 'border-ww-blue' : 'border-[#84ABFF]'
+          }`}
+        >
+          <div className="flex flex-col items-start">
+            {draft.recurring && <span className="block text-[12px] font-normal text-[#031AA1]">Recurrence</span>}
+            <span className="text-[14px] font-semibold text-[#031AA1] truncate max-w-[280px]">
+              {draft.recurring ? displayLabel : 'Does not repeat'}
+            </span>
+          </div>
+          <ChevronDown size={16} className={`text-[#031AA1] transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+        </button>
+
+        {dropdownOpen && (
+          <div className="absolute left-0 top-full mt-1 w-full bg-white border border-slate-200 rounded-2xl shadow-lg z-30 py-1 max-h-64 overflow-y-auto">
+            {presets.map((p) => (
+              <button
+                key={p.value}
+                type="button"
+                onClick={() => handlePreset(p.value)}
+                className="w-full text-left px-4 py-2.5 text-[14px] font-semibold text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue cursor-pointer"
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {customModalOpen && (
+        <CustomRecurrenceModal
+          draft={draft}
+          onSave={handleCustomSave}
+          onClose={() => setCustomModalOpen(false)}
+        />
+      )}
+    </>
+  );
+}
+
 const DROPDOWN_TRIGGER_BASE = 'w-full h-[62px] px-4 flex items-center justify-between cursor-pointer rounded-2xl border bg-white transition-all';
 const DROPDOWN_MENU_CLASS = 'absolute left-0 top-full mt-1 w-full bg-white border border-slate-200 rounded-2xl shadow-lg z-30 py-1 max-h-64 overflow-y-auto';
 
@@ -308,8 +586,13 @@ export default function WorkshopForm({
   // Action handlers
   const handleSaveDraft = () => {
     if (mode === 'create') {
-      setWorkshops((prev) => [...prev, { ...draft, id: 'ws-' + Date.now() }]);
-      toast('Workshop created \u2014 ' + draft.title);
+      const base = { ...draft, id: 'ws-' + Date.now() };
+      const extras = draft.recurring && draft.recurringDays.length > 0
+        ? generateRecurringInstances(base)
+        : [];
+      setWorkshops((prev) => [...prev, base, ...extras]);
+      const total = 1 + extras.length;
+      toast(total > 1 ? `${total} workshops created` : 'Workshop created \u2014 ' + draft.title);
     } else {
       setWorkshops((prev) => prev.map((w) => (w.id === draft.id ? { ...draft } : w)));
       toast('Changes saved');
@@ -327,11 +610,13 @@ export default function WorkshopForm({
 
   const handlePublish = () => {
     if (mode === 'create') {
-      setWorkshops((prev) => [
-        ...prev,
-        { ...draft, id: 'ws-' + Date.now(), status: 'Published' },
-      ]);
-      toast('Workshop published \u2014 ' + draft.title);
+      const base = { ...draft, id: 'ws-' + Date.now(), status: 'Published' };
+      const extras = draft.recurring && draft.recurringDays.length > 0
+        ? generateRecurringInstances(base).map((w) => ({ ...w, status: 'Published' }))
+        : [];
+      setWorkshops((prev) => [...prev, base, ...extras]);
+      const total = 1 + extras.length;
+      toast(total > 1 ? `${total} workshops published` : 'Workshop published \u2014 ' + draft.title);
     } else {
       setWorkshops((prev) =>
         prev.map((w) => (w.id === draft.id ? { ...draft, status: 'Published' } : w))
@@ -528,12 +813,7 @@ export default function WorkshopForm({
       />
 
       {/* 8. Recurrence */}
-      <Select
-        label="Recurrence"
-        value={draft.recurrence}
-        onChange={(v) => updateField('recurrence', v)}
-        options={RECURRENCE_OPTIONS}
-      />
+      <RecurrenceField draft={draft} setDraft={setDraft} />
 
       {/* 9. Markets */}
       <div>

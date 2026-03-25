@@ -164,7 +164,7 @@ export default function DraftManager() {
                   : 'bg-white border-border text-slate-600 hover:border-slate-400'
               }`}
             >
-              <Filter size={14} />
+              <Calendar size={14} />
               Dates
               {(dateFrom || dateTo) && !filterOpen && (
                 <>

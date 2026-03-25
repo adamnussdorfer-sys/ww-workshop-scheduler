@@ -168,32 +168,35 @@ export default function CoachForm({ coach, mode, onClose, onRemove }) {
 
       {/* Availability */}
       <div>
-        <label className="block text-xs text-slate-500 mb-1.5">Availability</label>
-        <div className="space-y-2">
+        <label className="block text-[12px] font-normal text-[#031AA1] mb-2">Availability</label>
+        <div className="space-y-3">
           {draft.availability.map((slot, i) => (
             <div key={i} className="flex items-center gap-2">
-              <select
-                value={slot.day}
-                onChange={(e) => updateSlot(i, 'day', e.target.value)}
-                className="px-2 py-1.5 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue flex-1"
-              >
-                {DAYS.map((d) => (
-                  <option key={d} value={d}>{DAY_LABELS[d]}</option>
-                ))}
-              </select>
-              <input
-                type="time"
-                value={slot.start}
-                onChange={(e) => updateSlot(i, 'start', e.target.value)}
-                className="px-2 py-1.5 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue"
-              />
+              <div className="flex-1">
+                <Select
+                  label="Day"
+                  value={slot.day}
+                  onChange={(v) => updateSlot(i, 'day', v)}
+                  options={DAYS.map((d) => ({ value: d, label: DAY_LABELS[d] }))}
+                />
+              </div>
+              <div className="w-[100px]">
+                <Input
+                  label="Start"
+                  type="time"
+                  value={slot.start}
+                  onChange={(e) => updateSlot(i, 'start', e.target.value)}
+                />
+              </div>
               <span className="text-slate-400 text-sm">–</span>
-              <input
-                type="time"
-                value={slot.end}
-                onChange={(e) => updateSlot(i, 'end', e.target.value)}
-                className="px-2 py-1.5 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue"
-              />
+              <div className="w-[100px]">
+                <Input
+                  label="End"
+                  type="time"
+                  value={slot.end}
+                  onChange={(e) => updateSlot(i, 'end', e.target.value)}
+                />
+              </div>
               {draft.availability.length > 1 && (
                 <button
                   type="button"

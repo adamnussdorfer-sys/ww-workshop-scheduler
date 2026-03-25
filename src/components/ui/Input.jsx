@@ -8,7 +8,7 @@ const LABEL_STYLE = 'block text-[12px] font-normal text-[#031AA1]';
 const INPUT_STYLE =
   'w-full outline-none text-[14px] font-semibold bg-transparent';
 
-export default function Input({ label, multiline, rows = 3, className, ...props }) {
+export default function Input({ label, multiline, rows = 3, trailing, className, ...props }) {
   const [focused, setFocused] = useState(false);
   const inputRef = useRef(null);
   const hasValue = props.value !== undefined && props.value !== '';
@@ -28,23 +28,28 @@ export default function Input({ label, multiline, rows = 3, className, ...props 
       className={`${WRAPPER_BASE} ${multiline ? 'py-3' : 'h-[62px]'} ${stateClass}`}
       onClick={() => inputRef.current?.focus()}
     >
-      {showLabel && <label className={LABEL_STYLE}>{label}</label>}
-      <div className={`flex flex-col gap-1 ${showLabel ? 'mt-0.5' : ''}`}>
-        <Tag
-          ref={inputRef}
-          {...props}
-          {...(multiline ? { rows } : {})}
-          onFocus={(e) => {
-            setFocused(true);
-            props.onFocus?.(e);
-          }}
-          onBlur={(e) => {
-            setFocused(false);
-            props.onBlur?.(e);
-          }}
-          placeholder={showLabel ? props.placeholder : props.placeholder || label}
-          className={`${INPUT_STYLE} text-[#031AA1] placeholder:text-[#031AA1] ${multiline ? 'resize-none' : ''}`}
-        />
+      <div className="flex items-center gap-2">
+        <div className="flex-1 flex flex-col justify-center">
+          {showLabel && <label className={LABEL_STYLE}>{label}</label>}
+          <div className={`flex flex-col gap-1 ${showLabel ? 'mt-0.5' : ''}`}>
+            <Tag
+              ref={inputRef}
+              {...props}
+              {...(multiline ? { rows } : {})}
+              onFocus={(e) => {
+                setFocused(true);
+                props.onFocus?.(e);
+              }}
+              onBlur={(e) => {
+                setFocused(false);
+                props.onBlur?.(e);
+              }}
+              placeholder={showLabel ? props.placeholder : props.placeholder || label}
+              className={`${INPUT_STYLE} text-[#031AA1] placeholder:text-[#031AA1] ${multiline ? 'resize-none' : ''}`}
+            />
+          </div>
+        </div>
+        {trailing}
       </div>
     </div>
   );

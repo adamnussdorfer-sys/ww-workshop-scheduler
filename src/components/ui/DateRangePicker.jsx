@@ -123,7 +123,7 @@ export default function DateRangePicker({ dateFrom, dateTo, onChange, onClose })
   return (
     <div
       ref={ref}
-      className="fixed inset-x-4 bottom-4 md:absolute md:inset-auto md:left-0 md:top-full md:mt-2 md:w-max bg-white border border-border rounded-2xl shadow-xl z-40 p-5 overflow-auto max-h-[80vh] md:max-h-none"
+      className="fixed inset-x-4 bottom-4 md:absolute md:inset-auto md:right-0 md:top-full md:mt-2 md:w-max bg-white border border-border rounded-2xl shadow-xl z-40 p-5 overflow-auto max-h-[80vh] md:max-h-none"
     >
       {/* Nav arrows */}
       <div className="flex items-center justify-between mb-4">
