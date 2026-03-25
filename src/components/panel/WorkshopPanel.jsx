@@ -6,7 +6,7 @@ const STATUS_BADGE_OUTLINE = {
   Published: 'border-green-400 text-green-700',
 };
 
-export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode, slotContext, conflicts }) {
+export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode, slotContext, conflicts, onNavigate }) {
   const panelTitle =
     mode === 'create' ? 'New Workshop' : (workshop?.title ?? 'Workshop Details');
   const status = workshop?.status ?? 'Draft';
@@ -63,6 +63,7 @@ export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode
               slotContext={slotContext}
               onClose={onClose}
               conflicts={conflicts}
+              onNavigate={onNavigate}
               key={workshop?.id ?? 'create'}
             />
           )}

@@ -563,6 +563,7 @@ export default function WorkshopForm({
   slotContext,
   onClose,
   conflicts = [],
+  onNavigate,
 }) {
   const { setWorkshops } = useApp();
   const [draft, setDraft] = useState(() => initDraft(workshop, mode, slotContext));
@@ -644,6 +645,7 @@ export default function WorkshopForm({
       const total = 1 + extras.length;
       toast(total > 1 ? `${total} workshops saved` : 'Changes saved');
     }
+    if (draft.startTime && onNavigate) onNavigate(parseISO(draft.startTime));
     onClose();
   };
 
@@ -673,6 +675,7 @@ export default function WorkshopForm({
       const total = 1 + extras.length;
       toast(total > 1 ? `${total} workshops published` : 'Workshop published');
     }
+    if (draft.startTime && onNavigate) onNavigate(parseISO(draft.startTime));
     onClose();
   };
 

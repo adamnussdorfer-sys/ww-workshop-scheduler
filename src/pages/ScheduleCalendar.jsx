@@ -384,6 +384,7 @@ export default function ScheduleCalendar() {
         mode={panelMode}
         slotContext={slotContext}
         conflicts={conflictMap.get(selectedWorkshopId)?.conflicts ?? []}
+        onNavigate={setCurrentDate}
       />
     </div>
   );
