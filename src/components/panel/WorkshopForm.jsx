@@ -663,7 +663,10 @@ export default function WorkshopForm({
       {/* 2. Date & Time */}
       <DateTimeRow draft={draft} updateField={updateField} />
 
-      {/* 3. Timezone */}
+      {/* 3. Recurrence */}
+      <RecurrenceField draft={draft} setDraft={setDraft} />
+
+      {/* 4. Timezone */}
       <Select
         label="Timezone"
         value={draft.timezone}
@@ -812,10 +815,7 @@ export default function WorkshopForm({
         placeholder="Workshop description"
       />
 
-      {/* 8. Recurrence */}
-      <RecurrenceField draft={draft} setDraft={setDraft} />
-
-      {/* 9. Markets */}
+      {/* 8. Markets */}
       <div>
         <label className="block text-xs text-slate-500 mb-1.5">Markets</label>
         <div className="flex gap-4 flex-wrap">
