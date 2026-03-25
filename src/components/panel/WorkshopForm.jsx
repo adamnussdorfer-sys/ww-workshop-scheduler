@@ -105,6 +105,7 @@ function initDraft(workshop, mode, slotContext) {
       recurringWeeks: 1,
       recurrenceEndType: 'never',
       recurrenceOccurrences: 13,
+      timezone: 'ET',
       ...workshop,
     };
   }
@@ -566,6 +567,7 @@ export default function WorkshopForm({
   // Custom dropdown open states
   const [coachDropdownOpen, setCoachDropdownOpen] = useState(false);
   const [coCoachDropdownOpen, setCoCoachDropdownOpen] = useState(false);
+  const [showCoCoach, setShowCoCoach] = useState(() => !!draft.coCoachId);
 
   // Refs for click-outside detection
   const coachDropdownRef = useRef(null);
@@ -700,8 +702,21 @@ export default function WorkshopForm({
       {/* 2. Date & Time */}
       <DateTimeRow draft={draft} updateField={updateField} />
 
-      {/* 3. Recurrence */}
-      <RecurrenceField draft={draft} setDraft={setDraft} />
+      {/* 3. Recurrence toggle + dropdown */}
+      <label className="flex items-center gap-2 cursor-pointer">
+        <Checkbox
+          checked={draft.recurring}
+          onChange={() => {
+            if (draft.recurring) {
+              setDraft((prev) => ({ ...prev, recurring: false, recurringDays: [], recurringWeeks: 1, recurrenceEndType: 'never', recurrenceOccurrences: 13 }));
+            } else {
+              setDraft((prev) => ({ ...prev, recurring: true }));
+            }
+          }}
+        />
+        <span className="text-sm text-slate-700">Make recurring</span>
+      </label>
+      {draft.recurring && <RecurrenceField draft={draft} setDraft={setDraft} />}
 
       {/* 4. Coach — custom availability-aware dropdown */}
       <div ref={coachDropdownRef} className="relative w-full">
@@ -757,74 +772,77 @@ export default function WorkshopForm({
         )}
       </div>
 
-      {/* 5. Co-Coach — custom availability-aware dropdown with None option */}
-      <div ref={coCoachDropdownRef} className="relative w-full">
-        <button
-          type="button"
-          onClick={() => setCoCoachDropdownOpen((o) => !o)}
-          className={`${DROPDOWN_TRIGGER_BASE} ${
-            coCoachDropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : selectedCoCoach ? 'border-ww-blue' : 'border-[#84ABFF]'
-          }`}
-        >
-          <div className="flex flex-col items-start">
-            {selectedCoCoach && <span className="block text-[12px] font-normal text-[#031AA1]">Co-Coach</span>}
-            <span className={`text-[14px] font-semibold ${selectedCoCoach ? 'text-[#031AA1]' : 'text-[#031AA1]'}`}>
-              {selectedCoCoach ? selectedCoCoach.name : 'Co-Coach'}
-            </span>
-          </div>
-          <ChevronDown size={16} className={`text-[#031AA1] transition-transform ${coCoachDropdownOpen ? 'rotate-180' : ''}`} />
-        </button>
+      {/* 5. Co-Coach toggle + dropdown */}
+      <label className="flex items-center gap-2 cursor-pointer">
+        <Checkbox
+          checked={showCoCoach}
+          onChange={() => {
+            if (showCoCoach) {
+              updateField('coCoachId', null);
+              setShowCoCoach(false);
+            } else {
+              setShowCoCoach(true);
+            }
+          }}
+        />
+        <span className="text-sm text-slate-700">Add co-coach</span>
+      </label>
+      {showCoCoach && (
+        <div ref={coCoachDropdownRef} className="relative w-full">
+          <button
+            type="button"
+            onClick={() => setCoCoachDropdownOpen((o) => !o)}
+            className={`${DROPDOWN_TRIGGER_BASE} ${
+              coCoachDropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : 'border-ww-blue'
+            }`}
+          >
+            <div className="flex flex-col items-start">
+              <span className="block text-[12px] font-normal text-[#031AA1]">Co-Coach</span>
+              <span className="text-[14px] font-semibold text-[#031AA1]">
+                {selectedCoCoach ? selectedCoCoach.name : 'Select co-coach'}
+              </span>
+            </div>
+            <ChevronDown size={16} className={`text-[#031AA1] transition-transform ${coCoachDropdownOpen ? 'rotate-180' : ''}`} />
+          </button>
 
-        {coCoachDropdownOpen && (
-          <div className={DROPDOWN_MENU_CLASS}>
-            {/* None option */}
-            <button
-              type="button"
-              className="w-full text-left px-4 py-2.5 text-[14px] font-semibold text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue cursor-pointer"
-              onClick={() => {
-                updateField('coCoachId', null);
-                setCoCoachDropdownOpen(false);
-              }}
-            >
-              None
-            </button>
+          {coCoachDropdownOpen && (
+            <div className={DROPDOWN_MENU_CLASS}>
+              {coaches
+                .filter((c) => c.id !== draft.coachId)
+                .map((coach) => {
+                  const avail = workshopDate
+                    ? getCoachAvailability(coach, workshopDate, workshopHour, workshopMinute)
+                    : { available: true, reason: null };
 
-            {/* Coach list — exclude currently selected primary coach */}
-            {coaches
-              .filter((c) => c.id !== draft.coachId)
-              .map((coach) => {
-                const avail = workshopDate
-                  ? getCoachAvailability(coach, workshopDate, workshopHour, workshopMinute)
-                  : { available: true, reason: null };
-
-                return (
-                  <button
-                    key={coach.id}
-                    type="button"
-                    className={`w-full text-left px-4 py-2.5 text-[14px] font-semibold flex items-center gap-2 ${
-                      avail.available
-                        ? 'text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue cursor-pointer'
-                        : 'text-slate-400 cursor-not-allowed'
-                    }`}
-                    onClick={() => {
-                      if (!avail.available) return;
-                      updateField('coCoachId', coach.id);
-                      setCoCoachDropdownOpen(false);
-                    }}
-                  >
-                    <span className={`w-2 h-2 rounded-full flex-shrink-0 ${avail.available ? 'bg-green-500' : 'bg-slate-300'}`} />
-                    <span>
-                      {coach.name}
-                      {!avail.available && avail.reason && (
-                        <span className="ml-1 text-xs text-slate-400">({avail.reason})</span>
-                      )}
-                    </span>
-                  </button>
-                );
-              })}
-          </div>
-        )}
-      </div>
+                  return (
+                    <button
+                      key={coach.id}
+                      type="button"
+                      className={`w-full text-left px-4 py-2.5 text-[14px] font-semibold flex items-center gap-2 ${
+                        avail.available
+                          ? 'text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue cursor-pointer'
+                          : 'text-slate-400 cursor-not-allowed'
+                      }`}
+                      onClick={() => {
+                        if (!avail.available) return;
+                        updateField('coCoachId', coach.id);
+                        setCoCoachDropdownOpen(false);
+                      }}
+                    >
+                      <span className={`w-2 h-2 rounded-full flex-shrink-0 ${avail.available ? 'bg-green-500' : 'bg-slate-300'}`} />
+                      <span>
+                        {coach.name}
+                        {!avail.available && avail.reason && (
+                          <span className="ml-1 text-xs text-slate-400">({avail.reason})</span>
+                        )}
+                      </span>
+                    </button>
+                  );
+                })}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* 6. Type */}
       <Select
