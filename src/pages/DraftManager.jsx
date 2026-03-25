@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useRef } from 'react';
-import { AlertTriangle, Plus, Trash2, X, Filter } from 'lucide-react';
+import { AlertTriangle, Plus, Trash2, X, Filter, Calendar, Clock } from 'lucide-react';
 import { format, parseISO, isAfter, isBefore, startOfDay, endOfDay } from 'date-fns';
 import { useApp } from '../context/AppContext';
 import Checkbox from '../components/ui/Checkbox';
@@ -239,10 +239,18 @@ export default function DraftManager() {
 
           {/* Desktop: table */}
           <div className="hidden md:block">
-            <table className="w-full">
+            <table className="w-full table-fixed">
+              <colgroup>
+                <col className="w-12" />
+                <col className="w-[25%]" />
+                <col className="w-[20%]" />
+                <col className="w-[22%]" />
+                <col className="w-[16%]" />
+                <col className="w-[17%]" />
+              </colgroup>
               <thead>
                 <tr className="border-b border-border bg-slate-50/60">
-                  <th className="w-12 px-4 py-3">
+                  <th className="px-4 py-3">
                     <Checkbox
                       checked={allSelected}
                       indeterminate={someSelected}
@@ -279,12 +287,26 @@ export default function DraftManager() {
                         onChange={() => toggleOne(w.id)}
                       />
                     </td>
-                    <td className="px-4 py-3 text-sm font-medium text-ww-navy">{w.title}</td>
+                    <td className="px-4 py-3 text-sm font-medium text-ww-navy truncate">{w.title}</td>
                     <td className="px-4 py-3 text-sm text-slate-600">
-                      {coachMap.get(w.coachId)?.name ?? 'Unknown'}
+                      {(() => {
+                        const coach = coachMap.get(w.coachId);
+                        const name = coach?.name ?? 'Unknown';
+                        return (
+                          <div className="flex items-center gap-2.5">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-ww-blue/10 text-ww-blue text-[10px] font-semibold flex items-center justify-center">
+                              {name.split(' ').map((n) => n[0]).join('').slice(0, 2)}
+                            </span>
+                            <span className="truncate">{name}</span>
+                          </div>
+                        );
+                      })()}
                     </td>
                     <td className="px-4 py-3 text-sm text-slate-600">
-                      {format(parseISO(w.startTime), 'EEE MMM d, h:mm a')}
+                      <div className="flex items-center gap-2">
+                        <Calendar size={14} className="flex-shrink-0 text-slate-400" />
+                        <span className="truncate">{format(parseISO(w.startTime), 'EEE MMM d, h:mm a')}</span>
+                      </div>
                     </td>
                     <td className="px-4 py-3">
                       <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${TYPE_PILL_STYLES[w.type] ?? 'bg-slate-100 text-slate-600'}`}>
@@ -293,9 +315,9 @@ export default function DraftManager() {
                     </td>
                     <td className="px-4 py-3">
                       {conflictMap.get(w.id)?.hasConflicts && (
-                        <div className="flex items-start gap-1.5">
+                        <div className="bg-red-50 border border-red-200 rounded-lg px-2.5 py-1.5 inline-flex items-start gap-1.5">
                           <AlertTriangle size={14} className="text-ww-coral flex-shrink-0 mt-0.5" />
-                          <div className="text-xs text-red-600">
+                          <div className="text-xs text-red-700">
                             {conflictMap.get(w.id).conflicts.map((c, i) => (
                               <span key={i} className="block">{c.message}</span>
                             ))}
@@ -335,9 +357,9 @@ export default function DraftManager() {
                       {w.type}
                     </span>
                     {conflictMap.get(w.id)?.hasConflicts && (
-                      <div className="flex items-start gap-1.5 mt-1.5">
+                      <div className="bg-red-50 border border-red-200 rounded-lg px-2.5 py-1.5 mt-1.5 flex items-start gap-1.5">
                         <AlertTriangle size={12} className="text-ww-coral flex-shrink-0 mt-0.5" />
-                        <div className="text-[11px] text-red-600">
+                        <div className="text-[11px] text-red-700">
                           {conflictMap.get(w.id).conflicts.map((c, i) => (
                             <span key={i} className="block">{c.message}</span>
                           ))}
