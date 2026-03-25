@@ -3,7 +3,7 @@ import { AlertTriangle, Plus, Trash2, X, Filter } from 'lucide-react';
 import { format, parseISO, isAfter, isBefore, startOfDay, endOfDay } from 'date-fns';
 import { useApp } from '../context/AppContext';
 import Checkbox from '../components/ui/Checkbox';
-import MiniCalendar from '../components/ui/MiniCalendar';
+import DateRangePicker from '../components/ui/DateRangePicker';
 import { buildConflictMap } from '../utils/conflictEngine';
 import WorkshopPanel from '../components/panel/WorkshopPanel';
 
@@ -28,10 +28,7 @@ export default function DraftManager() {
   const [dateFrom, setDateFrom] = useState(null);
   const [dateTo, setDateTo] = useState(null);
   const [filterOpen, setFilterOpen] = useState(false);
-  const [fromCalOpen, setFromCalOpen] = useState(false);
-  const [toCalOpen, setToCalOpen] = useState(false);
-  const fromRef = useRef(null);
-  const toRef = useRef(null);
+  const filterRef = useRef(null);
 
   const handleSort = (field) => {
     if (sortBy === field) {
@@ -157,21 +154,43 @@ export default function DraftManager() {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Filter button */}
-          <button
-            onClick={() => setFilterOpen((o) => !o)}
-            className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full border-[1.5px] transition-colors ${
-              filterOpen || dateFrom || dateTo
-                ? 'bg-ww-blue/5 border-ww-blue text-ww-blue'
-                : 'bg-white border-border text-slate-600 hover:border-slate-400'
-            }`}
-          >
-            <Filter size={14} />
-            Dates
-            {(dateFrom || dateTo) && (
-              <span className="w-1.5 h-1.5 rounded-full bg-ww-blue" />
+          {/* Filter button + date range picker */}
+          <div className="relative" ref={filterRef}>
+            <button
+              onClick={() => setFilterOpen((o) => !o)}
+              className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full border-[1.5px] transition-colors cursor-pointer ${
+                filterOpen || dateFrom || dateTo
+                  ? 'bg-ww-blue/5 border-ww-blue text-ww-blue'
+                  : 'bg-white border-border text-slate-600 hover:border-slate-400'
+              }`}
+            >
+              <Filter size={14} />
+              Dates
+              {(dateFrom || dateTo) && !filterOpen && (
+                <>
+                  <span className="text-xs font-normal text-ww-blue/70">
+                    {dateFrom ? format(dateFrom, 'MMM d') : '...'} – {dateTo ? format(dateTo, 'MMM d') : '...'}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); setDateFrom(null); setDateTo(null); }}
+                    className="text-ww-blue/50 hover:text-ww-blue transition-colors"
+                  >
+                    <X size={14} />
+                  </button>
+                </>
+              )}
+            </button>
+
+            {filterOpen && (
+              <DateRangePicker
+                dateFrom={dateFrom}
+                dateTo={dateTo}
+                onChange={(from, to) => { setDateFrom(from); setDateTo(to); }}
+                onClose={() => setFilterOpen(false)}
+              />
             )}
-          </button>
+          </div>
 
           {/* Bulk actions — only when items selected */}
           {effectiveSelectedIds.size > 0 && (
@@ -213,56 +232,6 @@ export default function DraftManager() {
           </button>
         </div>
       </div>
-
-      {/* Date filter expandable row */}
-      {filterOpen && (
-        <div className="flex flex-wrap items-center gap-2 px-6 pb-3">
-          <div className="relative" ref={fromRef}>
-            <button
-              onClick={() => { setFromCalOpen((o) => !o); setToCalOpen(false); }}
-              className={`rounded-2xl border px-4 h-[42px] flex items-center bg-white transition-all cursor-pointer ${dateFrom ? 'border-ww-blue' : 'border-[#84ABFF]'}`}
-            >
-              <span className="text-[13px] font-semibold text-[#031AA1]">
-                {dateFrom ? format(dateFrom, 'MM/dd/yyyy') : 'From'}
-              </span>
-            </button>
-            {fromCalOpen && (
-              <MiniCalendar
-                selected={dateFrom}
-                onSelect={(d) => setDateFrom(d)}
-                onClose={() => setFromCalOpen(false)}
-              />
-            )}
-          </div>
-          <span className="text-sm text-slate-400">to</span>
-          <div className="relative" ref={toRef}>
-            <button
-              onClick={() => { setToCalOpen((o) => !o); setFromCalOpen(false); }}
-              className={`rounded-2xl border px-4 h-[42px] flex items-center bg-white transition-all cursor-pointer ${dateTo ? 'border-ww-blue' : 'border-[#84ABFF]'}`}
-            >
-              <span className="text-[13px] font-semibold text-[#031AA1]">
-                {dateTo ? format(dateTo, 'MM/dd/yyyy') : 'To'}
-              </span>
-            </button>
-            {toCalOpen && (
-              <MiniCalendar
-                selected={dateTo}
-                onSelect={(d) => setDateTo(d)}
-                onClose={() => setToCalOpen(false)}
-              />
-            )}
-          </div>
-          {(dateFrom || dateTo) && (
-            <button
-              onClick={() => { setDateFrom(null); setDateTo(null); }}
-              className="p-1 text-slate-400 hover:text-slate-600 transition-colors"
-              aria-label="Clear dates"
-            >
-              <X size={16} />
-            </button>
-          )}
-        </div>
-      )}
 
       {/* Table / cards area */}
       <div className="flex-1 overflow-auto px-6 py-4">
