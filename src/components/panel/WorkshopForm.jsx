@@ -636,8 +636,13 @@ export default function WorkshopForm({
       const total = 1 + extras.length;
       toast(total > 1 ? `${total} workshops created` : 'Workshop created \u2014 ' + draft.title);
     } else {
-      setWorkshops((prev) => prev.map((w) => (w.id === draft.id ? { ...draft } : w)));
-      toast('Changes saved');
+      const updated = { ...draft };
+      const extras = draft.recurring && draft.recurringDays.length > 0
+        ? generateRecurringInstances(updated)
+        : [];
+      setWorkshops((prev) => [...prev.map((w) => (w.id === draft.id ? updated : w)), ...extras]);
+      const total = 1 + extras.length;
+      toast(total > 1 ? `${total} workshops saved` : 'Changes saved');
     }
     onClose();
   };
@@ -660,10 +665,13 @@ export default function WorkshopForm({
       const total = 1 + extras.length;
       toast(total > 1 ? `${total} workshops published` : 'Workshop published \u2014 ' + draft.title);
     } else {
-      setWorkshops((prev) =>
-        prev.map((w) => (w.id === draft.id ? { ...draft, status: 'Published' } : w))
-      );
-      toast('Workshop published');
+      const updated = { ...draft, status: 'Published' };
+      const extras = draft.recurring && draft.recurringDays.length > 0
+        ? generateRecurringInstances(updated).map((w) => ({ ...w, status: 'Published' }))
+        : [];
+      setWorkshops((prev) => [...prev.map((w) => (w.id === draft.id ? updated : w)), ...extras]);
+      const total = 1 + extras.length;
+      toast(total > 1 ? `${total} workshops published` : 'Workshop published');
     }
     onClose();
   };
