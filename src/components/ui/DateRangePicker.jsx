@@ -49,7 +49,6 @@ export default function DateRangePicker({ dateFrom, dateTo, onChange, onClose })
       onChange(day, null);
       setSelecting('to');
     } else {
-      // If clicked date is before the from date, reset
       if (dateFrom && isBefore(day, dateFrom)) {
         onChange(day, null);
         setSelecting('to');
@@ -75,7 +74,7 @@ export default function DateRangePicker({ dateFrom, dateTo, onChange, onClose })
 
   function renderMonth(month, weeks) {
     return (
-      <div className="flex-1 min-w-0">
+      <div className="w-[280px]">
         <h3 className="text-sm font-semibold text-ww-navy text-center mb-3">
           {format(month, 'MMMM yyyy')}
         </h3>
@@ -97,7 +96,7 @@ export default function DateRangePicker({ dateFrom, dateTo, onChange, onClose })
                   key={day.toISOString()}
                   type="button"
                   onClick={() => inMonth && handleDayClick(day)}
-                  className={`h-9 text-sm relative flex items-center justify-center transition-colors
+                  className={`h-10 w-10 text-sm relative flex items-center justify-center transition-colors
                     ${!inMonth ? 'text-slate-200 cursor-default' : 'cursor-pointer'}
                     ${inRange && inMonth ? 'bg-ww-blue/10' : ''}
                     ${isRangeStart(day) && inMonth ? 'bg-ww-blue/10 rounded-l-full' : ''}
@@ -105,7 +104,7 @@ export default function DateRangePicker({ dateFrom, dateTo, onChange, onClose })
                     ${selected && dateFrom && dateTo && isSameDay(dateFrom, dateTo) ? '!rounded-full' : ''}
                   `}
                 >
-                  <span className={`w-9 h-9 flex items-center justify-center rounded-full transition-colors
+                  <span className={`w-10 h-10 flex items-center justify-center rounded-full transition-colors
                     ${selected && inMonth ? 'bg-ww-blue text-white font-semibold' : ''}
                     ${!selected && today && inMonth ? 'ring-2 ring-ww-blue/30 text-ww-blue font-semibold' : ''}
                     ${!selected && !today && inMonth ? 'hover:bg-slate-100 text-slate-700' : ''}
@@ -124,8 +123,9 @@ export default function DateRangePicker({ dateFrom, dateTo, onChange, onClose })
   return (
     <div
       ref={ref}
-      className="absolute left-0 top-full mt-2 bg-white border border-border rounded-2xl shadow-xl z-40 p-5"
+      className="fixed inset-x-4 bottom-4 md:absolute md:inset-auto md:left-0 md:top-full md:mt-2 bg-white border border-border rounded-2xl shadow-xl z-40 p-5 overflow-auto max-h-[80vh] md:max-h-none"
     >
+      {/* Nav arrows */}
       <div className="flex items-center justify-between mb-4">
         <button
           type="button"
@@ -144,7 +144,8 @@ export default function DateRangePicker({ dateFrom, dateTo, onChange, onClose })
         </button>
       </div>
 
-      <div className="flex gap-8">
+      {/* Calendars — stack on mobile, side by side on desktop */}
+      <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
         {renderMonth(leftMonth, leftWeeks)}
         {renderMonth(rightMonth, rightWeeks)}
       </div>
