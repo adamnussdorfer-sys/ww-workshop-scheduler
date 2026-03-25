@@ -216,7 +216,18 @@ function TimePicker({ value, onChange, label }) {
 
 function DateTimeRow({ draft, updateField }) {
   const [calOpen, setCalOpen] = useState(false);
+  const [tzOpen, setTzOpen] = useState(false);
   const dateRef = useRef(null);
+  const tzRef = useRef(null);
+
+  useEffect(() => {
+    if (!tzOpen) return;
+    function handleMouseDown(e) {
+      if (tzRef.current && !tzRef.current.contains(e.target)) setTzOpen(false);
+    }
+    document.addEventListener('mousedown', handleMouseDown);
+    return () => document.removeEventListener('mousedown', handleMouseDown);
+  }, [tzOpen]);
 
   // Parse current date from draft.startTime
   const currentDate = draft.startTime ? parseISO(draft.startTime) : null;
@@ -280,6 +291,32 @@ function DateTimeRow({ draft, updateField }) {
             <TimePicker value={startTime} onChange={handleStartTimeChange} label="Start" />
             <span className="text-[#031AA1]/40 text-sm">–</span>
             <TimePicker value={endTime} onChange={handleEndTimeChange} label="End" />
+            <span className="text-[#031AA1]/40 text-sm">|</span>
+            <div className="relative" ref={tzRef}>
+              <button
+                type="button"
+                onClick={() => setTzOpen((o) => !o)}
+                className="text-[13px] font-semibold text-[#031AA1] cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap"
+              >
+                {draft.timezone}
+              </button>
+              {tzOpen && (
+                <div className="absolute right-0 top-full mt-1 bg-white border border-slate-200 rounded-2xl shadow-lg z-30 py-1 min-w-[180px]">
+                  {TIMEZONE_OPTIONS.map((tz) => (
+                    <button
+                      key={tz.value}
+                      type="button"
+                      onClick={() => { updateField('timezone', tz.value); setTzOpen(false); }}
+                      className={`w-full text-left px-4 py-2 text-[13px] font-semibold cursor-pointer transition-colors ${
+                        draft.timezone === tz.value ? 'text-ww-blue bg-ww-blue/5' : 'text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue'
+                      }`}
+                    >
+                      {tz.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </>
         )}
       </div>
@@ -665,14 +702,6 @@ export default function WorkshopForm({
 
       {/* 3. Recurrence */}
       <RecurrenceField draft={draft} setDraft={setDraft} />
-
-      {/* 4. Timezone */}
-      <Select
-        label="Timezone"
-        value={draft.timezone}
-        onChange={(v) => updateField('timezone', v)}
-        options={TIMEZONE_OPTIONS}
-      />
 
       {/* 4. Coach — custom availability-aware dropdown */}
       <div ref={coachDropdownRef} className="relative w-full">
