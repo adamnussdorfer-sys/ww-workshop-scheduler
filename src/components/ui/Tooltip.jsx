@@ -28,7 +28,7 @@ export default function Tooltip({ children, content }) {
       >
         {children}
       </span>
-      {visible &&
+      {visible && content &&
         createPortal(
           <div
             className="fixed z-[9999] -translate-x-1/2 bg-ww-navy text-white text-[11px] leading-snug rounded-md shadow-lg px-2.5 py-1.5 max-w-56 pointer-events-none"

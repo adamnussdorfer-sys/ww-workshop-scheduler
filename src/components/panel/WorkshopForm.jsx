@@ -12,6 +12,7 @@ import Checkbox from '../ui/Checkbox';
 import Input, { Select } from '../ui/Input';
 import MiniCalendar from '../ui/MiniCalendar';
 import { getCoachAvailability } from '../../utils/coachAvailability';
+import Tooltip from '../ui/Tooltip';
 
 const WORKSHOP_TYPES = [
   'Weekly Connection',
@@ -516,9 +517,11 @@ function RecurrenceField({ draft, setDraft }) {
         >
           <div className="flex flex-col items-start">
             {draft.recurring && <span className="block text-[12px] font-normal text-[#031AA1]">Recurrence</span>}
-            <span className="text-[14px] font-semibold text-[#031AA1] truncate max-w-[280px]" title={draft.recurring ? displayLabel : undefined}>
-              {draft.recurring ? displayLabel : 'Does not repeat'}
-            </span>
+            <Tooltip content={draft.recurring ? displayLabel : null}>
+              <span className="text-[14px] font-semibold text-[#031AA1] truncate max-w-[280px]">
+                {draft.recurring ? displayLabel : 'Does not repeat'}
+              </span>
+            </Tooltip>
           </div>
           <ChevronDown size={16} className={`text-[#031AA1] transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
         </button>
