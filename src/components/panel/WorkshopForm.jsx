@@ -699,7 +699,15 @@ export default function WorkshopForm({
         placeholder="Workshop title"
       />
 
-      {/* 2. Date & Time */}
+      {/* 2. Type */}
+      <Select
+        label="Type"
+        value={draft.type}
+        onChange={(v) => updateField('type', v)}
+        options={WORKSHOP_TYPES.map((t) => ({ value: t, label: t }))}
+      />
+
+      {/* 3. Date & Time */}
       <DateTimeRow draft={draft} updateField={updateField} />
 
       {/* 3. Recurrence toggle + dropdown */}
@@ -844,15 +852,7 @@ export default function WorkshopForm({
         </div>
       )}
 
-      {/* 6. Type */}
-      <Select
-        label="Type"
-        value={draft.type}
-        onChange={(v) => updateField('type', v)}
-        options={WORKSHOP_TYPES.map((t) => ({ value: t, label: t }))}
-      />
-
-      {/* 7. Description */}
+      {/* 6. Description */}
       <Input
         label="Description"
         multiline
