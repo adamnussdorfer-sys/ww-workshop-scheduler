@@ -82,13 +82,6 @@ export default function CoachDetailPanel({ coach, onEdit, onRemove }) {
         >
           Edit
         </button>
-        <button
-          type="button"
-          onClick={onRemove}
-          className="px-4 py-2 text-sm font-medium rounded-full text-ww-coral border border-ww-coral/30 hover:bg-ww-coral/10 transition-colors"
-        >
-          Remove
-        </button>
       </div>
     </div>
   );

@@ -300,6 +300,7 @@ export default function CoachRoster() {
               coach={selectedCoach}
               mode={panelMode}
               onClose={closePanel}
+              onRemove={panelMode === 'edit' ? handleRemove : undefined}
               key={selectedCoach?.id ?? 'create'}
             />
           )}

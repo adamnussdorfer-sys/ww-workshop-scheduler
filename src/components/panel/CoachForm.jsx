@@ -54,7 +54,7 @@ function getInitials(name) {
     .join('');
 }
 
-export default function CoachForm({ coach, mode, onClose }) {
+export default function CoachForm({ coach, mode, onClose, onRemove }) {
   const { setCoaches, toast } = useApp();
   const [draft, setDraft] = useState(() => initDraft(mode === 'edit' ? coach : null));
 
@@ -239,6 +239,18 @@ export default function CoachForm({ coach, mode, onClose }) {
           Cancel
         </button>
       </div>
+
+      {mode === 'edit' && onRemove && (
+        <div className="pt-6 mt-2">
+          <button
+            type="button"
+            onClick={onRemove}
+            className="text-sm text-red-500 hover:text-red-700 transition-colors"
+          >
+            Remove coach
+          </button>
+        </div>
+      )}
     </div>
   );
 }
