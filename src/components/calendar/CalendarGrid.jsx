@@ -9,7 +9,6 @@ import {
   isToday,
 } from 'date-fns';
 import WorkshopCard from './WorkshopCard';
-import { getSaturatedSlots } from '../../utils/conflictEngine';
 import {
   GRID_START_HOUR,
   GRID_END_HOUR,
@@ -104,14 +103,6 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
     [workshops]
   );
 
-  const saturationMap = useMemo(() => {
-    const result = new Map();
-    weekDays.forEach(day => {
-      const dayWs = visibleWorkshops.filter(ws => isSameDay(parseISO(ws.startTime), day));
-      result.set(day.toISOString(), getSaturatedSlots(dayWs));
-    });
-    return result;
-  }, [visibleWorkshops, weekDays]);
 
   // Compute availability bands per day — short-circuits when overlay is off.
   // Uses full coaches array (preserving stable coachIndex for color) then filters
@@ -233,16 +224,6 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                   />
                 ))}
 
-                {/* Saturation bars — amber overlay for 4+ concurrent workshops */}
-                {saturationMap.get(day.toISOString())?.map(({ slotIndex, count }) => (
-                  <div
-                    key={`sat-${slotIndex}`}
-                    className="absolute left-0 right-0 bg-amber-50 border-t border-amber-300 flex items-center px-1 z-10 pointer-events-none"
-                    style={{ top: slotIndex * 32, height: 32 }}
-                  >
-                    <span className="text-[9px] text-amber-700 font-medium">{count} concurrent</span>
-                  </div>
-                ))}
 
                 {/* Workshop cards */}
                 {(() => {

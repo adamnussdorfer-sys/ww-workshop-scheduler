@@ -713,4 +713,35 @@ export const workshops = [
     recurrence: 'weekly',
     attendance: [86, 91, 82, 95, 88],
   },
+
+  // ── 4-EVENT OVERLAP TEST (Wednesday 10:00) ────────────────────────────
+  // ws-018 (10:00-11:30) and ws-019 (10:00-11:00) already exist here
+  {
+    id: 'ws-050',
+    title: 'Midweek Motivation',
+    type: 'Weekly Connection',
+    status: 'Published',
+    coachId: 'coach-001',
+    coCoachId: null,
+    startTime: getWeekDay(2, 10, 0).toISOString(),
+    endTime: getWeekDay(2, 11, 0).toISOString(),
+    markets: ['US'],
+    description: 'Midweek motivational check-in to keep your goals on track.',
+    recurrence: 'weekly',
+    attendance: [78, 83, 75, 88, 81],
+  },
+  {
+    id: 'ws-051',
+    title: 'Coaching Corner: Meal Prep',
+    type: 'Coaching Corner',
+    status: 'Published',
+    coachId: 'coach-007',
+    coCoachId: null,
+    startTime: getWeekDay(2, 10, 0).toISOString(),
+    endTime: getWeekDay(2, 10, 30).toISOString(),
+    markets: ['US', 'CA'],
+    description: 'Quick tips for efficient weekly meal prep.',
+    recurrence: 'weekly',
+    attendance: [42, 47, 39, 51, 44],
+  },
 ];

@@ -9,7 +9,6 @@ import {
   isToday,
 } from 'date-fns';
 import WorkshopCard from './WorkshopCard';
-import { getSaturatedSlots } from '../../utils/conflictEngine';
 import {
   GRID_START_HOUR,
   GRID_END_HOUR,
@@ -114,10 +113,6 @@ export default function DayView({
     [visibleWorkshops, date]
   );
 
-  const saturationSlots = useMemo(
-    () => getSaturatedSlots(dayWorkshops),
-    [dayWorkshops]
-  );
 
   // Compute availability bands for this single day
   const availabilityBands = useMemo(() => {
@@ -201,16 +196,6 @@ export default function DayView({
             />
           ))}
 
-          {/* Saturation bars */}
-          {saturationSlots.map(({ slotIndex, count }) => (
-            <div
-              key={`sat-${slotIndex}`}
-              className="absolute left-0 right-0 bg-amber-50 border-t border-amber-300 flex items-center px-1 z-10 pointer-events-none"
-              style={{ top: slotIndex * 32, height: 32 }}
-            >
-              <span className="text-[9px] text-amber-700 font-medium">{count} concurrent</span>
-            </div>
-          ))}
 
           {/* Workshop cards — wider in day view */}
           {(() => {
