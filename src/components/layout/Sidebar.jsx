@@ -71,7 +71,7 @@ export default function Sidebar({ collapsed, onToggle }) {
         </button>
 
         {menuOpen && (
-          <div className={`absolute bottom-full mb-2 ${collapsed ? 'left-1/2 -translate-x-1/2' : 'left-3'} bg-white border border-border rounded-xl shadow-lg py-1 min-w-[160px] z-50`}>
+          <div className={`fixed ${collapsed ? 'left-[68px]' : 'left-[12px]'} bottom-[90px] bg-white border border-border rounded-xl shadow-lg py-1 min-w-[160px] z-50`}>
             <div className="px-3 py-2 border-b border-border">
               <p className="text-sm font-semibold text-ww-navy">Kathleen Toth</p>
               <p className="text-xs text-slate-400">kathleen@ww.com</p>
