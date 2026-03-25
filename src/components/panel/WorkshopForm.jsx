@@ -516,7 +516,7 @@ function RecurrenceField({ draft, setDraft }) {
         >
           <div className="flex flex-col items-start">
             {draft.recurring && <span className="block text-[12px] font-normal text-[#031AA1]">Recurrence</span>}
-            <span className="text-[14px] font-semibold text-[#031AA1] truncate max-w-[280px]">
+            <span className="text-[14px] font-semibold text-[#031AA1] truncate max-w-[280px]" title={draft.recurring ? displayLabel : undefined}>
               {draft.recurring ? displayLabel : 'Does not repeat'}
             </span>
           </div>
