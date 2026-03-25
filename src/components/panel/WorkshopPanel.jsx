@@ -1,10 +1,15 @@
 import { X } from 'lucide-react';
 import WorkshopForm from './WorkshopForm';
 
+const STATUS_BADGE_OUTLINE = {
+  Draft: 'border-yellow-400 text-yellow-700',
+  Published: 'border-green-400 text-green-700',
+};
+
 export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode, slotContext, conflicts }) {
-  // Dynamic panel title
   const panelTitle =
     mode === 'create' ? 'New Workshop' : (workshop?.title ?? 'Workshop Details');
+  const status = workshop?.status ?? 'Draft';
 
   return (
     <>
@@ -31,10 +36,17 @@ export default function WorkshopPanel({ isOpen, onClose, workshop, coaches, mode
 
         {/* Panel header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border flex-shrink-0">
-          <h2 className="text-base font-semibold text-ww-navy">{panelTitle}</h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-base font-semibold text-ww-navy">{panelTitle}</h2>
+            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+              STATUS_BADGE_OUTLINE[status] ?? STATUS_BADGE_OUTLINE.Draft
+            }`}>
+              {status}
+            </span>
+          </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded hover:bg-surface-2"
+            className="text-ww-blue hover:text-ww-navy transition-colors p-1 rounded hover:bg-surface-2"
             aria-label="Close panel"
           >
             <X size={18} />

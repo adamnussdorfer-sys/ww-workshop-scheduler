@@ -9,6 +9,13 @@ const COACH_STATUS_BADGE = {
   inactive: 'bg-slate-100 text-slate-600',
 };
 
+const TZ_SHORT = {
+  'America/New_York': 'ET',
+  'America/Chicago': 'CT',
+  'America/Denver': 'MT',
+  'America/Los_Angeles': 'PT',
+};
+
 function SortHeader({ label, sortKey, sort, onSort, align = 'left' }) {
   const isActive = sort.key === sortKey;
   return (
@@ -126,7 +133,7 @@ export default function CoachRoster() {
       {/* Page header */}
       <div className="flex items-center justify-between px-6 py-4 flex-shrink-0">
         <div>
-          <h1 className="text-xl font-semibold text-ww-navy">Coach Roster</h1>
+          <h1 className="text-xl font-semibold text-ww-navy">Coaches</h1>
           <p className="text-sm text-slate-500 mt-0.5">{coaches.length} coaches</p>
         </div>
 
@@ -151,6 +158,20 @@ export default function CoachRoster() {
                   <SortHeader
                     label="Name"
                     sortKey="name"
+                    sort={sort}
+                    onSort={handleSort}
+                    align="left"
+                  />
+                  <SortHeader
+                    label="Email"
+                    sortKey="email"
+                    sort={sort}
+                    onSort={handleSort}
+                    align="left"
+                  />
+                  <SortHeader
+                    label="Timezone"
+                    sortKey="timezone"
                     sort={sort}
                     onSort={handleSort}
                     align="left"
@@ -181,6 +202,12 @@ export default function CoachRoster() {
                     <td className="px-4 py-3 text-sm font-medium text-ww-navy">
                       {coach.name}
                     </td>
+                    <td className="px-4 py-3 text-sm text-slate-600">
+                      {coach.email}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-slate-600">
+                      {TZ_SHORT[coach.timezone] ?? coach.timezone}
+                    </td>
                     <td className="px-4 py-3 text-sm text-slate-600 text-center">
                       {coach.workshopsThisWeek}
                     </td>
@@ -209,8 +236,9 @@ export default function CoachRoster() {
               >
                 <div className="flex flex-col gap-0.5">
                   <span className="text-sm font-medium text-ww-navy">{coach.name}</span>
+                  <span className="text-xs text-slate-500">{coach.email}</span>
                   <span className="text-xs text-slate-500">
-                    {coach.workshopsThisWeek} workshops this week
+                    {TZ_SHORT[coach.timezone] ?? coach.timezone} · {coach.workshopsThisWeek} workshops this week
                   </span>
                 </div>
                 <span

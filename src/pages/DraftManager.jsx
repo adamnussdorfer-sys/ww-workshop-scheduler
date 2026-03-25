@@ -1,8 +1,9 @@
-import { useState, useMemo, useCallback } from 'react';
-import { AlertTriangle, Plus } from 'lucide-react';
-import { format, parseISO } from 'date-fns';
+import { useState, useMemo, useCallback, useRef } from 'react';
+import { AlertTriangle, Plus, Trash2, X } from 'lucide-react';
+import { format, parseISO, isAfter, isBefore, startOfDay, endOfDay } from 'date-fns';
 import { useApp } from '../context/AppContext';
 import Checkbox from '../components/ui/Checkbox';
+import MiniCalendar from '../components/ui/MiniCalendar';
 import { buildConflictMap } from '../utils/conflictEngine';
 import WorkshopPanel from '../components/panel/WorkshopPanel';
 
@@ -19,13 +20,63 @@ export default function DraftManager() {
 
   const [selectedIds, setSelectedIds] = useState(new Set());
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [createPanelOpen, setCreatePanelOpen] = useState(false);
+  const [editingWorkshop, setEditingWorkshop] = useState(null);
+  const [sortBy, setSortBy] = useState('date'); // 'date' | 'title' | 'coach'
+  const [sortDir, setSortDir] = useState('asc');
+  const [dateFrom, setDateFrom] = useState(null);
+  const [dateTo, setDateTo] = useState(null);
+  const [fromCalOpen, setFromCalOpen] = useState(false);
+  const [toCalOpen, setToCalOpen] = useState(false);
+  const fromRef = useRef(null);
+  const toRef = useRef(null);
+
+  const handleSort = (field) => {
+    if (sortBy === field) {
+      setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortBy(field);
+      setSortDir('asc');
+    }
+  };
 
   // Derived data
-  const draftWorkshops = useMemo(
+  const allDrafts = useMemo(
     () => workshops.filter((w) => w.status === 'Draft'),
     [workshops]
   );
+
+  const draftWorkshops = useMemo(() => {
+    let list = [...allDrafts];
+
+    // Date filter
+    if (dateFrom) {
+      const from = startOfDay(dateFrom);
+      list = list.filter((w) => !isBefore(parseISO(w.startTime), from));
+    }
+    if (dateTo) {
+      const to = endOfDay(dateTo);
+      list = list.filter((w) => !isAfter(parseISO(w.startTime), to));
+    }
+
+    // Sort
+    list.sort((a, b) => {
+      let cmp = 0;
+      if (sortBy === 'date') {
+        cmp = new Date(a.startTime) - new Date(b.startTime);
+      } else if (sortBy === 'title') {
+        cmp = (a.title || '').localeCompare(b.title || '');
+      } else if (sortBy === 'coach') {
+        const nameA = coaches.find((c) => c.id === a.coachId)?.name || '';
+        const nameB = coaches.find((c) => c.id === b.coachId)?.name || '';
+        cmp = nameA.localeCompare(nameB);
+      }
+      return sortDir === 'asc' ? cmp : -cmp;
+    });
+
+    return list;
+  }, [allDrafts, sortBy, sortDir, dateFrom, dateTo, coaches]);
 
   const conflictMap = useMemo(
     () => buildConflictMap(workshops, coaches),
@@ -83,41 +134,114 @@ export default function DraftManager() {
     toast(`${count} workshop${count !== 1 ? 's' : ''} published`);
   }
 
+  function handleDeleteConfirm() {
+    const count = effectiveSelectedIds.size;
+    setWorkshops((prev) => prev.filter((w) => !effectiveSelectedIds.has(w.id)));
+    setSelectedIds(new Set());
+    setDeleteModalOpen(false);
+    toast(`${count} draft${count !== 1 ? 's' : ''} deleted`);
+  }
+
   return (
     <div className="flex flex-col h-full">
       {/* Page header */}
       <div className="flex flex-wrap items-center justify-between gap-2 px-6 py-4 flex-shrink-0">
         <div>
-          <h1 className="text-xl font-semibold text-ww-navy">Draft Manager</h1>
-          <p className="text-sm text-slate-500 mt-0.5">{draftWorkshops.length} drafts</p>
+          <h1 className="text-xl font-semibold text-ww-navy">Drafts</h1>
+          <p className="text-sm text-slate-500 mt-0.5">
+            {draftWorkshops.length === allDrafts.length
+              ? `${allDrafts.length} drafts`
+              : `${draftWorkshops.length} of ${allDrafts.length} drafts`}
+          </p>
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Publish button — only when items selected */}
+          {/* Bulk actions — only when items selected */}
           {effectiveSelectedIds.size > 0 && (
-            <button
-              onClick={() => setModalOpen(true)}
-              className="flex items-center px-4 py-2 text-sm font-medium text-white bg-ww-blue rounded-full hover:bg-ww-blue/90 transition-colors"
-            >
-              Publish {effectiveSelectedIds.size}
-              {selectedConflictCount > 0 && (
-                <span className="inline-flex items-center gap-1 bg-white/30 text-white text-xs px-1.5 py-0.5 rounded-full ml-2">
-                  <AlertTriangle size={10} />
-                  {selectedConflictCount}
-                </span>
-              )}
-            </button>
+            <>
+              <button
+                onClick={() => setDeleteModalOpen(true)}
+                className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-red-600 bg-white border-[1.5px] border-red-300 rounded-full hover:bg-red-50 transition-colors"
+              >
+                <Trash2 size={14} />
+                Delete {effectiveSelectedIds.size}
+              </button>
+              <button
+                onClick={() => setModalOpen(true)}
+                className="flex items-center px-4 py-2 text-sm font-medium text-white bg-ww-blue rounded-full hover:bg-ww-blue/90 transition-colors"
+              >
+                Publish {effectiveSelectedIds.size}
+                {selectedConflictCount > 0 && (
+                  <span className="inline-flex items-center gap-1 bg-white/30 text-white text-xs px-1.5 py-0.5 rounded-full ml-2">
+                    <AlertTriangle size={10} />
+                    {selectedConflictCount}
+                  </span>
+                )}
+              </button>
+            </>
           )}
 
-          {/* Add Draft button */}
+          {/* Add Draft button — hidden in bulk mode */}
           <button
             onClick={() => setCreatePanelOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-full bg-ww-blue text-white hover:bg-ww-blue/90 transition-colors"
+            disabled={effectiveSelectedIds.size > 0}
+            className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-full transition-colors ${
+              effectiveSelectedIds.size > 0
+                ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                : 'bg-ww-blue text-white hover:bg-ww-blue/90'
+            }`}
           >
             <Plus size={16} />
             Add Draft
           </button>
         </div>
+      </div>
+
+      {/* Date filter toolbar */}
+      <div className="flex flex-wrap items-center gap-2 px-6 pb-2">
+        <div className="relative" ref={fromRef}>
+          <button
+            onClick={() => { setFromCalOpen((o) => !o); setToCalOpen(false); }}
+            className={`rounded-2xl border px-4 h-[46px] flex items-center bg-white transition-all cursor-pointer ${dateFrom ? 'border-ww-blue' : 'border-[#84ABFF]'}`}
+          >
+            <span className="text-[14px] font-semibold text-[#031AA1]">
+              {dateFrom ? format(dateFrom, 'MM/dd/yyyy') : 'mm/dd/yyyy'}
+            </span>
+          </button>
+          {fromCalOpen && (
+            <MiniCalendar
+              selected={dateFrom}
+              onSelect={(d) => setDateFrom(d)}
+              onClose={() => setFromCalOpen(false)}
+            />
+          )}
+        </div>
+        <span className="text-sm text-[#031AA1]">to</span>
+        <div className="relative" ref={toRef}>
+          <button
+            onClick={() => { setToCalOpen((o) => !o); setFromCalOpen(false); }}
+            className={`rounded-2xl border px-4 h-[46px] flex items-center bg-white transition-all cursor-pointer ${dateTo ? 'border-ww-blue' : 'border-[#84ABFF]'}`}
+          >
+            <span className="text-[14px] font-semibold text-[#031AA1]">
+              {dateTo ? format(dateTo, 'MM/dd/yyyy') : 'mm/dd/yyyy'}
+            </span>
+          </button>
+          {toCalOpen && (
+            <MiniCalendar
+              selected={dateTo}
+              onSelect={(d) => setDateTo(d)}
+              onClose={() => setToCalOpen(false)}
+            />
+          )}
+        </div>
+        {(dateFrom || dateTo) && (
+          <button
+            onClick={() => { setDateFrom(null); setDateTo(null); }}
+            className="p-1 text-slate-400 hover:text-slate-600"
+          >
+            <X size={16} />
+          </button>
+        )}
       </div>
 
       {/* Table / cards area */}
@@ -136,19 +260,19 @@ export default function DraftManager() {
                       onChange={toggleAll}
                     />
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Title
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover:text-slate-700 select-none" onClick={() => handleSort('title')}>
+                    Title {sortBy === 'title' && (sortDir === 'asc' ? '↑' : '↓')}
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Coach
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover:text-slate-700 select-none" onClick={() => handleSort('coach')}>
+                    Coach {sortBy === 'coach' && (sortDir === 'asc' ? '↑' : '↓')}
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Day &amp; Time
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover:text-slate-700 select-none" onClick={() => handleSort('date')}>
+                    Day &amp; Time {sortBy === 'date' && (sortDir === 'asc' ? '↑' : '↓')}
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
                     Type
                   </th>
-                  <th className="px-4 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
                     Conflicts
                   </th>
                 </tr>
@@ -157,9 +281,10 @@ export default function DraftManager() {
                 {draftWorkshops.map((w) => (
                   <tr
                     key={w.id}
-                    className="hover:bg-surface-2 transition-colors border-b border-border last:border-0 even:bg-slate-50/40"
+                    className="hover:bg-surface-2 transition-colors border-b border-border last:border-0 even:bg-slate-50/40 cursor-pointer"
+                    onClick={() => setEditingWorkshop(w)}
                   >
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                       <Checkbox
                         checked={effectiveSelectedIds.has(w.id)}
                         onChange={() => toggleOne(w.id)}
@@ -177,16 +302,16 @@ export default function DraftManager() {
                         {w.type}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-4 py-3">
                       {conflictMap.get(w.id)?.hasConflicts && (
-                        <span className="relative group inline-flex">
-                          <AlertTriangle size={14} className="text-ww-coral" />
-                          <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-max max-w-xs px-3 py-2 text-xs text-white bg-ww-navy rounded-lg shadow-lg z-10 pointer-events-none">
+                        <div className="flex items-start gap-1.5">
+                          <AlertTriangle size={14} className="text-ww-coral flex-shrink-0 mt-0.5" />
+                          <div className="text-xs text-red-600">
                             {conflictMap.get(w.id).conflicts.map((c, i) => (
                               <span key={i} className="block">{c.message}</span>
                             ))}
-                          </span>
-                        </span>
+                          </div>
+                        </div>
                       )}
                     </td>
                   </tr>
@@ -205,26 +330,31 @@ export default function DraftManager() {
 
             <div className="divide-y divide-border">
               {draftWorkshops.map((w) => (
-                <div key={w.id} className="p-4 flex items-start gap-3">
-                  <div className="pt-0.5">
+                <div key={w.id} className="p-4 flex items-start gap-3 cursor-pointer hover:bg-surface-2 transition-colors" onClick={() => setEditingWorkshop(w)}>
+                  <div className="pt-0.5" onClick={(e) => e.stopPropagation()}>
                     <Checkbox
                       checked={effectiveSelectedIds.has(w.id)}
                       onChange={() => toggleOne(w.id)}
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-ww-navy truncate">{w.title}</span>
-                      {conflictMap.get(w.id)?.hasConflicts && (
-                        <AlertTriangle size={14} className="text-ww-coral shrink-0" />
-                      )}
-                    </div>
+                    <span className="text-sm font-medium text-ww-navy truncate block">{w.title}</span>
                     <p className="text-xs text-slate-500 mt-0.5">
                       {coachMap.get(w.coachId)?.name ?? 'Unknown'} &middot; {format(parseISO(w.startTime), 'EEE MMM d, h:mm a')}
                     </p>
                     <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${TYPE_PILL_STYLES[w.type] ?? 'bg-slate-100 text-slate-600'}`}>
                       {w.type}
                     </span>
+                    {conflictMap.get(w.id)?.hasConflicts && (
+                      <div className="flex items-start gap-1.5 mt-1.5">
+                        <AlertTriangle size={12} className="text-ww-coral flex-shrink-0 mt-0.5" />
+                        <div className="text-[11px] text-red-600">
+                          {conflictMap.get(w.id).conflicts.map((c, i) => (
+                            <span key={i} className="block">{c.message}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -250,6 +380,18 @@ export default function DraftManager() {
         mode="create"
         slotContext={null}
         conflicts={[]}
+      />
+
+      {/* Edit draft panel */}
+      <WorkshopPanel
+        isOpen={!!editingWorkshop}
+        onClose={() => setEditingWorkshop(null)}
+        workshop={editingWorkshop}
+        coaches={coaches}
+        mode="view"
+        slotContext={null}
+        conflicts={editingWorkshop ? (conflictMap.get(editingWorkshop.id)?.conflicts ?? []) : []}
+        key={editingWorkshop?.id}
       />
 
       {/* Publish confirmation modal */}
@@ -296,6 +438,43 @@ export default function DraftManager() {
                   className="px-4 py-2 text-sm font-medium text-white bg-ww-blue rounded-full hover:bg-ww-blue/90 transition-colors"
                 >
                   {selectedConflictCount > 0 ? 'Publish anyway' : 'Publish'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Delete confirmation modal */}
+      {deleteModalOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/30 z-20"
+            onClick={() => setDeleteModalOpen(false)}
+          />
+          <div className="fixed inset-0 z-30 flex items-center justify-center p-4">
+            <div
+              className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2 className="text-lg font-semibold text-ww-navy">Delete Drafts</h2>
+              <p className="mt-2 text-sm text-slate-600">
+                Are you sure you want to delete {effectiveSelectedIds.size} draft
+                {effectiveSelectedIds.size !== 1 ? 's' : ''}? This cannot be undone.
+              </p>
+
+              <div className="flex justify-end gap-3 mt-6">
+                <button
+                  onClick={() => setDeleteModalOpen(false)}
+                  className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-border rounded-full hover:bg-surface-2 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDeleteConfirm}
+                  className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-full hover:bg-red-700 transition-colors"
+                >
+                  Delete
                 </button>
               </div>
             </div>

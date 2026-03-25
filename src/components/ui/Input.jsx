@@ -4,7 +4,7 @@ import { ChevronDown } from 'lucide-react';
 const WRAPPER_BASE =
   'w-full rounded-2xl border px-4 transition-all flex flex-col justify-center bg-white';
 const ACTIVE_STYLE = 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]';
-const LABEL_STYLE = 'block text-[12px] font-normal text-slate-500';
+const LABEL_STYLE = 'block text-[12px] font-normal text-[#031AA1]';
 const INPUT_STYLE =
   'w-full outline-none text-[14px] font-semibold bg-transparent';
 
@@ -43,7 +43,7 @@ export default function Input({ label, multiline, rows = 3, className, ...props 
             props.onBlur?.(e);
           }}
           placeholder={showLabel ? props.placeholder : props.placeholder || label}
-          className={`${INPUT_STYLE} text-[#031373] placeholder:text-[#031373]/40 ${multiline ? 'resize-none' : ''}`}
+          className={`${INPUT_STYLE} text-[#031AA1] placeholder:text-[#031AA1] ${multiline ? 'resize-none' : ''}`}
         />
       </div>
     </div>
@@ -64,27 +64,33 @@ export function Select({ label, value, onChange, options, className }) {
   }, [open]);
 
   const selectedLabel = options.find((o) => o.value === value)?.label ?? value;
+  const hasValue = value !== undefined && value !== '';
 
   return (
-    <div ref={ref} className={`w-full rounded-2xl border bg-white transition-all ${
-      open ? 'border-ww-blue' : 'border-ww-blue'
-    }`}>
-      {/* Trigger row */}
+    <div ref={ref} className="relative w-full">
+      {/* Trigger */}
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="w-full h-[62px] px-4 flex items-center justify-between cursor-pointer"
+        className={`w-full h-[62px] px-4 flex items-center justify-between cursor-pointer rounded-2xl border bg-white transition-all ${
+          open ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : hasValue ? 'border-ww-blue' : 'border-[#84ABFF]'
+        }`}
       >
-        <span className="text-[14px] font-semibold text-[#031373]">{selectedLabel}</span>
+        <div className="flex flex-col items-start">
+          {hasValue && <span className={LABEL_STYLE}>{label}</span>}
+          <span className="text-[14px] font-semibold text-[#031AA1]">
+            {hasValue ? selectedLabel : label}
+          </span>
+        </div>
         <ChevronDown
           size={16}
-          className={`text-[#031373] transition-transform ${open ? 'rotate-180' : ''}`}
+          className={`text-[#031AA1] transition-transform ${open ? 'rotate-180' : ''}`}
         />
       </button>
 
-      {/* Options */}
+      {/* Options — overlay */}
       {open && (
-        <div className="px-4 pb-3">
+        <div className="absolute left-0 top-full mt-1 w-full bg-white border border-slate-200 rounded-2xl shadow-lg z-30 py-1 max-h-64 overflow-y-auto">
           {options
             .filter((o) => o.value !== value)
             .map((o) => (
@@ -95,7 +101,7 @@ export function Select({ label, value, onChange, options, className }) {
                   onChange(o.value);
                   setOpen(false);
                 }}
-                className="w-full text-left py-2.5 text-[14px] font-semibold text-[#031373] hover:text-ww-blue cursor-pointer"
+                className="w-full text-left px-4 py-2.5 text-[14px] font-semibold text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue cursor-pointer"
               >
                 {o.label}
               </button>

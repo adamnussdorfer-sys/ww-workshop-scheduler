@@ -10,6 +10,7 @@ import { ChevronDown } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import Checkbox from '../ui/Checkbox';
 import Input, { Select } from '../ui/Input';
+import MiniCalendar from '../ui/MiniCalendar';
 import { getCoachAvailability } from '../../utils/coachAvailability';
 
 const WORKSHOP_TYPES = [
@@ -21,6 +22,15 @@ const WORKSHOP_TYPES = [
 ];
 
 const MARKETS = ['US', 'CA', 'UK', 'ANZ'];
+
+const TIMEZONE_OPTIONS = [
+  { value: 'ET', label: 'Eastern Time (ET)' },
+  { value: 'CT', label: 'Central Time (CT)' },
+  { value: 'MT', label: 'Mountain Time (MT)' },
+  { value: 'PT', label: 'Pacific Time (PT)' },
+  { value: 'GMT', label: 'Greenwich Mean Time (GMT)' },
+  { value: 'AEST', label: 'Australian Eastern (AEST)' },
+];
 
 const RECURRENCE_OPTIONS = [
   { value: 'weekly', label: 'Weekly' },
@@ -59,6 +69,7 @@ function initDraft(workshop, mode, slotContext) {
     coCoachId: null,
     description: '',
     recurrence: 'weekly',
+    timezone: 'ET',
     markets: ['US'],
     startTime: slotContext ? buildISO(slotContext) : '',
     endTime: slotContext ? buildEndISO(slotContext) : '',
@@ -95,80 +106,6 @@ const TIME_OPTIONS = Array.from({ length: 33 }, (_, i) => {
   return { h, m, display };
 });
 
-function MiniCalendar({ selected, onSelect, onClose }) {
-  const [viewMonth, setViewMonth] = useState(selected || new Date());
-  const ref = useRef(null);
-
-  useEffect(() => {
-    function handleMouseDown(e) {
-      if (ref.current && !ref.current.contains(e.target)) onClose();
-    }
-    document.addEventListener('mousedown', handleMouseDown);
-    return () => document.removeEventListener('mousedown', handleMouseDown);
-  }, [onClose]);
-
-  const weeks = useMemo(() => {
-    const monthStart = startOfMonth(viewMonth);
-    const monthEnd = endOfMonth(viewMonth);
-    const calStart = startOfWeek(monthStart);
-    const calEnd = endOfWeek(monthEnd);
-    const rows = [];
-    let day = calStart;
-    while (day <= calEnd) {
-      const week = [];
-      for (let i = 0; i < 7; i++) {
-        week.push(day);
-        day = addDays(day, 1);
-      }
-      rows.push(week);
-    }
-    return rows;
-  }, [viewMonth]);
-
-  return (
-    <div ref={ref} className="absolute left-0 top-full mt-1 bg-white border border-border rounded-lg shadow-lg z-20 p-3 w-64">
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-sm font-semibold text-slate-800">{format(viewMonth, 'MMMM yyyy')}</span>
-        <div className="flex gap-1">
-          <button type="button" onClick={() => setViewMonth(subMonths(viewMonth, 1))} className="p-0.5 hover:bg-slate-100 rounded">
-            <ChevronLeft size={16} className="text-slate-500" />
-          </button>
-          <button type="button" onClick={() => setViewMonth(addMonths(viewMonth, 1))} className="p-0.5 hover:bg-slate-100 rounded">
-            <ChevronRight size={16} className="text-slate-500" />
-          </button>
-        </div>
-      </div>
-      <div className="grid grid-cols-7 text-center text-[10px] text-slate-400 mb-1">
-        {['S','M','T','W','T','F','S'].map((d, i) => <div key={i}>{d}</div>)}
-      </div>
-      {weeks.map((week, wi) => (
-        <div key={wi} className="grid grid-cols-7 text-center">
-          {week.map((day) => {
-            const inMonth = isSameMonth(day, viewMonth);
-            const sel = selected && isSameDay(day, selected);
-            const today = isToday(day);
-            return (
-              <button
-                key={day.toISOString()}
-                type="button"
-                onClick={() => { onSelect(day); onClose(); }}
-                className={`w-8 h-8 text-xs rounded-full flex items-center justify-center
-                  ${sel ? 'bg-ww-blue text-white font-bold' : ''}
-                  ${!sel && today ? 'text-ww-blue font-bold' : ''}
-                  ${!sel && !today && inMonth ? 'text-slate-700 hover:bg-slate-100' : ''}
-                  ${!inMonth ? 'text-slate-300' : ''}
-                `}
-              >
-                {format(day, 'd')}
-              </button>
-            );
-          })}
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function TimePicker({ value, onChange, label }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -183,7 +120,6 @@ function TimePicker({ value, onChange, label }) {
     return () => document.removeEventListener('mousedown', handleMouseDown);
   }, [open]);
 
-  // Scroll to selected time when opened
   useEffect(() => {
     if (open && listRef.current) {
       const selected = listRef.current.querySelector('[data-selected="true"]');
@@ -191,7 +127,6 @@ function TimePicker({ value, onChange, label }) {
     }
   }, [open]);
 
-  // Find display text for current value
   const display = value
     ? TIME_OPTIONS.find((t) => t.h === value.h && t.m === value.m)?.display ?? `${value.h}:${String(value.m).padStart(2, '0')}`
     : label;
@@ -201,19 +136,19 @@ function TimePicker({ value, onChange, label }) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="px-3 py-2 border border-border rounded-lg text-sm bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue min-w-[90px] text-center"
+        className="text-[14px] font-semibold text-[#031AA1] cursor-pointer hover:opacity-70 transition-opacity"
       >
         {display}
       </button>
       {open && (
-        <div ref={listRef} className="absolute left-0 top-full mt-1 bg-white border border-border rounded-lg shadow-lg z-20 max-h-48 overflow-y-auto w-28">
+        <div ref={listRef} className="absolute left-0 top-full mt-1 bg-white border border-slate-200 rounded-2xl shadow-lg z-30 max-h-48 overflow-y-auto w-28 py-1">
           {TIME_OPTIONS.map((t) => {
             const sel = value && t.h === value.h && t.m === value.m;
             return (
               <div
                 key={t.display}
                 data-selected={sel ? 'true' : undefined}
-                className={`px-3 py-1.5 text-sm cursor-pointer ${sel ? 'bg-ww-blue/10 text-ww-blue font-medium' : 'text-slate-700 hover:bg-slate-50'}`}
+                className={`px-3 py-1.5 text-sm cursor-pointer ${sel ? 'bg-ww-blue/10 text-ww-blue font-medium' : 'text-[#031AA1] hover:bg-slate-50'}`}
                 onClick={() => { onChange(t); setOpen(false); }}
               >
                 {t.display}
@@ -264,34 +199,43 @@ function DateTimeRow({ draft, updateField }) {
     updateField('endTime', setMinutes(setHours(new Date(base), t.h), t.m).toISOString());
   };
 
+  const hasDate = !!currentDate;
+
   return (
-    <div className="flex items-center gap-2">
-      {/* Date button */}
-      <div className="relative" ref={dateRef}>
-        <button
-          type="button"
-          onClick={() => setCalOpen((o) => !o)}
-          className="px-3 py-2 border border-border rounded-lg text-sm bg-white hover:bg-slate-50 focus:outline-none whitespace-nowrap"
-        >
-          {currentDate ? format(currentDate, 'EEEE, MMMM d') : 'Select date'}
-        </button>
-        {calOpen && (
-          <MiniCalendar selected={currentDate} onSelect={handleDateSelect} onClose={() => setCalOpen(false)} />
+    <div className={`w-full rounded-2xl border px-4 h-[62px] flex flex-col justify-center bg-white transition-all ${
+      hasDate ? 'border-ww-blue' : 'border-[#84ABFF]'
+    }`}>
+      {hasDate && <span className="block text-[12px] font-normal text-[#031AA1]">Date & Time</span>}
+      <div className="flex items-center gap-2">
+        {/* Date button */}
+        <div className="relative" ref={dateRef}>
+          <button
+            type="button"
+            onClick={() => setCalOpen((o) => !o)}
+            className="text-[14px] font-semibold text-[#031AA1] cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap"
+          >
+            {currentDate ? format(currentDate, 'EEE, MMM d') : 'Date & Time'}
+          </button>
+          {calOpen && (
+            <MiniCalendar selected={currentDate} onSelect={handleDateSelect} onClose={() => setCalOpen(false)} />
+          )}
+        </div>
+
+        {hasDate && (
+          <>
+            <span className="text-[#031AA1]/40 text-sm">|</span>
+            <TimePicker value={startTime} onChange={handleStartTimeChange} label="Start" />
+            <span className="text-[#031AA1]/40 text-sm">–</span>
+            <TimePicker value={endTime} onChange={handleEndTimeChange} label="End" />
+          </>
         )}
       </div>
-
-      {/* Start time */}
-      <TimePicker value={startTime} onChange={handleStartTimeChange} label="Start" />
-
-      <span className="text-slate-400 text-sm">–</span>
-
-      {/* End time */}
-      <TimePicker value={endTime} onChange={handleEndTimeChange} label="End" />
     </div>
   );
 }
 
-const DROPDOWN_CONTAINER_CLASS = 'w-full rounded-2xl border border-ww-blue bg-white transition-all';
+const DROPDOWN_TRIGGER_BASE = 'w-full h-[62px] px-4 flex items-center justify-between cursor-pointer rounded-2xl border bg-white transition-all';
+const DROPDOWN_MENU_CLASS = 'absolute left-0 top-full mt-1 w-full bg-white border border-slate-200 rounded-2xl shadow-lg z-30 py-1 max-h-64 overflow-y-auto';
 
 export default function WorkshopForm({
   workshop,
@@ -403,17 +347,6 @@ export default function WorkshopForm({
 
   return (
     <div className="space-y-4">
-      {/* Status badge */}
-      <div>
-        <span
-          className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${
-            STATUS_BADGE_STYLES[draft.status] ?? STATUS_BADGE_STYLES.Draft
-          }`}
-        >
-          {draft.status}
-        </span>
-      </div>
-
       {/* Conflict warnings (CONFLICT-01 through CONFLICT-04) */}
       {conflicts.length > 0 && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-3">
@@ -442,32 +375,37 @@ export default function WorkshopForm({
         placeholder="Workshop title"
       />
 
-      {/* 2. Date & Time — Google Calendar style */}
-      <div>
-        <label className="block text-xs text-slate-500 mb-1.5">Date & Time</label>
-        <DateTimeRow draft={draft} updateField={updateField} />
-      </div>
+      {/* 2. Date & Time */}
+      <DateTimeRow draft={draft} updateField={updateField} />
 
       {/* 3. Timezone */}
-      <div className="w-full rounded-2xl border border-ww-blue/25 px-4 py-3 bg-white">
-        <p className="text-sm font-medium text-ww-navy">Eastern Time (ET)</p>
-      </div>
+      <Select
+        label="Timezone"
+        value={draft.timezone}
+        onChange={(v) => updateField('timezone', v)}
+        options={TIMEZONE_OPTIONS}
+      />
 
       {/* 4. Coach — custom availability-aware dropdown */}
-      <div ref={coachDropdownRef} className={DROPDOWN_CONTAINER_CLASS}>
+      <div ref={coachDropdownRef} className="relative w-full">
         <button
           type="button"
           onClick={() => setCoachDropdownOpen((o) => !o)}
-          className="w-full h-[62px] px-4 flex items-center justify-between cursor-pointer"
+          className={`${DROPDOWN_TRIGGER_BASE} ${
+            coachDropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : selectedCoach ? 'border-ww-blue' : 'border-[#84ABFF]'
+          }`}
         >
-          <span className={`text-[14px] font-semibold ${selectedCoach ? 'text-[#031373]' : 'text-[#031373]/40'}`}>
-            {selectedCoach ? selectedCoach.name : 'Select coach...'}
-          </span>
-          <ChevronDown size={16} className={`text-[#031373] transition-transform ${coachDropdownOpen ? 'rotate-180' : ''}`} />
+          <div className="flex flex-col items-start">
+            {selectedCoach && <span className="block text-[12px] font-normal text-[#031AA1]">Coach</span>}
+            <span className={`text-[14px] font-semibold ${selectedCoach ? 'text-[#031AA1]' : 'text-[#031AA1]'}`}>
+              {selectedCoach ? selectedCoach.name : 'Coach'}
+            </span>
+          </div>
+          <ChevronDown size={16} className={`text-[#031AA1] transition-transform ${coachDropdownOpen ? 'rotate-180' : ''}`} />
         </button>
 
         {coachDropdownOpen && (
-          <div className="px-4 pb-3">
+          <div className={DROPDOWN_MENU_CLASS}>
             {coaches.map((coach) => {
               const avail = workshopDate
                 ? getCoachAvailability(coach, workshopDate, workshopHour, workshopMinute)
@@ -477,9 +415,9 @@ export default function WorkshopForm({
                 <button
                   key={coach.id}
                   type="button"
-                  className={`w-full text-left py-2.5 text-[14px] font-semibold flex items-center gap-2 ${
+                  className={`w-full text-left px-4 py-2.5 text-[14px] font-semibold flex items-center gap-2 ${
                     avail.available
-                      ? 'text-[#031373] hover:text-ww-blue cursor-pointer'
+                      ? 'text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue cursor-pointer'
                       : 'text-slate-400 cursor-not-allowed'
                   }`}
                   onClick={() => {
@@ -503,24 +441,29 @@ export default function WorkshopForm({
       </div>
 
       {/* 5. Co-Coach — custom availability-aware dropdown with None option */}
-      <div ref={coCoachDropdownRef} className={DROPDOWN_CONTAINER_CLASS}>
+      <div ref={coCoachDropdownRef} className="relative w-full">
         <button
           type="button"
           onClick={() => setCoCoachDropdownOpen((o) => !o)}
-          className="w-full h-[62px] px-4 flex items-center justify-between cursor-pointer"
+          className={`${DROPDOWN_TRIGGER_BASE} ${
+            coCoachDropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : selectedCoCoach ? 'border-ww-blue' : 'border-[#84ABFF]'
+          }`}
         >
-          <span className={`text-[14px] font-semibold ${selectedCoCoach ? 'text-[#031373]' : 'text-[#031373]/40'}`}>
-            {selectedCoCoach ? selectedCoCoach.name : 'None'}
-          </span>
-          <ChevronDown size={16} className={`text-[#031373] transition-transform ${coCoachDropdownOpen ? 'rotate-180' : ''}`} />
+          <div className="flex flex-col items-start">
+            {selectedCoCoach && <span className="block text-[12px] font-normal text-[#031AA1]">Co-Coach</span>}
+            <span className={`text-[14px] font-semibold ${selectedCoCoach ? 'text-[#031AA1]' : 'text-[#031AA1]'}`}>
+              {selectedCoCoach ? selectedCoCoach.name : 'Co-Coach'}
+            </span>
+          </div>
+          <ChevronDown size={16} className={`text-[#031AA1] transition-transform ${coCoachDropdownOpen ? 'rotate-180' : ''}`} />
         </button>
 
         {coCoachDropdownOpen && (
-          <div className="px-4 pb-3">
+          <div className={DROPDOWN_MENU_CLASS}>
             {/* None option */}
             <button
               type="button"
-              className="w-full text-left py-2.5 text-[14px] font-semibold text-[#031373] hover:text-ww-blue cursor-pointer"
+              className="w-full text-left px-4 py-2.5 text-[14px] font-semibold text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue cursor-pointer"
               onClick={() => {
                 updateField('coCoachId', null);
                 setCoCoachDropdownOpen(false);
@@ -541,9 +484,9 @@ export default function WorkshopForm({
                   <button
                     key={coach.id}
                     type="button"
-                    className={`w-full text-left py-2.5 text-[14px] font-semibold flex items-center gap-2 ${
+                    className={`w-full text-left px-4 py-2.5 text-[14px] font-semibold flex items-center gap-2 ${
                       avail.available
-                        ? 'text-[#031373] hover:text-ww-blue cursor-pointer'
+                        ? 'text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue cursor-pointer'
                         : 'text-slate-400 cursor-not-allowed'
                     }`}
                     onClick={() => {
@@ -613,7 +556,7 @@ export default function WorkshopForm({
         <div className="flex gap-3">
           <button
             onClick={handleSaveDraft}
-            className="flex-1 px-4 py-2 text-sm font-medium bg-surface-2 text-ww-navy rounded-full hover:bg-slate-200 transition-colors"
+            className="flex-1 px-4 py-2 text-sm font-medium bg-white text-ww-blue border-[1.5px] border-ww-blue rounded-full hover:bg-ww-blue/5 transition-colors"
           >
             Save Draft
           </button>
@@ -625,15 +568,18 @@ export default function WorkshopForm({
           </button>
         </div>
 
-        {mode === 'view' && (
+      </div>
+
+      {mode === 'view' && (
+        <div className="pt-6 mt-2">
           <button
             onClick={handleRemove}
-            className="w-full text-sm text-red-500 hover:text-red-700 transition-colors"
+            className="text-sm text-red-500 hover:text-red-700 transition-colors"
           >
-            Remove from Schedule
+            Delete workshop
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

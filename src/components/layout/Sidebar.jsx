@@ -3,9 +3,9 @@ import { Calendar, Users, FileText, PanelLeftClose, PanelLeftOpen } from 'lucide
 import NavItem from '../nav/NavItem';
 
 const NAV_ITEMS = [
-  { to: '/', icon: Calendar, label: 'Schedule Calendar' },
-  { to: '/roster', icon: Users, label: 'Coach Roster' },
-  { to: '/drafts', icon: FileText, label: 'Draft Manager' },
+  { to: '/', icon: Calendar, label: 'Calendar' },
+  { to: '/roster', icon: Users, label: 'Coaches' },
+  { to: '/drafts', icon: FileText, label: 'Drafts' },
 ];
 
 export default function Sidebar({ collapsed, onToggle }) {
