@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-
-const INPUT_CLASS =
-  'w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue';
-const LABEL_CLASS = 'block text-sm font-medium text-slate-700 mb-1';
+import Input, { Select } from '../ui/Input';
 
 const COACH_TYPES = ['Coach Creator', 'Legacy Coach'];
 const EMPLOYMENT_TYPES = ['Full-time', 'Part-time', 'Contract'];
@@ -120,87 +117,58 @@ export default function CoachForm({ coach, mode, onClose }) {
   return (
     <div className="space-y-4">
       {/* Name */}
-      <div>
-        <label className={LABEL_CLASS}>Name</label>
-        <input
-          type="text"
-          value={draft.name}
-          onChange={(e) => updateField('name', e.target.value)}
-          className={INPUT_CLASS}
-          placeholder="Full name"
-        />
-      </div>
+      <Input
+        label="Name"
+        type="text"
+        value={draft.name}
+        onChange={(e) => updateField('name', e.target.value)}
+        placeholder="Full name"
+      />
 
       {/* Email */}
-      <div>
-        <label className={LABEL_CLASS}>Email</label>
-        <input
-          type="email"
-          value={draft.email}
-          onChange={(e) => updateField('email', e.target.value)}
-          className={INPUT_CLASS}
-          placeholder="email@ww.com"
-        />
-      </div>
+      <Input
+        label="Email"
+        type="email"
+        value={draft.email}
+        onChange={(e) => updateField('email', e.target.value)}
+        placeholder="email@ww.com"
+      />
 
       {/* Type */}
-      <div>
-        <label className={LABEL_CLASS}>Type</label>
-        <select
-          value={draft.type}
-          onChange={(e) => updateField('type', e.target.value)}
-          className={INPUT_CLASS}
-        >
-          {COACH_TYPES.map((t) => (
-            <option key={t} value={t}>{t}</option>
-          ))}
-        </select>
-      </div>
+      <Select
+        label="Type"
+        value={draft.type}
+        onChange={(v) => updateField('type', v)}
+        options={COACH_TYPES.map((t) => ({ value: t, label: t }))}
+      />
 
       {/* Employment */}
-      <div>
-        <label className={LABEL_CLASS}>Employment</label>
-        <select
-          value={draft.employment}
-          onChange={(e) => updateField('employment', e.target.value)}
-          className={INPUT_CLASS}
-        >
-          {EMPLOYMENT_TYPES.map((t) => (
-            <option key={t} value={t}>{t}</option>
-          ))}
-        </select>
-      </div>
+      <Select
+        label="Employment"
+        value={draft.employment}
+        onChange={(v) => updateField('employment', v)}
+        options={EMPLOYMENT_TYPES.map((t) => ({ value: t, label: t }))}
+      />
 
       {/* Timezone */}
-      <div>
-        <label className={LABEL_CLASS}>Timezone</label>
-        <select
-          value={draft.timezone}
-          onChange={(e) => updateField('timezone', e.target.value)}
-          className={INPUT_CLASS}
-        >
-          {TIMEZONES.map((tz) => (
-            <option key={tz} value={tz}>{tz.replace('America/', '').replace('_', ' ')}</option>
-          ))}
-        </select>
-      </div>
+      <Select
+        label="Timezone"
+        value={draft.timezone}
+        onChange={(v) => updateField('timezone', v)}
+        options={TIMEZONES.map((tz) => ({ value: tz, label: tz.replace('America/', '').replace('_', ' ') }))}
+      />
 
       {/* Status */}
-      <div>
-        <label className={LABEL_CLASS}>Status</label>
-        <select
-          value={draft.status}
-          onChange={(e) => updateField('status', e.target.value)}
-          className={INPUT_CLASS}
-        >
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
-      </div>
+      <Select
+        label="Status"
+        value={draft.status}
+        onChange={(v) => updateField('status', v)}
+        options={[{ value: 'active', label: 'Active' }, { value: 'inactive', label: 'Inactive' }]}
+      />
 
       {/* Availability */}
       <div>
-        <label className={LABEL_CLASS}>Availability</label>
+        <label className="block text-xs text-slate-500 mb-1.5">Availability</label>
         <div className="space-y-2">
           {draft.availability.map((slot, i) => (
             <div key={i} className="flex items-center gap-2">

@@ -236,7 +236,7 @@ export default function CoachRoster() {
 
       {/* Slide panel — bottom sheet on mobile, right slide on desktop */}
       <div
-        className={`fixed z-30 bg-white shadow-2xl flex flex-col transition-transform duration-200 ease-in-out
+        className={`fixed z-30 bg-slate-50 shadow-2xl flex flex-col transition-transform duration-200 ease-in-out
           inset-x-0 bottom-0 max-h-[85vh] rounded-t-2xl
           md:inset-auto md:right-0 md:top-0 md:h-screen md:w-[400px] md:max-h-none md:rounded-none
           ${isPanelOpen ? 'translate-y-0 md:translate-x-0' : 'translate-y-full md:translate-y-0 md:translate-x-full'}`}

@@ -6,8 +6,10 @@ import {
 } from 'date-fns';
 import { AlertTriangle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
+import { ChevronDown } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import Checkbox from '../ui/Checkbox';
+import Input, { Select } from '../ui/Input';
 import { getCoachAvailability } from '../../utils/coachAvailability';
 
 const WORKSHOP_TYPES = [
@@ -289,13 +291,7 @@ function DateTimeRow({ draft, updateField }) {
   );
 }
 
-const INPUT_CLASS =
-  'w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue';
-const LABEL_CLASS = 'block text-sm font-medium text-slate-700 mb-1';
-const DROPDOWN_TRIGGER_CLASS =
-  'w-full px-3 py-2 border border-border rounded-lg text-sm text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-ww-blue/30 focus:border-ww-blue bg-white';
-const DROPDOWN_LIST_CLASS =
-  'absolute left-0 right-0 top-full mt-1 bg-white border border-border rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto';
+const DROPDOWN_CONTAINER_CLASS = 'w-full rounded-2xl border border-ww-blue bg-white transition-all';
 
 export default function WorkshopForm({
   workshop,
@@ -438,218 +434,167 @@ export default function WorkshopForm({
       )}
 
       {/* 1. Title */}
-      <div>
-        <label className={LABEL_CLASS}>Title</label>
-        <input
-          type="text"
-          value={draft.title}
-          onChange={(e) => updateField('title', e.target.value)}
-          className={INPUT_CLASS}
-          placeholder="Workshop title"
-        />
-      </div>
+      <Input
+        label="Title"
+        type="text"
+        value={draft.title}
+        onChange={(e) => updateField('title', e.target.value)}
+        placeholder="Workshop title"
+      />
 
       {/* 2. Date & Time — Google Calendar style */}
       <div>
-        <label className={LABEL_CLASS}>Date & Time</label>
+        <label className="block text-xs text-slate-500 mb-1.5">Date & Time</label>
         <DateTimeRow draft={draft} updateField={updateField} />
       </div>
 
       {/* 3. Timezone */}
-      <div>
-        <label className={LABEL_CLASS}>Timezone</label>
-        <p className="text-sm text-slate-500 px-3 py-2 bg-slate-50 rounded-lg border border-border">
-          Eastern Time (ET)
-        </p>
+      <div className="w-full rounded-2xl border border-ww-blue/25 px-4 py-3 bg-white">
+        <p className="text-sm font-medium text-ww-navy">Eastern Time (ET)</p>
       </div>
 
       {/* 4. Coach — custom availability-aware dropdown */}
-      <div>
-        <label className={LABEL_CLASS}>Coach</label>
-        <div className="relative" ref={coachDropdownRef}>
-          <button
-            type="button"
-            className={DROPDOWN_TRIGGER_CLASS}
-            onClick={() => setCoachDropdownOpen((o) => !o)}
-          >
-            <span className={selectedCoach ? 'text-slate-900' : 'text-slate-400'}>
-              {selectedCoach ? selectedCoach.name : 'Select coach...'}
-            </span>
-            <svg
-              className="w-4 h-4 text-slate-400 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+      <div ref={coachDropdownRef} className={DROPDOWN_CONTAINER_CLASS}>
+        <button
+          type="button"
+          onClick={() => setCoachDropdownOpen((o) => !o)}
+          className="w-full h-[62px] px-4 flex items-center justify-between cursor-pointer"
+        >
+          <span className={`text-[14px] font-semibold ${selectedCoach ? 'text-[#031373]' : 'text-[#031373]/40'}`}>
+            {selectedCoach ? selectedCoach.name : 'Select coach...'}
+          </span>
+          <ChevronDown size={16} className={`text-[#031373] transition-transform ${coachDropdownOpen ? 'rotate-180' : ''}`} />
+        </button>
 
-          {coachDropdownOpen && (
-            <div className={DROPDOWN_LIST_CLASS}>
-              {coaches.map((coach) => {
+        {coachDropdownOpen && (
+          <div className="px-4 pb-3">
+            {coaches.map((coach) => {
+              const avail = workshopDate
+                ? getCoachAvailability(coach, workshopDate, workshopHour, workshopMinute)
+                : { available: true, reason: null };
+
+              return (
+                <button
+                  key={coach.id}
+                  type="button"
+                  className={`w-full text-left py-2.5 text-[14px] font-semibold flex items-center gap-2 ${
+                    avail.available
+                      ? 'text-[#031373] hover:text-ww-blue cursor-pointer'
+                      : 'text-slate-400 cursor-not-allowed'
+                  }`}
+                  onClick={() => {
+                    if (!avail.available) return;
+                    updateField('coachId', coach.id);
+                    setCoachDropdownOpen(false);
+                  }}
+                >
+                  <span className={`w-2 h-2 rounded-full flex-shrink-0 ${avail.available ? 'bg-green-500' : 'bg-slate-300'}`} />
+                  <span>
+                    {coach.name}
+                    {!avail.available && avail.reason && (
+                      <span className="ml-1 text-xs text-slate-400">({avail.reason})</span>
+                    )}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* 5. Co-Coach — custom availability-aware dropdown with None option */}
+      <div ref={coCoachDropdownRef} className={DROPDOWN_CONTAINER_CLASS}>
+        <button
+          type="button"
+          onClick={() => setCoCoachDropdownOpen((o) => !o)}
+          className="w-full h-[62px] px-4 flex items-center justify-between cursor-pointer"
+        >
+          <span className={`text-[14px] font-semibold ${selectedCoCoach ? 'text-[#031373]' : 'text-[#031373]/40'}`}>
+            {selectedCoCoach ? selectedCoCoach.name : 'None'}
+          </span>
+          <ChevronDown size={16} className={`text-[#031373] transition-transform ${coCoachDropdownOpen ? 'rotate-180' : ''}`} />
+        </button>
+
+        {coCoachDropdownOpen && (
+          <div className="px-4 pb-3">
+            {/* None option */}
+            <button
+              type="button"
+              className="w-full text-left py-2.5 text-[14px] font-semibold text-[#031373] hover:text-ww-blue cursor-pointer"
+              onClick={() => {
+                updateField('coCoachId', null);
+                setCoCoachDropdownOpen(false);
+              }}
+            >
+              None
+            </button>
+
+            {/* Coach list — exclude currently selected primary coach */}
+            {coaches
+              .filter((c) => c.id !== draft.coachId)
+              .map((coach) => {
                 const avail = workshopDate
                   ? getCoachAvailability(coach, workshopDate, workshopHour, workshopMinute)
                   : { available: true, reason: null };
 
                 return (
-                  <div
+                  <button
                     key={coach.id}
-                    className={`flex items-center gap-2 px-3 py-2 text-sm ${
+                    type="button"
+                    className={`w-full text-left py-2.5 text-[14px] font-semibold flex items-center gap-2 ${
                       avail.available
-                        ? 'text-green-700 hover:bg-green-50 cursor-pointer'
+                        ? 'text-[#031373] hover:text-ww-blue cursor-pointer'
                         : 'text-slate-400 cursor-not-allowed'
                     }`}
                     onClick={() => {
                       if (!avail.available) return;
-                      updateField('coachId', coach.id);
-                      setCoachDropdownOpen(false);
+                      updateField('coCoachId', coach.id);
+                      setCoCoachDropdownOpen(false);
                     }}
                   >
-                    {/* Availability indicator dot */}
-                    <span
-                      className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                        avail.available ? 'bg-green-500' : 'bg-slate-300'
-                      }`}
-                    />
+                    <span className={`w-2 h-2 rounded-full flex-shrink-0 ${avail.available ? 'bg-green-500' : 'bg-slate-300'}`} />
                     <span>
                       {coach.name}
                       {!avail.available && avail.reason && (
                         <span className="ml-1 text-xs text-slate-400">({avail.reason})</span>
                       )}
                     </span>
-                  </div>
+                  </button>
                 );
               })}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* 5. Co-Coach — custom availability-aware dropdown with None option */}
-      <div>
-        <label className={LABEL_CLASS}>Co-Coach</label>
-        <div className="relative" ref={coCoachDropdownRef}>
-          <button
-            type="button"
-            className={DROPDOWN_TRIGGER_CLASS}
-            onClick={() => setCoCoachDropdownOpen((o) => !o)}
-          >
-            <span className={selectedCoCoach ? 'text-slate-900' : 'text-slate-400'}>
-              {selectedCoCoach ? selectedCoCoach.name : 'None'}
-            </span>
-            <svg
-              className="w-4 h-4 text-slate-400 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-
-          {coCoachDropdownOpen && (
-            <div className={DROPDOWN_LIST_CLASS}>
-              {/* None option */}
-              <div
-                className="flex items-center gap-2 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 cursor-pointer"
-                onClick={() => {
-                  updateField('coCoachId', null);
-                  setCoCoachDropdownOpen(false);
-                }}
-              >
-                <span className="w-2 h-2 rounded-full flex-shrink-0 bg-transparent" />
-                <span>None</span>
-              </div>
-
-              {/* Coach list — exclude currently selected primary coach */}
-              {coaches
-                .filter((c) => c.id !== draft.coachId)
-                .map((coach) => {
-                  const avail = workshopDate
-                    ? getCoachAvailability(coach, workshopDate, workshopHour, workshopMinute)
-                    : { available: true, reason: null };
-
-                  return (
-                    <div
-                      key={coach.id}
-                      className={`flex items-center gap-2 px-3 py-2 text-sm ${
-                        avail.available
-                          ? 'text-green-700 hover:bg-green-50 cursor-pointer'
-                          : 'text-slate-400 cursor-not-allowed'
-                      }`}
-                      onClick={() => {
-                        if (!avail.available) return;
-                        updateField('coCoachId', coach.id);
-                        setCoCoachDropdownOpen(false);
-                      }}
-                    >
-                      <span
-                        className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                          avail.available ? 'bg-green-500' : 'bg-slate-300'
-                        }`}
-                      />
-                      <span>
-                        {coach.name}
-                        {!avail.available && avail.reason && (
-                          <span className="ml-1 text-xs text-slate-400">({avail.reason})</span>
-                        )}
-                      </span>
-                    </div>
-                  );
-                })}
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* 6. Type */}
-      <div>
-        <label className={LABEL_CLASS}>Type</label>
-        <select
-          value={draft.type}
-          onChange={(e) => updateField('type', e.target.value)}
-          className={INPUT_CLASS}
-        >
-          {WORKSHOP_TYPES.map((t) => (
-            <option key={t} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
-      </div>
+      <Select
+        label="Type"
+        value={draft.type}
+        onChange={(v) => updateField('type', v)}
+        options={WORKSHOP_TYPES.map((t) => ({ value: t, label: t }))}
+      />
 
       {/* 7. Description */}
-      <div>
-        <label className={LABEL_CLASS}>Description</label>
-        <textarea
-          rows={3}
-          value={draft.description}
-          onChange={(e) => updateField('description', e.target.value)}
-          className={INPUT_CLASS}
-          placeholder="Workshop description"
-        />
-      </div>
+      <Input
+        label="Description"
+        multiline
+        rows={3}
+        value={draft.description}
+        onChange={(e) => updateField('description', e.target.value)}
+        placeholder="Workshop description"
+      />
 
       {/* 8. Recurrence */}
-      <div>
-        <label className={LABEL_CLASS}>Recurrence</label>
-        <select
-          value={draft.recurrence}
-          onChange={(e) => updateField('recurrence', e.target.value)}
-          className={INPUT_CLASS}
-        >
-          {RECURRENCE_OPTIONS.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-      </div>
+      <Select
+        label="Recurrence"
+        value={draft.recurrence}
+        onChange={(v) => updateField('recurrence', v)}
+        options={RECURRENCE_OPTIONS}
+      />
 
       {/* 9. Markets */}
       <div>
-        <label className={LABEL_CLASS}>Markets</label>
+        <label className="block text-xs text-slate-500 mb-1.5">Markets</label>
         <div className="flex gap-4 flex-wrap">
           {MARKETS.map((market) => (
             <label key={market} className="flex items-center gap-1.5 cursor-pointer">
