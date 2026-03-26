@@ -177,7 +177,7 @@ export default function DayView({
           {/* Current-time gutter line */}
           {nowTop !== null && (
             <div
-              className="absolute right-0 h-[2px] bg-red-500 pointer-events-none"
+              className="absolute right-0 h-[2px] bg-[#8B9AE8] pointer-events-none"
               style={{ top: nowTop, width: 8 }}
             />
           )}
@@ -228,14 +228,14 @@ export default function DayView({
           ))}
 
 
-          {/* Current-time red line */}
+          {/* Current-time line */}
           {nowTop !== null && (
             <div
               className="absolute left-0 right-0 pointer-events-none"
-              style={{ top: nowTop, zIndex: 50 }}
+              style={{ top: nowTop, zIndex: 5 }}
             >
-              <div className="absolute -left-[5px] -top-[5px] w-[10px] h-[10px] rounded-full bg-red-500" />
-              <div className="absolute left-0 right-0 h-[2px] bg-red-500" />
+              <div className="absolute -left-[5px] -top-[5px] w-[10px] h-[10px] rounded-full bg-[#8B9AE8]" />
+              <div className="absolute left-0 right-0 h-[2px]" style={{ backgroundImage: 'repeating-linear-gradient(to right, #8B9AE8 0, #8B9AE8 12px, transparent 12px, transparent 18px)' }} />
             </div>
           )}
 

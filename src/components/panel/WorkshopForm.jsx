@@ -104,6 +104,16 @@ function getDayFromSlot(slotContext) {
   return [INDEX_TO_DAY[getDay(d)]];
 }
 
+function defaultSlot(tz) {
+  const now = new Date();
+  const h = getHoursInTz(now, tz);
+  const m = getMinutesInTz(now, tz);
+  // Round up to next 30-min mark
+  const roundedM = m < 30 ? 30 : 0;
+  const roundedH = m < 30 ? h : h + 1;
+  return { date: now, hour: roundedH, minute: roundedM };
+}
+
 function initDraft(workshop, mode, slotContext, tz) {
   if (mode === 'view' && workshop) {
     return {
@@ -117,6 +127,7 @@ function initDraft(workshop, mode, slotContext, tz) {
     };
   }
   // mode === 'create'
+  const slot = slotContext || defaultSlot(tz);
   return {
     title: '',
     type: 'Weekly Workshop',
@@ -126,14 +137,14 @@ function initDraft(workshop, mode, slotContext, tz) {
     description: '',
     recurrence: 'none',
     recurring: false,
-    recurringDays: getDayFromSlot(slotContext),
+    recurringDays: getDayFromSlot(slot),
     recurringWeeks: 1,
     recurrenceEndType: 'never',
     recurrenceOccurrences: 13,
     timezone: 'ET',
     markets: ['US'],
-    startTime: slotContext ? buildISO(slotContext, tz) : '',
-    endTime: slotContext ? buildEndISO(slotContext, tz) : '',
+    startTime: buildISO(slot, tz),
+    endTime: buildEndISO(slot, tz),
   };
 }
 
@@ -223,6 +234,7 @@ function TimePicker({ value, onChange, label }) {
 }
 
 function DateTimeRow({ draft, updateField }) {
+  const { userTimezone } = useApp();
   const [calOpen, setCalOpen] = useState(false);
   const [tzOpen, setTzOpen] = useState(false);
   const dateRef = useRef(null);
