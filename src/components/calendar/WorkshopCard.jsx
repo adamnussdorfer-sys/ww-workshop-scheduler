@@ -22,8 +22,8 @@ const DRAFT_BORDER = 'border-2 border-dashed border-slate-300';
 
 // Static lookup prevents Tailwind JIT from purging these classes (same pattern as TYPE_CARD_STYLES)
 const CONFLICT_RING = {
-  red: 'ring-2 ring-red-600',
-  orange: 'ring-2 ring-red-400',
+  red: 'ring-2 ring-inset ring-red-600',
+  orange: 'ring-2 ring-inset ring-red-400',
 };
 
 export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999 }) {
@@ -59,7 +59,7 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
         transition-[transform,box-shadow] duration-150 ease-out
         hover:-translate-y-0.5 hover:shadow-md
         motion-reduce:transition-none motion-reduce:hover:transform-none
-        ${cardStyle} ${ringClass || (isDraft ? DRAFT_BORDER : 'ring-[1.5px] ring-border')}${isFiltered ? ' opacity-25 pointer-events-none' : ''}${isHighlighted ? ' animate-new-glow' : ''}`}
+        ${cardStyle} ${ringClass || (isDraft ? DRAFT_BORDER : 'ring-[1.5px] ring-inset ring-border')}${isFiltered ? ' opacity-25 pointer-events-none' : ''}${isHighlighted ? ' animate-new-glow' : ''}`}
       onClick={(e) => {
         e.stopPropagation();
         onClick?.(workshop.id);

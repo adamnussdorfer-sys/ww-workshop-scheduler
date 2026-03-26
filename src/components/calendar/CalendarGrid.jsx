@@ -242,7 +242,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                         top,
                         height,
                         left: `${leftPct}%`,
-                        width: `calc(${widthPct}% - 2px)`,
+                        width: `calc(${widthPct}% - 4px)`,
                         zIndex: col + 1,
                       }}
                     >
