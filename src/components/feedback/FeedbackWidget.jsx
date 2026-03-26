@@ -95,18 +95,38 @@ export default function FeedbackWidget() {
 
     setSending(true);
     try {
-      const res = await fetch(SHEET_URL, {
-        method: 'POST',
-        body: JSON.stringify({
+      await new Promise((resolve, reject) => {
+        const iframe = document.createElement('iframe');
+        iframe.name = 'feedback-frame';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = SHEET_URL;
+        form.target = 'feedback-frame';
+
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'payload';
+        input.value = JSON.stringify({
           title: title.trim(),
           comment: comment.trim(),
           screenshot: screenshot || '',
           page: window.location.pathname,
           timestamp: new Date().toISOString(),
-        }),
-      });
+        });
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
 
-      if (!res.ok) throw new Error('Request failed');
+        // Give it time to complete, then clean up
+        setTimeout(() => {
+          document.body.removeChild(form);
+          document.body.removeChild(iframe);
+          resolve();
+        }, 3000);
+      });
 
       toast.success('Feedback sent — thank you!');
       handleClose();
