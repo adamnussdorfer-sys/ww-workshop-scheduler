@@ -15,6 +15,18 @@ const WORKSHOP_TYPES = [
 
 const VALID_MARKETS = ['US', 'CA', 'UK', 'ANZ'];
 
+/**
+ * Get the ET (Eastern Time) UTC offset for a given date string, handling EDT/EST.
+ */
+function getETOffset(dateStr) {
+  const testDate = new Date(`${dateStr}T12:00:00Z`);
+  const tz = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    timeZoneName: 'short',
+  }).formatToParts(testDate).find((p) => p.type === 'timeZoneName')?.value;
+  return tz === 'EDT' ? '-04:00' : '-05:00';
+}
+
 // Build a lowercase lookup map for fuzzy type matching
 const TYPE_LOOKUP = new Map(WORKSHOP_TYPES.map((t) => [t.toLowerCase(), t]));
 
@@ -222,6 +234,8 @@ export function parseWorkshopCSV(csvText, coaches) {
     if (rowErrors.length > 0) {
       errors.push(...rowErrors);
     } else {
+      // Interpret times as ET (workshops are scheduled in Eastern Time)
+      const offset = getETOffset(parsedDate);
       valid.push({
         id: `ws-${now}-${i}`,
         title,
@@ -229,8 +243,8 @@ export function parseWorkshopCSV(csvText, coaches) {
         status: 'Draft',
         coachId,
         coCoachId,
-        startTime: `${parsedDate}T${parsedStart}:00`,
-        endTime: `${parsedDate}T${parsedEnd}:00`,
+        startTime: new Date(`${parsedDate}T${parsedStart}:00${offset}`).toISOString(),
+        endTime: new Date(`${parsedDate}T${parsedEnd}:00${offset}`).toISOString(),
         markets,
         recurrence,
         description: '',

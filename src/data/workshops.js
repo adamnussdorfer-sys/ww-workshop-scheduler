@@ -1,10 +1,22 @@
-import { startOfWeek, addDays, setHours, setMinutes } from 'date-fns';
+import { startOfWeek, addDays } from 'date-fns';
 
 // dayOffset: 0=Mon, 1=Tue, 2=Wed, 3=Thu, 4=Fri, 5=Sat, 6=Sun
 // For this week's schedule: Wed=2, Thu=3, Fri=4, Sat=5, Sun=6, Mon=7, Tue=8
 function getWeekDay(dayOffset, hour, minute = 0) {
   const monday = startOfWeek(new Date(), { weekStartsOn: 1 });
-  return setMinutes(setHours(addDays(monday, dayOffset), hour), minute);
+  const day = addDays(monday, dayOffset);
+  const y = day.getFullYear();
+  const m = String(day.getMonth() + 1).padStart(2, '0');
+  const d = String(day.getDate()).padStart(2, '0');
+  const hh = String(hour).padStart(2, '0');
+  const mm = String(minute).padStart(2, '0');
+  // Pin times to ET — determine EDT vs EST for this date
+  const tz = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    timeZoneName: 'short',
+  }).formatToParts(day).find((p) => p.type === 'timeZoneName')?.value;
+  const offset = tz === 'EDT' ? '-04:00' : '-05:00';
+  return new Date(`${y}-${m}-${d}T${hh}:${mm}:00${offset}`);
 }
 
 export const workshops = [
