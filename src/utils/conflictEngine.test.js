@@ -2,12 +2,23 @@ import { describe, it, expect } from 'vitest';
 import { buildConflictMap, getSaturatedSlots } from './conflictEngine';
 import { workshops } from '../data/workshops';
 import { coaches } from '../data/coaches';
-import { startOfWeek, addDays, setHours, setMinutes } from 'date-fns';
+import { startOfWeek, addDays } from 'date-fns';
 
-// Helper to create ISO date strings anchored to current week
+// Helper to create ISO date strings anchored to current week, pinned to ET
 function getWeekDay(dayOffset, hour, minute = 0) {
   const monday = startOfWeek(new Date(), { weekStartsOn: 1 });
-  return setMinutes(setHours(addDays(monday, dayOffset), hour), minute).toISOString();
+  const day = addDays(monday, dayOffset);
+  const y = day.getFullYear();
+  const m = String(day.getMonth() + 1).padStart(2, '0');
+  const d = String(day.getDate()).padStart(2, '0');
+  const hh = String(hour).padStart(2, '0');
+  const mm = String(minute).padStart(2, '0');
+  const tz = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    timeZoneName: 'short',
+  }).formatToParts(day).find((p) => p.type === 'timeZoneName')?.value;
+  const offset = tz === 'EDT' ? '-04:00' : '-05:00';
+  return new Date(`${y}-${m}-${d}T${hh}:${mm}:00${offset}`).toISOString();
 }
 
 // ── Double-booking detection ────────────────────────────────────────────────

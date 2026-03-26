@@ -629,16 +629,11 @@ export default function WorkshopForm({
     }));
   };
 
-  // Compute workshop date/hour/minute from draft.startTime for availability checks
+  // Parse workshop start time for availability checks
   let workshopDate = null;
-  let workshopHour = 0;
-  let workshopMinute = 0;
   if (draft.startTime) {
     try {
-      const parsed = parseISO(draft.startTime);
-      workshopDate = parsed;
-      workshopHour = getHoursInTz(parsed, userTimezone);
-      workshopMinute = getMinutesInTz(parsed, userTimezone);
+      workshopDate = parseISO(draft.startTime);
     } catch {
       // leave null
     }
@@ -784,7 +779,7 @@ export default function WorkshopForm({
           <div className={DROPDOWN_MENU_CLASS}>
             {coaches.map((coach) => {
               const avail = workshopDate
-                ? getCoachAvailability(coach, workshopDate, workshopHour, workshopMinute)
+                ? getCoachAvailability(coach, workshopDate)
                 : { available: true, reason: null };
 
               return (
@@ -855,7 +850,7 @@ export default function WorkshopForm({
                 .filter((c) => c.id !== draft.coachId)
                 .map((coach) => {
                   const avail = workshopDate
-                    ? getCoachAvailability(coach, workshopDate, workshopHour, workshopMinute)
+                    ? getCoachAvailability(coach, workshopDate)
                     : { available: true, reason: null };
 
                   return (

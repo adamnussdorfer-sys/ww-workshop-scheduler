@@ -1,5 +1,6 @@
 import { parseISO, differenceInMinutes, format } from 'date-fns';
 import { getCoachAvailability } from './coachAvailability';
+import { getHoursInTz, getMinutesInTz } from './timezone';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -44,11 +45,11 @@ function groupByCoach(workshops) {
 }
 
 /**
- * Convert an ISO datetime string to minutes from midnight.
+ * Convert an ISO datetime string to minutes from midnight in ET.
  */
 function timeToMinutes(isoString) {
   const d = new Date(isoString);
-  return d.getHours() * 60 + d.getMinutes();
+  return getHoursInTz(d, 'America/New_York') * 60 + getMinutesInTz(d, 'America/New_York');
 }
 
 /**
@@ -188,15 +189,9 @@ export function buildConflictMap(workshops, coaches) {
       const coach = coachMap.get(coachId);
       if (!coach) continue;
 
-      const startDate = new Date(ws.startTime);
-      const startHour = startDate.getHours();
-      const startMinute = startDate.getMinutes();
-
       const { available, reason } = getCoachAvailability(
         coach,
-        startDate,
-        startHour,
-        startMinute
+        new Date(ws.startTime)
       );
 
       if (!available) {
