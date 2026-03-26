@@ -21,6 +21,11 @@ import {
 } from '../../utils/availabilityBands';
 import { useApp } from '../../context/AppContext';
 
+// Derive short timezone label from browser, e.g. "PT", "ET", "CT"
+const LOCAL_TZ = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
+  .formatToParts(new Date())
+  .find((p) => p.type === 'timeZoneName')?.value ?? 'Local';
+
 function getEventPosition(startTimeISO, endTimeISO) {
   const start = parseISO(startTimeISO);
   const end = parseISO(endTimeISO);
@@ -148,7 +153,7 @@ export default function DayView({
       <div className="flex border-b border-border sticky top-0 bg-white z-10">
         {/* Time gutter spacer — timezone label */}
         <div className="w-16 flex-shrink-0 flex items-center justify-center h-6">
-          <span className="text-[10px] text-slate-400 font-medium tracking-wide">ET</span>
+          <span className="text-[10px] text-slate-400 font-medium tracking-wide">{LOCAL_TZ}</span>
         </div>
         <div className="flex-1 border-l border-border" />
       </div>
