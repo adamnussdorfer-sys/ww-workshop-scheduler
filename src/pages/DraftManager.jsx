@@ -5,6 +5,7 @@ import { useApp } from '../context/AppContext';
 import Checkbox from '../components/ui/Checkbox';
 import DateRangePicker from '../components/ui/DateRangePicker';
 import { buildConflictMap } from '../utils/conflictEngine';
+import { formatDateTimeInTz } from '../utils/timezone';
 import WorkshopPanel from '../components/panel/WorkshopPanel';
 import CsvUploadModal from '../components/upload/CsvUploadModal';
 
@@ -24,7 +25,7 @@ const TYPE_PILL_STYLES = {
 };
 
 export default function DraftManager() {
-  const { workshops, coaches, setWorkshops, toast, highlightWorkshops } = useApp();
+  const { workshops, coaches, setWorkshops, toast, highlightWorkshops, userTimezone } = useApp();
 
   const [selectedIds, setSelectedIds] = useState(new Set());
   const [modalOpen, setModalOpen] = useState(false);
@@ -86,8 +87,8 @@ export default function DraftManager() {
   }, [allDrafts, sortBy, sortDir, dateFrom, dateTo, coaches]);
 
   const conflictMap = useMemo(
-    () => buildConflictMap(workshops, coaches),
-    [workshops, coaches]
+    () => buildConflictMap(workshops, coaches, userTimezone),
+    [workshops, coaches, userTimezone]
   );
 
   const coachMap = useMemo(
@@ -328,7 +329,7 @@ export default function DraftManager() {
                     <td className="px-4 py-3 text-sm text-slate-600">
                       <div className="flex items-center gap-2">
                         <Calendar size={14} className="flex-shrink-0 text-slate-400" />
-                        <span className="truncate">{format(parseISO(w.startTime), 'EEE MMM d, h:mm a')}</span>
+                        <span className="truncate">{formatDateTimeInTz(w.startTime, userTimezone)}</span>
                       </div>
                     </td>
                     <td className="px-4 py-3">
@@ -374,7 +375,7 @@ export default function DraftManager() {
                   <div className="flex-1 min-w-0">
                     <span className="text-sm font-medium text-ww-navy truncate block">{w.title}</span>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      {coachMap.get(w.coachId)?.name ?? 'Unknown'} &middot; {format(parseISO(w.startTime), 'EEE MMM d, h:mm a')}
+                      {coachMap.get(w.coachId)?.name ?? 'Unknown'} &middot; {formatDateTimeInTz(w.startTime, userTimezone)}
                     </p>
                     <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${TYPE_PILL_STYLES[w.type] ?? 'bg-slate-100 text-slate-600'}`}>
                       {w.type}

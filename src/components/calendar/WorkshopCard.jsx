@@ -1,9 +1,9 @@
 import { useState, useRef, useCallback } from 'react';
-import { format, parseISO } from 'date-fns';
 import { createPortal } from 'react-dom';
 import { AlertTriangle } from 'lucide-react';
 import Tooltip from '../ui/Tooltip';
 import { useApp } from '../../context/AppContext';
+import { formatTimeInTz } from '../../utils/timezone';
 
 const TYPE_CARD_STYLES = {
   'Weekly Workshop': 'bg-sky-100',
@@ -29,13 +29,13 @@ const CONFLICT_RING = {
 };
 
 export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999, hideConflictIcon = false }) {
-  const { highlightedIds } = useApp();
+  const { highlightedIds, userTimezone } = useApp();
   const isHighlighted = highlightedIds.has(workshop.id);
   const compact = height < 42;
   const cardStyle = TYPE_CARD_STYLES[workshop.type] ?? 'bg-slate-50';
   const isDraft = workshop.status === 'Draft';
 
-  const startLabel = format(parseISO(workshop.startTime), 'h:mm a');
+  const startLabel = formatTimeInTz(workshop.startTime, userTimezone);
 
   const coach = coachMap.get(workshop.coachId);
   const coCoach = workshop.coCoachId ? coachMap.get(workshop.coCoachId) : null;

@@ -56,6 +56,31 @@ export function getTzAbbr(tz) {
     .find((p) => p.type === 'timeZoneName')?.value ?? tz;
 }
 
+/** Format an ISO datetime string as "h:mm a" in the given IANA timezone. */
+export function formatTimeInTz(isoString, tz) {
+  const date = typeof isoString === 'string' ? new Date(isoString) : isoString;
+  return date.toLocaleString('en-US', {
+    timeZone: tz,
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+}
+
+/** Format an ISO datetime string as "EEE MMM d, h:mm a" in the given IANA timezone. */
+export function formatDateTimeInTz(isoString, tz) {
+  const date = typeof isoString === 'string' ? new Date(isoString) : isoString;
+  return date.toLocaleString('en-US', {
+    timeZone: tz,
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+}
+
 /**
  * Create a Date representing a specific clock time in a given IANA timezone.
  * E.g. createDateInTz('2026-03-25', 15, 30, 'America/New_York') → 3:30 PM ET as UTC Date.

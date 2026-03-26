@@ -1,6 +1,6 @@
-import { parseISO, differenceInMinutes, format } from 'date-fns';
+import { differenceInMinutes } from 'date-fns';
 import { getCoachAvailability } from './coachAvailability';
-import { getHoursInTz, getMinutesInTz } from './timezone';
+import { getHoursInTz, getMinutesInTz, formatTimeInTz } from './timezone';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -45,18 +45,11 @@ function groupByCoach(workshops) {
 }
 
 /**
- * Convert an ISO datetime string to minutes from midnight in ET.
+ * Convert an ISO datetime string to minutes from midnight in the given timezone.
  */
-function timeToMinutes(isoString) {
+function timeToMinutes(isoString, tz) {
   const d = new Date(isoString);
-  return getHoursInTz(d, 'America/New_York') * 60 + getMinutesInTz(d, 'America/New_York');
-}
-
-/**
- * Format an ISO datetime string as human-readable time (e.g., "10:30 AM").
- */
-function formatTime(isoString) {
-  return format(parseISO(isoString), 'h:mm a');
+  return getHoursInTz(d, tz) * 60 + getMinutesInTz(d, tz);
 }
 
 /**
@@ -96,7 +89,7 @@ function addConflict(resultMap, workshopId, conflict) {
  *   message: string
  * }
  */
-export function buildConflictMap(workshops, coaches) {
+export function buildConflictMap(workshops, coaches, tz = 'America/New_York') {
   // CONFLICT-05: Exclude cancelled workshops
   const active = workshops.filter((w) => w.status !== 'Cancelled');
 
@@ -132,13 +125,13 @@ export function buildConflictMap(workshops, coaches) {
         addConflict(resultMap, a.id, {
           type: 'double-booking',
           severity: 'red',
-          message: `Coach ${coachName} also assigned to "${b.title}" at ${formatTime(b.startTime)}`,
+          message: `Coach ${coachName} also assigned to "${b.title}" at ${formatTimeInTz(b.startTime, tz)}`,
         });
 
         addConflict(resultMap, b.id, {
           type: 'double-booking',
           severity: 'red',
-          message: `Coach ${coachName} also assigned to "${a.title}" at ${formatTime(a.startTime)}`,
+          message: `Coach ${coachName} also assigned to "${a.title}" at ${formatTimeInTz(a.startTime, tz)}`,
         });
       }
     }
@@ -213,7 +206,7 @@ export function buildConflictMap(workshops, coaches) {
  * @param {Object[]} dayWorkshops - Non-cancelled workshops for a single day
  * @returns {Array<{slotIndex: number, count: number}>} Saturated slots (count >= 4)
  */
-export function getSaturatedSlots(dayWorkshops) {
+export function getSaturatedSlots(dayWorkshops, tz = 'America/New_York') {
   const saturated = [];
 
   for (let i = 0; i < GRID_SLOTS; i++) {
@@ -223,8 +216,8 @@ export function getSaturatedSlots(dayWorkshops) {
 
     let count = 0;
     for (const ws of dayWorkshops) {
-      const wsStart = timeToMinutes(ws.startTime);
-      const wsEnd = timeToMinutes(ws.endTime);
+      const wsStart = timeToMinutes(ws.startTime, tz);
+      const wsEnd = timeToMinutes(ws.endTime, tz);
       // Workshop overlaps slot if wsStart < slotEnd AND wsEnd > slotStart
       if (wsStart < slotEnd && wsEnd > slotStart) {
         count++;

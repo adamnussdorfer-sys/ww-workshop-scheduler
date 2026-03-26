@@ -14,11 +14,11 @@ import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { findNextAvailableSlot } from '../utils/slotFinder';
 
 export default function ScheduleCalendar() {
-  const { workshops, coaches, filters, setFilters } = useApp();
+  const { workshops, coaches, filters, setFilters, userTimezone } = useApp();
 
   const conflictMap = useMemo(
-    () => buildConflictMap(workshops, coaches),
-    [workshops, coaches]
+    () => buildConflictMap(workshops, coaches, userTimezone),
+    [workshops, coaches, userTimezone]
   );
 
   // General date state — derives week start for week view
