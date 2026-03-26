@@ -66,7 +66,7 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
       }}
     >
       {hasConflicts && (
-        <div className={`absolute top-0.5 right-0.5 ${iconColor} cursor-help`}>
+        <div className={`absolute top-1.5 right-1.5 ${iconColor} cursor-help`}>
           <Tooltip
             content={conflicts.map((c, i) => (
               <div key={i}>{c.message}</div>
@@ -77,7 +77,7 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
         </div>
       )}
       {isDraft && !hasConflicts && (
-        <div className="absolute top-0.5 right-0.5 text-slate-400 cursor-help">
+        <div className="absolute top-1.5 right-1.5 text-slate-400 cursor-help">
           <Tooltip content="Draft">
             <span className="text-[10px] font-medium uppercase tracking-wide">Draft</span>
           </Tooltip>
