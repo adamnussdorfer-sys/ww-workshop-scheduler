@@ -15,9 +15,11 @@ export function getCoachAvailability(coach, date) {
     return { available: false, reason: 'Inactive coach' };
   }
 
-  const tz = coach.timezone || 'America/New_York';
+  // Availability windows are stored in ET (America/New_York).
+  // When backed by a real API, the server will handle timezone conversion.
+  const tz = 'America/New_York';
 
-  // Get day name in the coach's timezone
+  // Get day name in ET
   const dayName = new Intl.DateTimeFormat('en-US', {
     timeZone: tz,
     weekday: 'long',
