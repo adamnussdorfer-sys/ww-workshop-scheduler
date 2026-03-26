@@ -169,7 +169,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
       </div>
 
       {/* Body: time gutter + day columns */}
-      <div ref={scrollRef} className="flex overflow-y-auto flex-1">
+      <div ref={scrollRef} className="flex overflow-y-auto flex-1 pt-2">
         {/* Time gutter */}
         <div className="w-16 flex-shrink-0 relative" style={{ height: GRID_HEIGHT }}>
           {HOUR_LABELS.map((h) => (

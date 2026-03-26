@@ -168,7 +168,7 @@ export default function DayView({
       </div>
 
       {/* Body: time gutter + single day column */}
-      <div ref={scrollRef} className="flex overflow-y-auto flex-1">
+      <div ref={scrollRef} className="flex overflow-y-auto flex-1 pt-2">
         {/* Time gutter */}
         <div className="w-16 flex-shrink-0 relative" style={{ height: GRID_HEIGHT }}>
           {HOUR_LABELS.map((h) => (
