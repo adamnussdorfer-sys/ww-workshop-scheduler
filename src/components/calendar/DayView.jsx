@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import {
   parseISO,
   getHours,
@@ -126,6 +126,22 @@ export default function DayView({
 
   const today = isToday(date);
 
+  // Current-time indicator — updates every minute
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    if (!today) return;
+    const id = setInterval(() => setNow(new Date()), 60_000);
+    return () => clearInterval(id);
+  }, [today]);
+
+  const nowTop = useMemo(() => {
+    if (!today) return null;
+    const minutes = (now.getHours() - GRID_START_HOUR) * 60 + now.getMinutes();
+    const top = minutes * PX_PER_MIN;
+    if (top < 0 || top > GRID_HEIGHT) return null;
+    return top;
+  }, [today, now]);
+
   return (
     <div className="border border-border rounded-3xl overflow-hidden bg-white flex flex-col flex-1">
       {/* Header spacer — no date banner in day view */}
@@ -150,6 +166,13 @@ export default function DayView({
               {formatHourLabel(h)}
             </div>
           ))}
+          {/* Current-time gutter line */}
+          {nowTop !== null && (
+            <div
+              className="absolute right-0 h-[2px] bg-red-500 pointer-events-none"
+              style={{ top: nowTop, width: 8 }}
+            />
+          )}
         </div>
 
         {/* Single day column */}
@@ -196,6 +219,17 @@ export default function DayView({
             />
           ))}
 
+
+          {/* Current-time red line */}
+          {nowTop !== null && (
+            <div
+              className="absolute left-0 right-0 pointer-events-none"
+              style={{ top: nowTop, zIndex: 50 }}
+            >
+              <div className="absolute -left-[5px] -top-[5px] w-[10px] h-[10px] rounded-full bg-red-500" />
+              <div className="absolute left-0 right-0 h-[2px] bg-red-500" />
+            </div>
+          )}
 
           {/* Workshop cards — wider in day view */}
           {(() => {
