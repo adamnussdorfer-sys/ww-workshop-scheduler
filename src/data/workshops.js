@@ -4986,3 +4986,24 @@ export const workshops = [
     attendance: [124, 118, 131, 126, 122],
   },
 ];
+
+// Duplicate all workshops for +1 week and +2 weeks
+function duplicateWeek(base, weekOffset, idOffset) {
+  return base.map((ws, i) => {
+    const start = new Date(ws.startTime);
+    const end = new Date(ws.endTime);
+    start.setDate(start.getDate() + 7 * weekOffset);
+    end.setDate(end.getDate() + 7 * weekOffset);
+    return {
+      ...ws,
+      id: `ws-${String(idOffset + i + 1).padStart(3, '0')}`,
+      startTime: start.toISOString(),
+      endTime: end.toISOString(),
+    };
+  });
+}
+
+workshops.push(
+  ...duplicateWeek(workshops, 1, 354),
+  ...duplicateWeek(workshops, 2, 708),
+);

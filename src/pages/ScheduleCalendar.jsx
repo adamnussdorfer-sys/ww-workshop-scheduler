@@ -23,7 +23,7 @@ export default function ScheduleCalendar() {
 
   // General date state — derives week start for week view
   const [currentDate, setCurrentDate] = useState(() => new Date());
-  const [viewMode, setViewMode] = useState('week');
+  const [viewMode, setViewMode] = useState('day');
   const [showOverlay, setShowOverlay] = useState(false);
 
   // Auto-switch week view to day view on mobile
