@@ -10,6 +10,7 @@ import DraftManager from './pages/DraftManager'
 import Login from './pages/Login'
 import { coaches as initialCoaches } from './data/coaches'
 import { workshops as initialWorkshops } from './data/workshops'
+import FeedbackWidget from './components/feedback/FeedbackWidget'
 
 export default function App() {
   const [authed, setAuthed] = useState(() => sessionStorage.getItem('authenticated') === 'true')
@@ -68,13 +69,16 @@ export default function App() {
         <Route path="/login" element={<Login onLogin={login} />} />
         <Route path="/*" element={
           authed ? (
-            <AppShell>
-              <Routes>
-                <Route path="/" element={<ScheduleCalendar />} />
-                <Route path="/roster" element={<CoachRoster />} />
-                <Route path="/drafts" element={<DraftManager />} />
-              </Routes>
-            </AppShell>
+            <>
+              <AppShell>
+                <Routes>
+                  <Route path="/" element={<ScheduleCalendar />} />
+                  <Route path="/roster" element={<CoachRoster />} />
+                  <Route path="/drafts" element={<DraftManager />} />
+                </Routes>
+              </AppShell>
+              <FeedbackWidget />
+            </>
           ) : (
             <Navigate to="/login" replace />
           )
