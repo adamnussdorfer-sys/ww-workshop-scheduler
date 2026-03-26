@@ -11,23 +11,38 @@ import {
   format,
   parseISO,
 } from 'date-fns';
+import { useApp } from '../../context/AppContext';
 
 // ── Type-colored pill styles (mirrors WorkshopCard TYPE_CARD_STYLES) ─────────
 const TYPE_PILL_STYLES = {
-  'Weekly Connection': 'bg-sky-100 border-l-2 border-sky-500',
+  'Weekly Workshop': 'bg-sky-100 border-l-2 border-sky-500',
+  'Weekly Connection': 'bg-teal-100 border-l-2 border-teal-500',
   'All In': 'bg-fuchsia-100 border-l-2 border-fuchsia-500',
-  'Special Event': 'bg-pink-100 border-l-2 border-pink-500',
+  'GLP-1 & Diabetes': 'bg-emerald-100 border-l-2 border-emerald-500',
+  'Movement & Fitness': 'bg-violet-200 border-l-2 border-violet-500',
+  'Nutrition & Cooking': 'bg-amber-100 border-l-2 border-amber-500',
+  'Mindset & Wellness': 'bg-rose-100 border-l-2 border-rose-500',
+  'Community': 'bg-orange-100 border-l-2 border-orange-500',
+  'Education': 'bg-indigo-100 border-l-2 border-indigo-500',
+  'Real Room': 'bg-red-100 border-l-2 border-red-500',
+  'Life Stage': 'bg-pink-100 border-l-2 border-pink-500',
   'Coaching Corner': 'bg-slate-200 border-l-2 border-slate-500',
-  'Movement/Fitness': 'bg-violet-200 border-l-2 border-violet-500',
 };
 
 // ── Type-to-dot color mapping for mobile ─────────────────────────────────────
 const TYPE_DOT_COLORS = {
-  'Weekly Connection': 'bg-sky-500',
+  'Weekly Workshop': 'bg-sky-500',
+  'Weekly Connection': 'bg-teal-500',
   'All In': 'bg-fuchsia-500',
-  'Special Event': 'bg-pink-500',
+  'GLP-1 & Diabetes': 'bg-emerald-500',
+  'Movement & Fitness': 'bg-violet-500',
+  'Nutrition & Cooking': 'bg-amber-500',
+  'Mindset & Wellness': 'bg-rose-500',
+  'Community': 'bg-orange-500',
+  'Education': 'bg-indigo-500',
+  'Real Room': 'bg-red-500',
+  'Life Stage': 'bg-pink-500',
   'Coaching Corner': 'bg-slate-500',
-  'Movement/Fitness': 'bg-violet-500',
 };
 
 const MAX_VISIBLE_PILLS = 3;
@@ -43,6 +58,8 @@ export default function MonthView({
   filteredIds,
   anyFilterActive,
 }) {
+  const { highlightedIds } = useApp();
+
   // Build weeks array — each week is an array of 7 Date objects (Mon–Sun)
   const weeks = useMemo(() => {
     const monthStart = startOfMonth(currentDate);
@@ -143,10 +160,11 @@ export default function MonthView({
                   {pillWorkshops.map((ws) => {
                     const dotColor = TYPE_DOT_COLORS[ws.type] ?? 'bg-slate-400';
                     const isDimmed = anyFilterActive && !filteredIds.has(ws.id);
+                    const isNew = highlightedIds.has(ws.id);
                     return (
                       <span
                         key={ws.id}
-                        className={`w-2 h-2 rounded-full shrink-0 ${dotColor} ${isDimmed ? 'opacity-25' : ''}`}
+                        className={`w-2 h-2 rounded-full shrink-0 ${dotColor} ${isDimmed ? 'opacity-25' : ''}${isNew ? ' animate-new-glow' : ''}`}
                         onClick={(e) => {
                           e.stopPropagation();
                           onWorkshopClick(ws.id);
@@ -163,13 +181,14 @@ export default function MonthView({
                       TYPE_PILL_STYLES[ws.type] ?? 'bg-slate-50 border-l-2 border-slate-400';
                     const isDimmed =
                       anyFilterActive && !filteredIds.has(ws.id);
+                    const isNew = highlightedIds.has(ws.id);
 
                     return (
                       <div
                         key={ws.id}
                         className={`h-5 text-[10px] leading-tight px-1 rounded truncate cursor-pointer
                           ${pillStyle}
-                          ${isDimmed ? 'opacity-25 pointer-events-none' : ''}`}
+                          ${isDimmed ? 'opacity-25 pointer-events-none' : ''}${isNew ? ' animate-new-glow' : ''}`}
                         onClick={(e) => {
                           e.stopPropagation();
                           onWorkshopClick(ws.id);

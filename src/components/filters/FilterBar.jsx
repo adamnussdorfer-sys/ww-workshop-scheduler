@@ -3,16 +3,23 @@ import { ChevronDown, Check, SlidersHorizontal } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import Checkbox from '../ui/Checkbox';
 
-const WORKSHOP_TYPES = ['All In', 'Coaching Corner', 'Movement/Fitness', 'Special Event', 'Weekly Connection'];
+const WORKSHOP_TYPES = ['All In', 'Coaching Corner', 'Community', 'Education', 'GLP-1 & Diabetes', 'Life Stage', 'Mindset & Wellness', 'Movement & Fitness', 'Nutrition & Cooking', 'Real Room', 'Weekly Connection', 'Weekly Workshop'];
 const WORKSHOP_STATUSES = ['Published', 'Draft'];
 const WORKSHOP_MARKETS = ['US', 'CA', 'UK', 'ANZ'];
 
 const TYPE_CHECKBOX_COLORS = {
-  'Weekly Connection': { checked: 'bg-sky-500 border-sky-500', unchecked: 'border-sky-400' },
+  'Weekly Workshop': { checked: 'bg-sky-500 border-sky-500', unchecked: 'border-sky-400' },
+  'Weekly Connection': { checked: 'bg-teal-500 border-teal-500', unchecked: 'border-teal-400' },
   'All In': { checked: 'bg-fuchsia-500 border-fuchsia-500', unchecked: 'border-fuchsia-400' },
-  'Special Event': { checked: 'bg-pink-500 border-pink-500', unchecked: 'border-pink-400' },
+  'GLP-1 & Diabetes': { checked: 'bg-emerald-500 border-emerald-500', unchecked: 'border-emerald-400' },
+  'Movement & Fitness': { checked: 'bg-violet-500 border-violet-500', unchecked: 'border-violet-400' },
+  'Nutrition & Cooking': { checked: 'bg-amber-500 border-amber-500', unchecked: 'border-amber-400' },
+  'Mindset & Wellness': { checked: 'bg-rose-500 border-rose-500', unchecked: 'border-rose-400' },
+  'Community': { checked: 'bg-orange-500 border-orange-500', unchecked: 'border-orange-400' },
+  'Education': { checked: 'bg-indigo-500 border-indigo-500', unchecked: 'border-indigo-400' },
+  'Real Room': { checked: 'bg-red-500 border-red-500', unchecked: 'border-red-400' },
+  'Life Stage': { checked: 'bg-pink-500 border-pink-500', unchecked: 'border-pink-400' },
   'Coaching Corner': { checked: 'bg-slate-500 border-slate-500', unchecked: 'border-slate-400' },
-  'Movement/Fitness': { checked: 'bg-violet-500 border-violet-500', unchecked: 'border-violet-400' },
 };
 
 function ColoredCheckbox({ checked, colors }) {

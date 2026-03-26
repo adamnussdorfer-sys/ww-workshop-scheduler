@@ -2,11 +2,12 @@ import { format } from 'date-fns';
 
 // Grid constants — shared source of truth for CalendarGrid and this utility.
 // CalendarGrid imports these to avoid duplication.
-export const GRID_START_HOUR = 6;
+export const GRID_START_HOUR = 2;
 export const GRID_END_HOUR = 22;
 export const PX_PER_HOUR = 64;
 export const PX_PER_MIN = PX_PER_HOUR / 60;
-export const GRID_HEIGHT = (GRID_END_HOUR - GRID_START_HOUR) * PX_PER_HOUR; // 1024px
+export const GRID_HEIGHT = (GRID_END_HOUR - GRID_START_HOUR) * PX_PER_HOUR; // 1280px
+export const GRID_SLOTS = (GRID_END_HOUR - GRID_START_HOUR) * 2; // 40 half-hour slots
 
 // Static Tailwind class lookup — complete strings required for JIT scanner.
 // Pattern matches TYPE_CARD_STYLES in WorkshopCard.jsx.

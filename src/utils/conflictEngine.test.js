@@ -10,121 +10,170 @@ function getWeekDay(dayOffset, hour, minute = 0) {
   return setMinutes(setHours(addDays(monday, dayOffset), hour), minute).toISOString();
 }
 
-// ── Double-booking tests (Conflict A & B) ────────────────────────────────────
+// ── Double-booking detection ────────────────────────────────────────────────
 
 describe('buildConflictMap - double-booking detection', () => {
-  it('detects Conflict A: coach-005 (Diane Okafor) double-booked on ws-021 and ws-022', () => {
-    const conflictMap = buildConflictMap(workshops, coaches);
+  it('detects double-booking when same coach has overlapping workshops', () => {
+    const syntheticCoach = {
+      id: 'coach-db-test',
+      name: 'Double Book Coach',
+      status: 'active',
+      availability: [{ day: 'monday', start: '06:00', end: '20:00' }],
+    };
 
-    const ws021Result = conflictMap.get('ws-021');
-    const ws022Result = conflictMap.get('ws-022');
+    const wsA = {
+      id: 'ws-db-a',
+      title: 'Workshop A',
+      status: 'Published',
+      coachId: 'coach-db-test',
+      coCoachId: null,
+      startTime: getWeekDay(0, 9, 0),
+      endTime: getWeekDay(0, 10, 0),
+    };
+    const wsB = {
+      id: 'ws-db-b',
+      title: 'Workshop B',
+      status: 'Published',
+      coachId: 'coach-db-test',
+      coCoachId: null,
+      startTime: getWeekDay(0, 9, 30),
+      endTime: getWeekDay(0, 10, 30),
+    };
 
-    expect(ws021Result).toBeDefined();
-    expect(ws022Result).toBeDefined();
+    const conflictMap = buildConflictMap([wsA, wsB], [syntheticCoach]);
 
-    const ws021DoubleBooking = ws021Result.conflicts.find(
-      (c) => c.type === 'double-booking'
-    );
-    const ws022DoubleBooking = ws022Result.conflicts.find(
-      (c) => c.type === 'double-booking'
-    );
+    const aResult = conflictMap.get('ws-db-a');
+    const bResult = conflictMap.get('ws-db-b');
 
-    expect(ws021DoubleBooking).toBeDefined();
-    expect(ws022DoubleBooking).toBeDefined();
+    expect(aResult.hasConflicts).toBe(true);
+    expect(bResult.hasConflicts).toBe(true);
+    expect(aResult.ringColor).toBe('red');
+    expect(bResult.ringColor).toBe('red');
 
-    expect(ws021DoubleBooking.severity).toBe('red');
-    expect(ws022DoubleBooking.severity).toBe('red');
-
-    // Messages should mention coach name and other workshop
-    expect(ws021DoubleBooking.message).toContain('Diane Okafor');
-    expect(ws022DoubleBooking.message).toContain('Diane Okafor');
+    const aConflict = aResult.conflicts.find((c) => c.type === 'double-booking');
+    expect(aConflict).toBeDefined();
+    expect(aConflict.severity).toBe('red');
+    expect(aConflict.message).toContain('Double Book Coach');
   });
 
-  it('assigns ringColor red for ws-021 and ws-022 (double-booking)', () => {
-    const conflictMap = buildConflictMap(workshops, coaches);
+  it('detects double-booking via co-coach', () => {
+    const coach1 = {
+      id: 'coach-co-1',
+      name: 'Primary Coach',
+      status: 'active',
+      availability: [{ day: 'tuesday', start: '06:00', end: '20:00' }],
+    };
+    const coach2 = {
+      id: 'coach-co-2',
+      name: 'Shared Coach',
+      status: 'active',
+      availability: [{ day: 'tuesday', start: '06:00', end: '20:00' }],
+    };
 
-    expect(conflictMap.get('ws-021').ringColor).toBe('red');
-    expect(conflictMap.get('ws-022').ringColor).toBe('red');
-    expect(conflictMap.get('ws-021').hasConflicts).toBe(true);
-    expect(conflictMap.get('ws-022').hasConflicts).toBe(true);
-  });
+    const wsA = {
+      id: 'ws-co-a',
+      title: 'Workshop A',
+      status: 'Published',
+      coachId: 'coach-co-1',
+      coCoachId: 'coach-co-2',
+      startTime: getWeekDay(1, 10, 0),
+      endTime: getWeekDay(1, 11, 0),
+    };
+    const wsB = {
+      id: 'ws-co-b',
+      title: 'Workshop B',
+      status: 'Published',
+      coachId: 'coach-co-2',
+      coCoachId: null,
+      startTime: getWeekDay(1, 10, 30),
+      endTime: getWeekDay(1, 11, 30),
+    };
 
-  it('detects Conflict B: coach-008 (Alicia Fontaine) double-booked on ws-033 and ws-034', () => {
-    const conflictMap = buildConflictMap(workshops, coaches);
-
-    const ws033Result = conflictMap.get('ws-033');
-    const ws034Result = conflictMap.get('ws-034');
-
-    expect(ws033Result).toBeDefined();
-    expect(ws034Result).toBeDefined();
-
-    const ws033DoubleBooking = ws033Result.conflicts.find(
-      (c) => c.type === 'double-booking'
-    );
-    const ws034DoubleBooking = ws034Result.conflicts.find(
-      (c) => c.type === 'double-booking'
-    );
-
-    expect(ws033DoubleBooking).toBeDefined();
-    expect(ws034DoubleBooking).toBeDefined();
-
-    expect(ws033DoubleBooking.severity).toBe('red');
-    expect(ws034DoubleBooking.severity).toBe('red');
-
-    expect(ws033DoubleBooking.message).toContain('Alicia Fontaine');
-    expect(ws034DoubleBooking.message).toContain('Alicia Fontaine');
-  });
-
-  it('assigns ringColor red for ws-033 and ws-034 (double-booking)', () => {
-    const conflictMap = buildConflictMap(workshops, coaches);
-
-    expect(conflictMap.get('ws-033').ringColor).toBe('red');
-    expect(conflictMap.get('ws-034').ringColor).toBe('red');
+    const conflictMap = buildConflictMap([wsA, wsB], [coach1, coach2]);
+    expect(conflictMap.get('ws-co-a').ringColor).toBe('red');
+    expect(conflictMap.get('ws-co-b').ringColor).toBe('red');
   });
 });
 
-// ── Buffer violation tests (Conflict C) ─────────────────────────────────────
+// ── Buffer violation detection ──────────────────────────────────────────────
 
 describe('buildConflictMap - buffer violation detection', () => {
-  it('detects Conflict C: coach-012 (Thomas Erikson) buffer violation on ws-027 and ws-028', () => {
-    const conflictMap = buildConflictMap(workshops, coaches);
+  it('detects buffer violation when gap is less than 15 minutes', () => {
+    const coach = {
+      id: 'coach-buf',
+      name: 'Buffer Coach',
+      status: 'active',
+      availability: [{ day: 'wednesday', start: '06:00', end: '20:00' }],
+    };
 
-    const ws027Result = conflictMap.get('ws-027');
-    const ws028Result = conflictMap.get('ws-028');
+    const wsA = {
+      id: 'ws-buf-a',
+      title: 'Workshop A',
+      status: 'Published',
+      coachId: 'coach-buf',
+      coCoachId: null,
+      startTime: getWeekDay(2, 11, 0),
+      endTime: getWeekDay(2, 12, 0),
+    };
+    const wsB = {
+      id: 'ws-buf-b',
+      title: 'Workshop B',
+      status: 'Published',
+      coachId: 'coach-buf',
+      coCoachId: null,
+      startTime: getWeekDay(2, 12, 5),
+      endTime: getWeekDay(2, 13, 0),
+    };
 
-    expect(ws027Result).toBeDefined();
-    expect(ws028Result).toBeDefined();
+    const conflictMap = buildConflictMap([wsA, wsB], [coach]);
 
-    const ws027Buffer = ws027Result.conflicts.find((c) => c.type === 'buffer');
-    const ws028Buffer = ws028Result.conflicts.find((c) => c.type === 'buffer');
+    const aBuffer = conflictMap.get('ws-buf-a').conflicts.find((c) => c.type === 'buffer');
+    const bBuffer = conflictMap.get('ws-buf-b').conflicts.find((c) => c.type === 'buffer');
 
-    expect(ws027Buffer).toBeDefined();
-    expect(ws028Buffer).toBeDefined();
-
-    expect(ws027Buffer.severity).toBe('orange');
-    expect(ws028Buffer.severity).toBe('orange');
-
-    // Message should mention the gap duration (5 minutes)
-    expect(ws027Buffer.message).toContain('5');
-    expect(ws028Buffer.message).toContain('5');
+    expect(aBuffer).toBeDefined();
+    expect(bBuffer).toBeDefined();
+    expect(aBuffer.severity).toBe('orange');
+    expect(aBuffer.message).toContain('5');
+    expect(conflictMap.get('ws-buf-a').ringColor).toBe('orange');
   });
 
-  it('assigns ringColor orange for ws-027 and ws-028 (buffer violation)', () => {
-    const conflictMap = buildConflictMap(workshops, coaches);
+  it('does not flag buffer when gap is 15+ minutes', () => {
+    const coach = {
+      id: 'coach-ok',
+      name: 'OK Coach',
+      status: 'active',
+      availability: [{ day: 'wednesday', start: '06:00', end: '20:00' }],
+    };
 
-    expect(conflictMap.get('ws-027').ringColor).toBe('orange');
-    expect(conflictMap.get('ws-028').ringColor).toBe('orange');
-    expect(conflictMap.get('ws-027').hasConflicts).toBe(true);
-    expect(conflictMap.get('ws-028').hasConflicts).toBe(true);
+    const wsA = {
+      id: 'ws-ok-a',
+      title: 'Workshop A',
+      status: 'Published',
+      coachId: 'coach-ok',
+      coCoachId: null,
+      startTime: getWeekDay(2, 10, 0),
+      endTime: getWeekDay(2, 11, 0),
+    };
+    const wsB = {
+      id: 'ws-ok-b',
+      title: 'Workshop B',
+      status: 'Published',
+      coachId: 'coach-ok',
+      coCoachId: null,
+      startTime: getWeekDay(2, 11, 15),
+      endTime: getWeekDay(2, 12, 15),
+    };
+
+    const conflictMap = buildConflictMap([wsA, wsB], [coach]);
+    expect(conflictMap.get('ws-ok-a').hasConflicts).toBe(false);
+    expect(conflictMap.get('ws-ok-b').hasConflicts).toBe(false);
   });
 });
 
-// ── Availability conflict test ────────────────────────────────────────────────
+// ── Availability conflict detection ─────────────────────────────────────────
 
 describe('buildConflictMap - availability conflict detection', () => {
-  it('detects availability conflict when workshop is scheduled outside coach availability', () => {
-    // coach-001 (Sarah Mitchell) is available Mon-Fri 09:00-17:00
-    // Create a synthetic workshop at Monday 06:00 (before availability window)
+  it('detects availability conflict when workshop is outside coach availability', () => {
     const syntheticCoach = {
       id: 'coach-test',
       name: 'Test Coach',
@@ -138,41 +187,60 @@ describe('buildConflictMap - availability conflict detection', () => {
       status: 'Published',
       coachId: 'coach-test',
       coCoachId: null,
-      startTime: getWeekDay(0, 6, 0), // Monday 06:00 — before availability
+      startTime: getWeekDay(0, 6, 0),
       endTime: getWeekDay(0, 7, 0),
     };
 
-    const testWorkshops = [syntheticWorkshop];
-    const testCoaches = [syntheticCoach];
-
-    const conflictMap = buildConflictMap(testWorkshops, testCoaches);
+    const conflictMap = buildConflictMap([syntheticWorkshop], [syntheticCoach]);
 
     const result = conflictMap.get('ws-test-avail');
     expect(result).toBeDefined();
 
-    const availConflict = result.conflicts.find(
-      (c) => c.type === 'availability'
-    );
+    const availConflict = result.conflicts.find((c) => c.type === 'availability');
     expect(availConflict).toBeDefined();
     expect(availConflict.severity).toBe('orange');
     expect(availConflict.message).toContain('Test Coach');
   });
 });
 
-// ── Cancelled exclusion test ──────────────────────────────────────────────────
+// ── Cancelled exclusion ─────────────────────────────────────────────────────
 
 describe('buildConflictMap - cancelled workshop exclusion', () => {
-  it('does not include cancelled workshop ws-026 in the conflict map', () => {
-    const conflictMap = buildConflictMap(workshops, coaches);
-    expect(conflictMap.has('ws-026')).toBe(false);
+  it('excludes cancelled workshops from the conflict map', () => {
+    const coach = {
+      id: 'coach-cancel',
+      name: 'Cancel Coach',
+      status: 'active',
+      availability: [{ day: 'monday', start: '06:00', end: '20:00' }],
+    };
+
+    const wsActive = {
+      id: 'ws-active',
+      title: 'Active',
+      status: 'Published',
+      coachId: 'coach-cancel',
+      coCoachId: null,
+      startTime: getWeekDay(0, 9, 0),
+      endTime: getWeekDay(0, 10, 0),
+    };
+    const wsCancelled = {
+      id: 'ws-cancelled',
+      title: 'Cancelled',
+      status: 'Cancelled',
+      coachId: 'coach-cancel',
+      coCoachId: null,
+      startTime: getWeekDay(0, 9, 30),
+      endTime: getWeekDay(0, 10, 30),
+    };
+
+    const conflictMap = buildConflictMap([wsActive, wsCancelled], [coach]);
+    expect(conflictMap.has('ws-active')).toBe(true);
+    expect(conflictMap.has('ws-cancelled')).toBe(false);
+    // No double-booking since cancelled workshop is excluded
+    expect(conflictMap.get('ws-active').hasConflicts).toBe(false);
   });
 
-  it('does not include cancelled workshop ws-048 in the conflict map', () => {
-    const conflictMap = buildConflictMap(workshops, coaches);
-    expect(conflictMap.has('ws-048')).toBe(false);
-  });
-
-  it('cancelled workshops do not appear as keys in the conflict map at all', () => {
+  it('cancelled workshops in real data do not appear in conflict map', () => {
     const conflictMap = buildConflictMap(workshops, coaches);
     const cancelledWorkshops = workshops.filter((w) => w.status === 'Cancelled');
     cancelledWorkshops.forEach((w) => {
@@ -181,11 +249,10 @@ describe('buildConflictMap - cancelled workshop exclusion', () => {
   });
 });
 
-// ── Ring color priority test ─────────────────────────────────────────────────
+// ── Ring color priority ─────────────────────────────────────────────────────
 
 describe('buildConflictMap - ring color priority', () => {
-  it('assigns red ringColor when workshop has both double-booking (red) and buffer violation (orange)', () => {
-    // Create synthetic scenario: coach double-booked AND has buffer violation
+  it('assigns red ringColor when workshop has both double-booking and buffer violation', () => {
     const syntheticCoach = {
       id: 'coach-priority-test',
       name: 'Priority Test Coach',
@@ -193,16 +260,14 @@ describe('buildConflictMap - ring color priority', () => {
       availability: [{ day: 'tuesday', start: '06:00', end: '20:00' }],
     };
 
-    // ws-A and ws-B overlap (double-booking)
-    // ws-A and ws-C have only 5 min gap (buffer violation)
     const wsA = {
       id: 'ws-priority-a',
       title: 'Priority Workshop A',
       status: 'Published',
       coachId: 'coach-priority-test',
       coCoachId: null,
-      startTime: getWeekDay(1, 9, 0),  // Tue 09:00
-      endTime: getWeekDay(1, 10, 0),   // Tue 10:00
+      startTime: getWeekDay(1, 9, 0),
+      endTime: getWeekDay(1, 10, 0),
     };
     const wsB = {
       id: 'ws-priority-b',
@@ -210,8 +275,8 @@ describe('buildConflictMap - ring color priority', () => {
       status: 'Published',
       coachId: 'coach-priority-test',
       coCoachId: null,
-      startTime: getWeekDay(1, 9, 30), // Tue 09:30 — overlaps with A
-      endTime: getWeekDay(1, 10, 30),  // Tue 10:30
+      startTime: getWeekDay(1, 9, 30),
+      endTime: getWeekDay(1, 10, 30),
     };
     const wsC = {
       id: 'ws-priority-c',
@@ -219,107 +284,70 @@ describe('buildConflictMap - ring color priority', () => {
       status: 'Published',
       coachId: 'coach-priority-test',
       coCoachId: null,
-      startTime: getWeekDay(1, 10, 35), // Tue 10:35 — only 35 min after A ends (10:00), 5 min after B ends (10:30)
-      endTime: getWeekDay(1, 11, 30),   // Tue 11:30
+      startTime: getWeekDay(1, 10, 35),
+      endTime: getWeekDay(1, 11, 30),
     };
 
     const conflictMap = buildConflictMap([wsA, wsB, wsC], [syntheticCoach]);
 
-    // wsB has a double-booking (overlaps wsA) and a buffer violation (5 min before wsC)
     const wsBResult = conflictMap.get('ws-priority-b');
     expect(wsBResult).toBeDefined();
 
-    const hasDoubleBooking = wsBResult.conflicts.some(
-      (c) => c.type === 'double-booking'
-    );
+    const hasDoubleBooking = wsBResult.conflicts.some((c) => c.type === 'double-booking');
     const hasBuffer = wsBResult.conflicts.some((c) => c.type === 'buffer');
 
     expect(hasDoubleBooking).toBe(true);
     expect(hasBuffer).toBe(true);
-
-    // Red should beat orange — ringColor must be 'red'
     expect(wsBResult.ringColor).toBe('red');
-  });
-
-  it('non-conflicted workshops have ringColor null and hasConflicts false', () => {
-    const conflictMap = buildConflictMap(workshops, coaches);
-
-    // ws-005 has no conflicts: coach-007 Mon 12:00-12:30, no overlapping or buffer issues
-    const ws005Result = conflictMap.get('ws-005');
-    expect(ws005Result).toBeDefined();
-    expect(ws005Result.ringColor).toBeNull();
-    expect(ws005Result.hasConflicts).toBe(false);
   });
 });
 
-// ── getSaturatedSlots tests ──────────────────────────────────────────────────
+// ── Integration: buildConflictMap on real data ──────────────────────────────
+
+describe('buildConflictMap - integration with real data', () => {
+  it('returns a conflict map entry for every non-cancelled workshop', () => {
+    const conflictMap = buildConflictMap(workshops, coaches);
+    const active = workshops.filter((w) => w.status !== 'Cancelled');
+    expect(conflictMap.size).toBe(active.length);
+  });
+});
+
+// ── getSaturatedSlots tests (GRID_START_HOUR=2) ─────────────────────────────
 
 describe('getSaturatedSlots', () => {
   it('returns slot indices where 4+ workshops overlap in a 30-min window', () => {
-    // Create 4 workshops all overlapping at 07:00-07:30 (slot index 2 at GRID_START_HOUR=6)
-    const dayWorkshops = [
-      {
-        id: 'sat-1',
-        status: 'Published',
-        startTime: getWeekDay(0, 7, 0),
-        endTime: getWeekDay(0, 8, 0),
-      },
-      {
-        id: 'sat-2',
-        status: 'Published',
-        startTime: getWeekDay(0, 7, 0),
-        endTime: getWeekDay(0, 8, 0),
-      },
-      {
-        id: 'sat-3',
-        status: 'Published',
-        startTime: getWeekDay(0, 7, 0),
-        endTime: getWeekDay(0, 8, 0),
-      },
-      {
-        id: 'sat-4',
-        status: 'Published',
-        startTime: getWeekDay(0, 7, 0),
-        endTime: getWeekDay(0, 8, 0),
-      },
-    ];
+    // 4 workshops at 07:00-08:00. slotIndex = (7-2)*2 = 10
+    const dayWorkshops = Array.from({ length: 4 }, (_, i) => ({
+      id: `sat-${i}`,
+      status: 'Published',
+      startTime: getWeekDay(0, 7, 0),
+      endTime: getWeekDay(0, 8, 0),
+    }));
 
     const saturatedSlots = getSaturatedSlots(dayWorkshops);
 
     expect(saturatedSlots.length).toBeGreaterThan(0);
     expect(saturatedSlots[0].count).toBeGreaterThanOrEqual(4);
-    expect(saturatedSlots[0].slotIndex).toBeDefined();
+    // Slot 10 = 7:00 (GRID_START_HOUR=2, so (7-2)*2=10)
+    const slot7am = saturatedSlots.find((s) => s.slotIndex === 10);
+    expect(slot7am).toBeDefined();
+    expect(slot7am.count).toBe(4);
   });
 
   it('does not return slots with fewer than 4 overlapping workshops', () => {
-    // Only 3 workshops overlapping — should return empty
-    const dayWorkshops = [
-      {
-        id: 'sat-1',
-        status: 'Published',
-        startTime: getWeekDay(0, 7, 0),
-        endTime: getWeekDay(0, 8, 0),
-      },
-      {
-        id: 'sat-2',
-        status: 'Published',
-        startTime: getWeekDay(0, 7, 0),
-        endTime: getWeekDay(0, 8, 0),
-      },
-      {
-        id: 'sat-3',
-        status: 'Published',
-        startTime: getWeekDay(0, 7, 0),
-        endTime: getWeekDay(0, 8, 0),
-      },
-    ];
+    const dayWorkshops = Array.from({ length: 3 }, (_, i) => ({
+      id: `sat-${i}`,
+      status: 'Published',
+      startTime: getWeekDay(0, 7, 0),
+      endTime: getWeekDay(0, 8, 0),
+    }));
 
     const saturatedSlots = getSaturatedSlots(dayWorkshops);
     expect(saturatedSlots).toHaveLength(0);
   });
 
-  it('returns correct slotIndex for a saturated window not at start', () => {
-    // 4 workshops overlapping at 10:00 — slotIndex = (10*60 - 6*60) / 30 = 8
+  it('returns correct slotIndex for a saturated window at 10:00', () => {
+    // slotIndex = (10-2)*2 = 16
     const dayWorkshops = Array.from({ length: 4 }, (_, i) => ({
       id: `sat-10-${i}`,
       status: 'Published',
@@ -330,8 +358,7 @@ describe('getSaturatedSlots', () => {
     const saturatedSlots = getSaturatedSlots(dayWorkshops);
     expect(saturatedSlots.length).toBeGreaterThan(0);
 
-    // Slot 8: 10:00-10:30 (6*60 + 8*30 = 600min = 10:00)
-    const slotAt10 = saturatedSlots.find((s) => s.slotIndex === 8);
+    const slotAt10 = saturatedSlots.find((s) => s.slotIndex === 16);
     expect(slotAt10).toBeDefined();
     expect(slotAt10.count).toBe(4);
   });

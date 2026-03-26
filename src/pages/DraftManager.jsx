@@ -8,11 +8,18 @@ import { buildConflictMap } from '../utils/conflictEngine';
 import WorkshopPanel from '../components/panel/WorkshopPanel';
 
 const TYPE_PILL_STYLES = {
-  'Weekly Connection': 'bg-sky-100 text-sky-800',
+  'Weekly Workshop': 'bg-sky-100 text-sky-800',
+  'Weekly Connection': 'bg-teal-100 text-teal-800',
   'All In': 'bg-fuchsia-100 text-fuchsia-800',
-  'Special Event': 'bg-pink-100 text-pink-800',
+  'GLP-1 & Diabetes': 'bg-emerald-100 text-emerald-800',
+  'Movement & Fitness': 'bg-violet-200 text-violet-800',
+  'Nutrition & Cooking': 'bg-amber-100 text-amber-800',
+  'Mindset & Wellness': 'bg-rose-100 text-rose-800',
+  'Community': 'bg-orange-100 text-orange-800',
+  'Education': 'bg-indigo-100 text-indigo-800',
+  'Real Room': 'bg-red-100 text-red-800',
+  'Life Stage': 'bg-pink-100 text-pink-800',
   'Coaching Corner': 'bg-slate-200 text-slate-700',
-  'Movement/Fitness': 'bg-violet-200 text-violet-800',
 };
 
 export default function DraftManager() {

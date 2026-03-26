@@ -5,8 +5,8 @@ import { getCoachAvailability } from './coachAvailability';
 
 const BUFFER_MINUTES = 15;
 const SATURATION_THRESHOLD = 4;
-const GRID_START_HOUR = 6;  // Calendar grid starts at 6:00
-const GRID_SLOTS = 32;      // 32 half-hour slots (6:00 to 22:00)
+const GRID_START_HOUR = 2;  // Calendar grid starts at 2:00
+const GRID_SLOTS = 40;      // 40 half-hour slots (2:00 to 22:00)
 
 // ── Helper functions (internal) ───────────────────────────────────────────────
 

@@ -1,6 +1,6 @@
 import { startOfWeek, addDays, isSameDay, parseISO } from 'date-fns';
 
-const GRID_START_HOUR = 6;
+const GRID_START_HOUR = 2;
 const GRID_END_HOUR = 22;
 
 /**

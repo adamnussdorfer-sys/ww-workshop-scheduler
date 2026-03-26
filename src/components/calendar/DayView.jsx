@@ -15,6 +15,7 @@ import {
   PX_PER_HOUR,
   PX_PER_MIN,
   GRID_HEIGHT,
+  GRID_SLOTS,
   getAvailabilityBands,
   COACH_OVERLAY_COLORS,
 } from '../../utils/availabilityBands';
@@ -82,8 +83,7 @@ const HOUR_LABELS = Array.from(
   (_, i) => GRID_START_HOUR + i
 );
 
-// 32 slot lines: one per 30-min slot across 16 hours = 32 slots
-const SLOT_LINES = Array.from({ length: 32 }, (_, i) => i);
+const SLOT_LINES = Array.from({ length: GRID_SLOTS }, (_, i) => i);
 
 export default function DayView({
   date,

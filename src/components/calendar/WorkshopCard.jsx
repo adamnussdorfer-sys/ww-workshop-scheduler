@@ -1,13 +1,21 @@
 import { format, parseISO } from 'date-fns';
 import { AlertTriangle } from 'lucide-react';
 import Tooltip from '../ui/Tooltip';
+import { useApp } from '../../context/AppContext';
 
 const TYPE_CARD_STYLES = {
-  'Weekly Connection': 'bg-sky-100',
+  'Weekly Workshop': 'bg-sky-100',
+  'Weekly Connection': 'bg-teal-100',
   'All In': 'bg-fuchsia-100',
-  'Special Event': 'bg-pink-100',
+  'GLP-1 & Diabetes': 'bg-emerald-100',
+  'Movement & Fitness': 'bg-violet-200',
+  'Nutrition & Cooking': 'bg-amber-100',
+  'Mindset & Wellness': 'bg-rose-100',
+  'Community': 'bg-orange-100',
+  'Education': 'bg-indigo-100',
+  'Real Room': 'bg-red-100',
+  'Life Stage': 'bg-pink-100',
   'Coaching Corner': 'bg-slate-200',
-  'Movement/Fitness': 'bg-violet-200',
 };
 
 const DRAFT_BORDER = 'border-2 border-dashed border-slate-300';
@@ -19,6 +27,8 @@ const CONFLICT_RING = {
 };
 
 export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999 }) {
+  const { highlightedIds } = useApp();
+  const isHighlighted = highlightedIds.has(workshop.id);
   const compact = height < 42;
   const cardStyle = TYPE_CARD_STYLES[workshop.type] ?? 'bg-slate-50';
   const isDraft = workshop.status === 'Draft';
@@ -49,7 +59,7 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
         transition-[transform,box-shadow] duration-150 ease-out
         hover:-translate-y-0.5 hover:shadow-md
         motion-reduce:transition-none motion-reduce:hover:transform-none
-        ${cardStyle} ${ringClass || (isDraft ? DRAFT_BORDER : 'ring-[1.5px] ring-border')}${isFiltered ? ' opacity-25 pointer-events-none' : ''}`}
+        ${cardStyle} ${ringClass || (isDraft ? DRAFT_BORDER : 'ring-[1.5px] ring-border')}${isFiltered ? ' opacity-25 pointer-events-none' : ''}${isHighlighted ? ' animate-new-glow' : ''}`}
       onClick={(e) => {
         e.stopPropagation();
         onClick?.(workshop.id);

@@ -15,11 +15,18 @@ import { getCoachAvailability } from '../../utils/coachAvailability';
 import Tooltip from '../ui/Tooltip';
 
 const WORKSHOP_TYPES = [
+  'Weekly Workshop',
   'Weekly Connection',
   'All In',
-  'Special Event',
+  'GLP-1 & Diabetes',
+  'Movement & Fitness',
+  'Nutrition & Cooking',
+  'Mindset & Wellness',
+  'Community',
+  'Education',
+  'Real Room',
+  'Life Stage',
   'Coaching Corner',
-  'Movement/Fitness',
 ];
 
 const MARKETS = ['US', 'CA', 'UK', 'ANZ'];
@@ -113,7 +120,7 @@ function initDraft(workshop, mode, slotContext) {
   // mode === 'create'
   return {
     title: '',
-    type: 'Weekly Connection',
+    type: 'Weekly Workshop',
     status: 'Draft',
     coachId: '',
     coCoachId: null,
@@ -151,9 +158,9 @@ function fromDatetimeLocal(value) {
   }
 }
 
-// Generate 30-min time options from 6:00 AM to 10:00 PM
-const TIME_OPTIONS = Array.from({ length: 33 }, (_, i) => {
-  const totalMinutes = 6 * 60 + i * 30;
+// Generate 30-min time options from 2:00 AM to 10:00 PM
+const TIME_OPTIONS = Array.from({ length: 41 }, (_, i) => {
+  const totalMinutes = 2 * 60 + i * 30;
   const h = Math.floor(totalMinutes / 60);
   const m = totalMinutes % 60;
   const period = h >= 12 ? 'pm' : 'am';
@@ -565,7 +572,7 @@ export default function WorkshopForm({
   conflicts = [],
   onNavigate,
 }) {
-  const { setWorkshops } = useApp();
+  const { setWorkshops, highlightWorkshops } = useApp();
   const [draft, setDraft] = useState(() => initDraft(workshop, mode, slotContext));
 
   // Custom dropdown open states
@@ -634,6 +641,7 @@ export default function WorkshopForm({
         ? generateRecurringInstances(base)
         : [];
       setWorkshops((prev) => [...prev, base, ...extras]);
+      highlightWorkshops([base.id, ...extras.map((e) => e.id)]);
       const total = 1 + extras.length;
       toast(total > 1 ? `${total} workshops created` : 'Workshop created \u2014 ' + draft.title);
     } else {
@@ -642,6 +650,7 @@ export default function WorkshopForm({
         ? generateRecurringInstances(updated)
         : [];
       setWorkshops((prev) => [...prev.map((w) => (w.id === draft.id ? updated : w)), ...extras]);
+      highlightWorkshops([updated.id, ...extras.map((e) => e.id)]);
       const total = 1 + extras.length;
       toast(total > 1 ? `${total} workshops saved` : 'Changes saved');
     }
@@ -664,6 +673,7 @@ export default function WorkshopForm({
         ? generateRecurringInstances(base).map((w) => ({ ...w, status: 'Published' }))
         : [];
       setWorkshops((prev) => [...prev, base, ...extras]);
+      highlightWorkshops([base.id, ...extras.map((e) => e.id)]);
       const total = 1 + extras.length;
       toast(total > 1 ? `${total} workshops published` : 'Workshop published \u2014 ' + draft.title);
     } else {
@@ -672,6 +682,7 @@ export default function WorkshopForm({
         ? generateRecurringInstances(updated).map((w) => ({ ...w, status: 'Published' }))
         : [];
       setWorkshops((prev) => [...prev.map((w) => (w.id === draft.id ? updated : w)), ...extras]);
+      highlightWorkshops([updated.id, ...extras.map((e) => e.id)]);
       const total = 1 + extras.length;
       toast(total > 1 ? `${total} workshops published` : 'Workshop published');
     }
