@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useRef } from 'react';
-import { AlertTriangle, Plus, Trash2, X, Filter, Calendar, Clock } from 'lucide-react';
+import { AlertTriangle, Plus, Trash2, X, Filter, Calendar, Clock, Upload } from 'lucide-react';
 import { format, parseISO, isAfter, isBefore, startOfDay, endOfDay } from 'date-fns';
 import { useApp } from '../context/AppContext';
 import Checkbox from '../components/ui/Checkbox';
@@ -223,6 +223,20 @@ export default function DraftManager() {
               </button>
             </>
           )}
+
+          {/* Upload CSV button */}
+          <button
+            onClick={() => toast('CSV upload coming soon')}
+            disabled={effectiveSelectedIds.size > 0}
+            className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-full border-[1.5px] transition-colors ${
+              effectiveSelectedIds.size > 0
+                ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
+                : 'bg-white text-slate-600 border-border hover:border-slate-400'
+            }`}
+          >
+            <Upload size={14} />
+            Upload CSV
+          </button>
 
           {/* Add Draft button — hidden in bulk mode */}
           <button
