@@ -1,4 +1,6 @@
+import { useState, useRef, useCallback } from 'react';
 import { format, parseISO } from 'date-fns';
+import { createPortal } from 'react-dom';
 import { AlertTriangle } from 'lucide-react';
 import Tooltip from '../ui/Tooltip';
 import { useApp } from '../../context/AppContext';
@@ -26,7 +28,7 @@ const CONFLICT_RING = {
   orange: 'ring-2 ring-inset ring-red-400',
 };
 
-export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999 }) {
+export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999, hideConflictIcon = false }) {
   const { highlightedIds } = useApp();
   const isHighlighted = highlightedIds.has(workshop.id);
   const compact = height < 42;
@@ -53,8 +55,29 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
   const hasConflicts = conflicts.length > 0;
   const iconColor = ringColor === 'red' ? 'text-red-600' : 'text-red-400';
 
-  return (
+  const tooltipContent = hasConflicts
+    ? conflicts.map((c, i) => <div key={i}>{c.message}</div>)
+    : null;
+
+  // Card-level tooltip for when icon is hidden (week view)
+  const [tipVisible, setTipVisible] = useState(false);
+  const [tipPos, setTipPos] = useState({ top: 0, left: 0 });
+  const cardRef = useRef(null);
+  const showCardTip = useCallback(() => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setTipPos({ top: rect.bottom + 6, left: rect.left + rect.width / 2 });
+    setTipVisible(true);
+  }, []);
+  const hideCardTip = useCallback(() => setTipVisible(false), []);
+
+  const cardTipHandlers = hasConflicts && hideConflictIcon
+    ? { ref: cardRef, onMouseEnter: showCardTip, onMouseLeave: hideCardTip }
+    : {};
+
+  const card = (
     <div
+      {...cardTipHandlers}
       className={`h-full overflow-hidden rounded text-xs px-1.5 py-1 cursor-pointer relative
         transition-[transform,box-shadow] duration-150 ease-out
         hover:-translate-y-0.5 hover:shadow-md
@@ -65,13 +88,9 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
         onClick?.(workshop.id);
       }}
     >
-      {hasConflicts && (
+      {hasConflicts && !hideConflictIcon && (
         <div className={`absolute top-1.5 right-1.5 ${iconColor} cursor-help`}>
-          <Tooltip
-            content={conflicts.map((c, i) => (
-              <div key={i}>{c.message}</div>
-            ))}
-          >
+          <Tooltip content={tooltipContent}>
             <AlertTriangle size={12} strokeWidth={2.5} />
           </Tooltip>
         </div>
@@ -97,5 +116,20 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
         </>
       )}
     </div>
+  );
+
+  return (
+    <>
+      {card}
+      {tipVisible && tooltipContent && createPortal(
+        <div
+          className="fixed z-[9999] -translate-x-1/2 bg-ww-navy text-white text-[11px] leading-snug rounded-md shadow-lg px-2.5 py-1.5 max-w-56 pointer-events-none"
+          style={{ top: tipPos.top, left: tipPos.left }}
+        >
+          {tooltipContent}
+        </div>,
+        document.body
+      )}
+    </>
   );
 }

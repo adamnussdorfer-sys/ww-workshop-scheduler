@@ -253,6 +253,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                         onClick={onWorkshopClick}
                         isFiltered={isFiltered}
                         height={height}
+                        hideConflictIcon
                       />
                     </div>
                   );
