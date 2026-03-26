@@ -6,6 +6,7 @@ import Checkbox from '../components/ui/Checkbox';
 import DateRangePicker from '../components/ui/DateRangePicker';
 import { buildConflictMap } from '../utils/conflictEngine';
 import WorkshopPanel from '../components/panel/WorkshopPanel';
+import CsvUploadModal from '../components/upload/CsvUploadModal';
 
 const TYPE_PILL_STYLES = {
   'Weekly Workshop': 'bg-sky-100 text-sky-800',
@@ -23,11 +24,12 @@ const TYPE_PILL_STYLES = {
 };
 
 export default function DraftManager() {
-  const { workshops, coaches, setWorkshops, toast } = useApp();
+  const { workshops, coaches, setWorkshops, toast, highlightWorkshops } = useApp();
 
   const [selectedIds, setSelectedIds] = useState(new Set());
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [csvModalOpen, setCsvModalOpen] = useState(false);
   const [createPanelOpen, setCreatePanelOpen] = useState(false);
   const [editingWorkshop, setEditingWorkshop] = useState(null);
   const [sortBy, setSortBy] = useState('date'); // 'date' | 'title' | 'coach'
@@ -226,7 +228,7 @@ export default function DraftManager() {
 
           {/* Upload CSV button */}
           <button
-            onClick={() => toast('CSV upload coming soon')}
+            onClick={() => setCsvModalOpen(true)}
             disabled={effectiveSelectedIds.size > 0}
             className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-full border-[1.5px] transition-colors ${
               effectiveSelectedIds.size > 0
@@ -475,6 +477,21 @@ export default function DraftManager() {
             </div>
           </div>
         </>
+      )}
+
+      {/* CSV Upload modal */}
+      {csvModalOpen && (
+        <CsvUploadModal
+          coaches={coaches}
+          onImport={(validWorkshops) => {
+            setWorkshops((prev) => [...prev, ...validWorkshops]);
+            highlightWorkshops(validWorkshops.map((w) => w.id));
+            const count = validWorkshops.length;
+            toast(`${count} workshop${count !== 1 ? 's' : ''} imported as drafts`);
+            setCsvModalOpen(false);
+          }}
+          onClose={() => setCsvModalOpen(false)}
+        />
       )}
 
       {/* Delete confirmation modal */}
