@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router';
-import { Calendar, Users, FileText, PanelLeftClose, PanelLeftOpen, LogOut } from 'lucide-react';
+import { Calendar, Users, FileText, PanelLeftClose, PanelLeftOpen, LogOut, Globe } from 'lucide-react';
 import NavItem from '../nav/NavItem';
 import { AppContext } from '../../context/AppContext';
+import { TIMEZONE_OPTIONS, getTzAbbr } from '../../utils/timezone';
 
 const NAV_ITEMS = [
   { to: '/', icon: Calendar, label: 'Calendar' },
@@ -14,7 +15,7 @@ export default function Sidebar({ collapsed, onToggle }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  const { logout } = useContext(AppContext);
+  const { logout, userTimezone, setUserTimezone } = useContext(AppContext);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -78,6 +79,23 @@ export default function Sidebar({ collapsed, onToggle }) {
             <div className="px-3 py-2 border-b border-border">
               <p className="text-sm font-semibold text-ww-navy">Kathleen Toth</p>
               <p className="text-xs text-slate-400">kathleen@ww.com</p>
+            </div>
+            <div className="px-3 py-2 border-b border-border">
+              <label className="flex items-center gap-1.5 text-xs text-slate-500 mb-1.5">
+                <Globe size={12} />
+                Timezone
+              </label>
+              <select
+                value={userTimezone}
+                onChange={(e) => setUserTimezone(e.target.value)}
+                className="w-full text-sm text-ww-navy bg-slate-50 border border-border rounded-lg px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-ww-blue"
+              >
+                {TIMEZONE_OPTIONS.map((tz) => (
+                  <option key={tz.value} value={tz.value}>
+                    {tz.label} — {getTzAbbr(tz.value)}
+                  </option>
+                ))}
+              </select>
             </div>
             <button
               type="button"
