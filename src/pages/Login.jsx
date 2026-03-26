@@ -3,6 +3,33 @@ import { useNavigate } from 'react-router';
 import { Eye, EyeOff, Loader2, Check } from 'lucide-react';
 import Input from '../components/ui/Input';
 
+function WwLogo({ className, animate }) {
+  const anim = (name, delay = '0.3s', easing = 'ease-out') => animate ? {
+    animation: `${name} 0.7s ${easing} ${delay} both`,
+  } : undefined;
+
+  return (
+    <svg className={className} viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g style={anim('ww-left')}>
+        <path d="M14.9507 20.8125L14.3988 42.3256H14.0098L13.3144 20.8125H7.58112L6.9295 42.3158H6.50401L5.98855 20.8125H0L2.69886 53.7289H9.59189L10.1244 34.9706H10.545L11.0775 53.7289H17.8417L20.5405 20.8125H14.9507Z" fill="currentColor"/>
+      </g>
+      <g style={anim('ww-right')}>
+        <path d="M68.4102 20.8125L67.8583 42.3256H67.4692L66.7714 20.8125H61.0382L60.3866 42.3158H59.9611L59.4456 20.8125H53.4571L56.1559 53.7289H63.049L63.5839 34.9706H64.0021L64.537 53.7289H71.3011L74 20.8125H68.4102Z" fill="currentColor"/>
+      </g>
+      <rect
+        x="22.6093" y="32.3651"
+        width="28.7781" height="5.2202"
+        fill="currentColor"
+        style={animate ? {
+          transformBox: 'fill-box',
+          transformOrigin: 'center',
+          animation: 'ww-dash 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both',
+        } : undefined}
+      />
+    </svg>
+  );
+}
+
 export default function Login({ onLogin }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -50,7 +77,7 @@ export default function Login({ onLogin }) {
   if (!bgLoaded) {
     return (
       <div className="min-h-dvh flex flex-col items-center justify-center bg-[#020B46]">
-        <img src="/ww-glyph.svg" alt="WeightWatchers" className="h-28 mb-6" />
+        <WwLogo className="h-28 mb-6 text-[#0222D0]" />
         <Loader2 size={24} className="animate-spin text-white/40" />
       </div>
     );
@@ -59,7 +86,7 @@ export default function Login({ onLogin }) {
   return (
     <div className="min-h-dvh flex flex-col items-center justify-center bg-[#020B46] bg-[url('/login-bg.png')] bg-cover bg-center px-4 animate-[fadeIn_0.4s_ease-out]">
       {/* Logo */}
-      <img src="/ww-glyph.svg" alt="WeightWatchers" className="h-28 mb-3" />
+      <WwLogo className="h-28 mb-3 text-[#0222D0]" animate />
       <p className="text-white/60 text-sm mb-10">
         {fullText.slice(0, typedCount)}
         {typedCount < fullText.length && <span className="animate-pulse">|</span>}
@@ -133,7 +160,7 @@ export default function Login({ onLogin }) {
         </p>
       </div>
 
-      <p className="text-white/30 text-xs mt-8">&copy; 2026 WeightWatchers</p>
+      <p className="text-white/30 text-xs mt-8">&copy; 2026 Weight Watchers</p>
     </div>
   );
 }
