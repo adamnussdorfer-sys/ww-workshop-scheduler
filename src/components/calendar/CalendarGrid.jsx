@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
 import {
   parseISO,
   getHours,
@@ -82,6 +82,7 @@ function getColumnLayout(dayWorkshops) {
 }
 
 function formatHourLabel(h) {
+  if (h === 0 || h === 24) return '12 AM';
   if (h === 12) return '12 PM';
   if (h < 12) return `${h} AM`;
   return `${h - 12} PM`;
@@ -125,6 +126,14 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
     return result;
   }, [showOverlay, coaches, weekDays, filters.coaches]);
 
+  // Auto-scroll to ~5 AM on mount
+  const scrollRef = useRef(null);
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 5 * PX_PER_HOUR;
+    }
+  }, []);
+
   return (
     <div className="border border-border rounded-3xl overflow-hidden bg-white flex flex-col flex-1">
       {/* Header row: time gutter spacer + 7 day headers */}
@@ -160,7 +169,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
       </div>
 
       {/* Body: time gutter + day columns */}
-      <div className="flex overflow-y-auto flex-1">
+      <div ref={scrollRef} className="flex overflow-y-auto flex-1">
         {/* Time gutter */}
         <div className="w-16 flex-shrink-0 relative" style={{ height: GRID_HEIGHT }}>
           {HOUR_LABELS.map((h) => (
