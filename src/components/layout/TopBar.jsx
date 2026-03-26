@@ -1,13 +1,14 @@
 import { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router';
-import { Bell, LogOut } from 'lucide-react';
+import { Bell, LogOut, Globe } from 'lucide-react';
 import { AppContext } from '../../context/AppContext';
+import { TIMEZONE_OPTIONS, getTzAbbr } from '../../utils/timezone';
 
 export default function TopBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  const { logout } = useContext(AppContext);
+  const { logout, userTimezone, setUserTimezone } = useContext(AppContext);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -57,11 +58,31 @@ export default function TopBar() {
           </button>
 
           {menuOpen && (
-            <div className="absolute right-0 top-full mt-2 bg-white border border-border rounded-xl shadow-lg py-1 min-w-[160px] z-50">
+            <div className="absolute right-0 top-full mt-2 bg-white border border-border rounded-xl shadow-lg py-1 min-w-[220px] z-50">
               <div className="px-3 py-2 border-b border-border">
                 <p className="text-sm font-semibold text-ww-navy">Kathleen Toth</p>
                 <p className="text-xs text-slate-400">kathleen@ww.com</p>
               </div>
+
+              {/* Timezone selector */}
+              <div className="px-3 py-2 border-b border-border">
+                <label className="flex items-center gap-2 text-xs text-slate-500 mb-1.5">
+                  <Globe size={12} />
+                  Timezone
+                </label>
+                <select
+                  value={userTimezone}
+                  onChange={(e) => setUserTimezone(e.target.value)}
+                  className="w-full text-sm text-ww-navy bg-slate-50 border border-border rounded-lg px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-ww-blue"
+                >
+                  {TIMEZONE_OPTIONS.map((tz) => (
+                    <option key={tz.value} value={tz.value}>
+                      {tz.label} — {getTzAbbr(tz.value)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <button
                 type="button"
                 onClick={handleSignOut}

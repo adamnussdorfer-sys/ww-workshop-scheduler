@@ -1,12 +1,8 @@
 import { useMemo, useState, useEffect, useRef } from 'react';
 import {
   parseISO,
-  getHours,
-  getMinutes,
   differenceInMinutes,
-  isSameDay,
   format,
-  isToday,
 } from 'date-fns';
 import WorkshopCard from './WorkshopCard';
 import {
@@ -20,16 +16,12 @@ import {
   COACH_OVERLAY_COLORS,
 } from '../../utils/availabilityBands';
 import { useApp } from '../../context/AppContext';
+import { getHoursInTz, getMinutesInTz, isSameDayInTz, isTodayInTz, getTzAbbr } from '../../utils/timezone';
 
-// Derive short timezone label from browser, e.g. "PT", "ET", "CT"
-const LOCAL_TZ = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
-  .formatToParts(new Date())
-  .find((p) => p.type === 'timeZoneName')?.value ?? 'Local';
-
-function getEventPosition(startTimeISO, endTimeISO) {
+function getEventPosition(startTimeISO, endTimeISO, tz) {
   const start = parseISO(startTimeISO);
   const end = parseISO(endTimeISO);
-  const startMinutes = (getHours(start) - GRID_START_HOUR) * 60 + getMinutes(start);
+  const startMinutes = (getHoursInTz(start, tz) - GRID_START_HOUR) * 60 + getMinutesInTz(start, tz);
   const top = startMinutes * PX_PER_MIN;
   const durationMinutes = differenceInMinutes(end, start);
   const rawHeight = durationMinutes * PX_PER_MIN;
@@ -102,7 +94,7 @@ export default function DayView({
   anyFilterActive = false,
   showOverlay = false,
 }) {
-  const { filters } = useApp();
+  const { filters, userTimezone } = useApp();
 
   const coachMap = useMemo(
     () => new Map(coaches.map((c) => [c.id, c])),
@@ -115,8 +107,8 @@ export default function DayView({
   );
 
   const dayWorkshops = useMemo(
-    () => visibleWorkshops.filter((ws) => isSameDay(parseISO(ws.startTime), date)),
-    [visibleWorkshops, date]
+    () => visibleWorkshops.filter((ws) => isSameDayInTz(parseISO(ws.startTime), date, userTimezone)),
+    [visibleWorkshops, date, userTimezone]
   );
 
 
@@ -130,7 +122,7 @@ export default function DayView({
       .filter(band => !coachFilterSet || coachFilterSet.has(band.coachId));
   }, [showOverlay, coaches, date, filters.coaches]);
 
-  const today = isToday(date);
+  const today = isTodayInTz(date, userTimezone);
 
   // Current-time indicator — updates every minute
   const [now, setNow] = useState(() => new Date());
@@ -142,11 +134,11 @@ export default function DayView({
 
   const nowTop = useMemo(() => {
     if (!today) return null;
-    const minutes = (now.getHours() - GRID_START_HOUR) * 60 + now.getMinutes();
+    const minutes = (getHoursInTz(now, userTimezone) - GRID_START_HOUR) * 60 + getMinutesInTz(now, userTimezone);
     const top = minutes * PX_PER_MIN;
     if (top < 0 || top > GRID_HEIGHT) return null;
     return top;
-  }, [today, now]);
+  }, [today, now, userTimezone]);
 
   // Auto-scroll to ~5 AM on mount
   const scrollRef = useRef(null);
@@ -156,13 +148,15 @@ export default function DayView({
     }
   }, []);
 
+  const tzLabel = getTzAbbr(userTimezone);
+
   return (
     <div className="border border-border rounded-3xl overflow-hidden bg-white flex flex-col flex-1">
       {/* Header spacer — no date banner in day view */}
       <div className="flex border-b border-border sticky top-0 bg-white z-10">
         {/* Time gutter spacer — timezone label */}
         <div className="w-16 flex-shrink-0 flex items-center justify-center h-6">
-          <span className="text-[10px] text-slate-400 font-medium tracking-wide">{LOCAL_TZ}</span>
+          <span className="text-[10px] text-slate-400 font-medium tracking-wide">{tzLabel}</span>
         </div>
         <div className="flex-1 border-l border-border" />
       </div>
@@ -249,7 +243,7 @@ export default function DayView({
           {(() => {
             const colLayout = getColumnLayout(dayWorkshops);
             return dayWorkshops.map((ws) => {
-              const { top, height } = getEventPosition(ws.startTime, ws.endTime);
+              const { top, height } = getEventPosition(ws.startTime, ws.endTime, userTimezone);
               const isFiltered = anyFilterActive && !filteredIds.has(ws.id);
               const { col, totalCols } = colLayout.get(ws.id) ?? { col: 0, totalCols: 1 };
               const widthPct = 100 / totalCols;

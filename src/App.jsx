@@ -1,7 +1,8 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 import { Toaster, toast } from 'sonner'
 import { AppContext } from './context/AppContext'
+import { getBrowserTimezone } from './utils/timezone'
 import AppShell from './components/layout/AppShell'
 import ScheduleCalendar from './pages/ScheduleCalendar'
 import CoachRoster from './pages/CoachRoster'
@@ -20,6 +21,19 @@ export default function App() {
     statuses: [],
     markets: [],
   })
+  const [highlightedIds, setHighlightedIds] = useState(new Set())
+  const highlightTimer = useRef(null)
+  const [userTimezone, setUserTimezone] = useState(() => localStorage.getItem('ww-tz') || getBrowserTimezone())
+
+  useEffect(() => {
+    localStorage.setItem('ww-tz', userTimezone)
+  }, [userTimezone])
+
+  const highlightWorkshops = useCallback((ids) => {
+    if (highlightTimer.current) clearTimeout(highlightTimer.current)
+    setHighlightedIds(new Set(ids))
+    highlightTimer.current = setTimeout(() => setHighlightedIds(new Set()), 3500)
+  }, [])
 
   function login() {
     sessionStorage.setItem('authenticated', 'true')
@@ -32,8 +46,8 @@ export default function App() {
   }
 
   const contextValue = useMemo(
-    () => ({ coaches, setCoaches, workshops, setWorkshops, filters, setFilters, toast, logout }),
-    [coaches, workshops, filters]
+    () => ({ coaches, setCoaches, workshops, setWorkshops, filters, setFilters, toast, logout, highlightedIds, highlightWorkshops, userTimezone, setUserTimezone }),
+    [coaches, workshops, filters, highlightedIds, highlightWorkshops, userTimezone]
   )
 
   return (

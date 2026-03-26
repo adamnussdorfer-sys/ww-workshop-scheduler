@@ -13,6 +13,7 @@ import Input, { Select } from '../ui/Input';
 import MiniCalendar from '../ui/MiniCalendar';
 import { getCoachAvailability } from '../../utils/coachAvailability';
 import Tooltip from '../ui/Tooltip';
+import { getHoursInTz, getMinutesInTz, createDateInTz, getTzAbbr } from '../../utils/timezone';
 
 const WORKSHOP_TYPES = [
   'Weekly Workshop',
@@ -87,16 +88,14 @@ const STATUS_BADGE_STYLES = {
   Published: 'bg-green-100 text-green-800',
 };
 
-// Convert { date, hour, minute } to ISO string
-function buildISO({ date, hour, minute }) {
-  const d = setMinutes(setHours(new Date(date), hour), minute);
-  return d.toISOString();
+// Convert { date, hour, minute } to ISO string in user's timezone
+function buildISO({ date, hour, minute }, tz) {
+  return createDateInTz(new Date(date), hour, minute, tz).toISOString();
 }
 
 // Same as buildISO but adds 1 hour
-function buildEndISO({ date, hour, minute }) {
-  const d = setMinutes(setHours(new Date(date), hour), minute);
-  return addHours(d, 1).toISOString();
+function buildEndISO({ date, hour, minute }, tz) {
+  return addHours(createDateInTz(new Date(date), hour, minute, tz), 1).toISOString();
 }
 
 function getDayFromSlot(slotContext) {
@@ -105,7 +104,7 @@ function getDayFromSlot(slotContext) {
   return [INDEX_TO_DAY[getDay(d)]];
 }
 
-function initDraft(workshop, mode, slotContext) {
+function initDraft(workshop, mode, slotContext, tz) {
   if (mode === 'view' && workshop) {
     return {
       recurring: false,
@@ -133,8 +132,8 @@ function initDraft(workshop, mode, slotContext) {
     recurrenceOccurrences: 13,
     timezone: 'ET',
     markets: ['US'],
-    startTime: slotContext ? buildISO(slotContext) : '',
-    endTime: slotContext ? buildEndISO(slotContext) : '',
+    startTime: slotContext ? buildISO(slotContext, tz) : '',
+    endTime: slotContext ? buildEndISO(slotContext, tz) : '',
   };
 }
 
@@ -241,10 +240,10 @@ function DateTimeRow({ draft, updateField }) {
   // Parse current date from draft.startTime
   const currentDate = draft.startTime ? parseISO(draft.startTime) : null;
   const startTime = draft.startTime
-    ? { h: getHours(parseISO(draft.startTime)), m: getMinutes(parseISO(draft.startTime)) }
+    ? { h: getHoursInTz(parseISO(draft.startTime), userTimezone), m: getMinutesInTz(parseISO(draft.startTime), userTimezone) }
     : null;
   const endTime = draft.endTime
-    ? { h: getHours(parseISO(draft.endTime)), m: getMinutes(parseISO(draft.endTime)) }
+    ? { h: getHoursInTz(parseISO(draft.endTime), userTimezone), m: getMinutesInTz(parseISO(draft.endTime), userTimezone) }
     : null;
 
   const handleDateSelect = (day) => {
@@ -253,23 +252,23 @@ function DateTimeRow({ draft, updateField }) {
     const sm = startTime?.m ?? 0;
     const eh = endTime?.h ?? 10;
     const em = endTime?.m ?? 0;
-    updateField('startTime', setMinutes(setHours(new Date(day), sh), sm).toISOString());
-    updateField('endTime', setMinutes(setHours(new Date(day), eh), em).toISOString());
+    updateField('startTime', createDateInTz(new Date(day), sh, sm, userTimezone).toISOString());
+    updateField('endTime', createDateInTz(new Date(day), eh, em, userTimezone).toISOString());
   };
 
   const handleStartTimeChange = (t) => {
     const base = currentDate || new Date();
-    updateField('startTime', setMinutes(setHours(new Date(base), t.h), t.m).toISOString());
+    updateField('startTime', createDateInTz(new Date(base), t.h, t.m, userTimezone).toISOString());
     // Auto-advance end time if it would be before start
     if (endTime && (t.h > endTime.h || (t.h === endTime.h && t.m >= endTime.m))) {
-      const newEnd = addHours(setMinutes(setHours(new Date(base), t.h), t.m), 1);
+      const newEnd = addHours(createDateInTz(new Date(base), t.h, t.m, userTimezone), 1);
       updateField('endTime', newEnd.toISOString());
     }
   };
 
   const handleEndTimeChange = (t) => {
     const base = currentDate || new Date();
-    updateField('endTime', setMinutes(setHours(new Date(base), t.h), t.m).toISOString());
+    updateField('endTime', createDateInTz(new Date(base), t.h, t.m, userTimezone).toISOString());
   };
 
   const hasDate = !!currentDate;
@@ -572,8 +571,8 @@ export default function WorkshopForm({
   conflicts = [],
   onNavigate,
 }) {
-  const { setWorkshops, highlightWorkshops } = useApp();
-  const [draft, setDraft] = useState(() => initDraft(workshop, mode, slotContext));
+  const { setWorkshops, highlightWorkshops, userTimezone } = useApp();
+  const [draft, setDraft] = useState(() => initDraft(workshop, mode, slotContext, userTimezone));
 
   // Custom dropdown open states
   const [coachDropdownOpen, setCoachDropdownOpen] = useState(false);
@@ -626,8 +625,8 @@ export default function WorkshopForm({
     try {
       const parsed = parseISO(draft.startTime);
       workshopDate = parsed;
-      workshopHour = getHours(parsed);
-      workshopMinute = getMinutes(parsed);
+      workshopHour = getHoursInTz(parsed, userTimezone);
+      workshopMinute = getMinutesInTz(parsed, userTimezone);
     } catch {
       // leave null
     }

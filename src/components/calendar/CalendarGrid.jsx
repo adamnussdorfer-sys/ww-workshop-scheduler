@@ -1,12 +1,8 @@
 import { useMemo, useEffect, useRef } from 'react';
 import {
   parseISO,
-  getHours,
-  getMinutes,
   differenceInMinutes,
-  isSameDay,
   format,
-  isToday,
 } from 'date-fns';
 import WorkshopCard from './WorkshopCard';
 import {
@@ -20,15 +16,12 @@ import {
   COACH_OVERLAY_COLORS,
 } from '../../utils/availabilityBands';
 import { useApp } from '../../context/AppContext';
+import { getHoursInTz, getMinutesInTz, isSameDayInTz, isTodayInTz, getTzAbbr } from '../../utils/timezone';
 
-const LOCAL_TZ = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
-  .formatToParts(new Date())
-  .find((p) => p.type === 'timeZoneName')?.value ?? 'Local';
-
-function getEventPosition(startTimeISO, endTimeISO) {
+function getEventPosition(startTimeISO, endTimeISO, tz) {
   const start = parseISO(startTimeISO);
   const end = parseISO(endTimeISO);
-  const startMinutes = (getHours(start) - GRID_START_HOUR) * 60 + getMinutes(start);
+  const startMinutes = (getHoursInTz(start, tz) - GRID_START_HOUR) * 60 + getMinutesInTz(start, tz);
   const top = startMinutes * PX_PER_MIN;
   const durationMinutes = differenceInMinutes(end, start);
   const rawHeight = durationMinutes * PX_PER_MIN;
@@ -96,7 +89,7 @@ const HOUR_LABELS = Array.from(
 const SLOT_LINES = Array.from({ length: GRID_SLOTS }, (_, i) => i);
 
 export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap, onWorkshopClick, onSlotClick, filteredIds = new Set(), anyFilterActive = false, showOverlay = false, onDayClick }) {
-  const { filters } = useApp();
+  const { filters, userTimezone } = useApp();
 
   const coachMap = useMemo(
     () => new Map(coaches.map((c) => [c.id, c])),
@@ -134,18 +127,20 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
     }
   }, []);
 
+  const tzLabel = getTzAbbr(userTimezone);
+
   return (
     <div className="border border-border rounded-3xl overflow-hidden bg-white flex flex-col flex-1">
       {/* Header row: time gutter spacer + 7 day headers */}
       <div className="flex border-b border-border sticky top-0 bg-white z-10">
         {/* Time gutter spacer — timezone label */}
         <div className="w-16 flex-shrink-0 flex items-center justify-center">
-          <span className="text-[10px] text-slate-400 font-medium tracking-wide">{LOCAL_TZ}</span>
+          <span className="text-[10px] text-slate-400 font-medium tracking-wide">{tzLabel}</span>
         </div>
         {/* Day headers */}
         <div className="grid flex-1" style={{ gridTemplateColumns: 'repeat(7, 1fr)' }}>
           {weekDays.map((day) => {
-            const today = isToday(day);
+            const today = isTodayInTz(day, userTimezone);
             return (
               <div
                 key={day.toISOString()}
@@ -187,7 +182,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
         <div className="grid flex-1" style={{ gridTemplateColumns: 'repeat(7, 1fr)' }}>
           {weekDays.map((day) => {
             const dayWorkshops = visibleWorkshops.filter((ws) =>
-              isSameDay(parseISO(ws.startTime), day)
+              isSameDayInTz(parseISO(ws.startTime), day, userTimezone)
             );
 
             return (
@@ -242,7 +237,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                 {(() => {
                   const colLayout = getColumnLayout(dayWorkshops);
                   return dayWorkshops.map((ws) => {
-                  const { top, height } = getEventPosition(ws.startTime, ws.endTime);
+                  const { top, height } = getEventPosition(ws.startTime, ws.endTime, userTimezone);
                   const isFiltered = anyFilterActive && !filteredIds.has(ws.id);
                   const { col, totalCols } = colLayout.get(ws.id) ?? { col: 0, totalCols: 1 };
                   const widthPct = 100 / totalCols;
