@@ -1,12 +1,9 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { MessageSquarePlus, X, ImagePlus, Loader2, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
-import emailjs from '@emailjs/browser';
 import Input from '../ui/Input';
 
-const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const SHEET_URL = import.meta.env.VITE_FEEDBACK_SHEET_URL;
 
 function resizeImage(file, maxWidth = 800) {
   return new Promise((resolve) => {
@@ -36,7 +33,7 @@ export default function FeedbackWidget() {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [comment, setComment] = useState('');
-  const [screenshot, setScreenshot] = useState(null); // base64 string
+  const [screenshot, setScreenshot] = useState(null);
   const [sending, setSending] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const fileRef = useRef(null);
@@ -91,29 +88,30 @@ export default function FeedbackWidget() {
       return;
     }
 
-    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
-      toast.error('EmailJS is not configured. Check .env variables.');
+    if (!SHEET_URL) {
+      toast.error('Feedback endpoint not configured.');
       return;
     }
 
     setSending(true);
     try {
-      await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        {
+      const res = await fetch(SHEET_URL, {
+        method: 'POST',
+        body: JSON.stringify({
           title: title.trim(),
-          message: comment.trim(),
+          comment: comment.trim(),
           screenshot: screenshot || '',
-          from_page: window.location.pathname,
-          timestamp: new Date().toLocaleString(),
-        },
-        PUBLIC_KEY
-      );
+          page: window.location.pathname,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      if (!res.ok) throw new Error('Request failed');
+
       toast.success('Feedback sent — thank you!');
       handleClose();
     } catch (err) {
-      console.error('EmailJS error:', err);
+      console.error('Feedback error:', err);
       toast.error('Failed to send feedback. Please try again.');
     } finally {
       setSending(false);
