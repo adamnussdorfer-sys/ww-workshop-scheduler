@@ -6,7 +6,7 @@ import {
 } from 'date-fns';
 import { AlertTriangle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Search } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import Checkbox from '../ui/Checkbox';
 import Input, { Select } from '../ui/Input';
@@ -591,6 +591,7 @@ export default function WorkshopForm({
   const [coachDropdownOpen, setCoachDropdownOpen] = useState(false);
   const [coCoachDropdownOpen, setCoCoachDropdownOpen] = useState(false);
   const [marketsDropdownOpen, setMarketsDropdownOpen] = useState(false);
+  const [coachSearch, setCoachSearch] = useState('');
   const [showCoCoach, setShowCoCoach] = useState(() => !!draft.coCoachId);
 
   // Refs for click-outside detection
@@ -612,6 +613,7 @@ export default function WorkshopForm({
 
       if (coachDropdownOpen && clickedOutsideCoach) {
         setCoachDropdownOpen(false);
+        setCoachSearch('');
       }
       if (coCoachDropdownOpen && clickedOutsideCoCoach) {
         setCoCoachDropdownOpen(false);
@@ -832,7 +834,22 @@ export default function WorkshopForm({
 
         {coachDropdownOpen && (
           <div className={DROPDOWN_MENU_CLASS}>
-            {coaches.map((coach) => {
+            <div className="px-3 pt-2 pb-1">
+              <div className="flex items-center gap-1.5 px-2.5 py-1.5 border border-slate-200 rounded-xl bg-slate-50">
+                <Search size={14} className="text-slate-400 shrink-0" />
+                <input
+                  type="text"
+                  value={coachSearch}
+                  onChange={(e) => setCoachSearch(e.target.value)}
+                  placeholder="Search coaches..."
+                  autoFocus
+                  className="bg-transparent outline-none text-[13px] text-[#031373] w-full placeholder:text-slate-400"
+                />
+              </div>
+            </div>
+            {coaches
+              .filter((c) => !coachSearch.trim() || c.name.toLowerCase().includes(coachSearch.toLowerCase()))
+              .map((coach) => {
               const avail = workshopDate
                 ? getCoachAvailability(coach, workshopDate)
                 : { available: true, reason: null };
@@ -850,6 +867,7 @@ export default function WorkshopForm({
                     if (!avail.available) return;
                     updateField('coachId', coach.id);
                     setCoachDropdownOpen(false);
+                    setCoachSearch('');
                   }}
                 >
                   <span className={`w-2 h-2 rounded-full flex-shrink-0 ${avail.available ? 'bg-green-500' : 'bg-slate-300'}`} />
