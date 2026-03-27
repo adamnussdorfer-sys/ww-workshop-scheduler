@@ -143,6 +143,7 @@ function initDraft(workshop, mode, slotContext, tz) {
     recurrenceOccurrences: 13,
     timezone: 'ET',
     markets: ['US'],
+    zoomType: 'meeting',
     startTime: buildISO(slot, tz),
     endTime: buildEndISO(slot, tz),
   };
@@ -906,6 +907,21 @@ export default function WorkshopForm({
               <span className="text-sm text-slate-700">{market}</span>
             </label>
           ))}
+        </div>
+      </div>
+
+      {/* Zoom Type */}
+      <div>
+        <label className="block text-sm font-semibold text-[#031373] mb-2">Zoom Type</label>
+        <div className="flex items-center gap-6">
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input type="radio" name="zoomType" checked={draft.zoomType === 'meeting'} onChange={() => updateField('zoomType', 'meeting')} className="accent-[#031373] w-4 h-4" />
+            <span className="text-sm text-ww-navy">Zoom Meeting</span>
+          </label>
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input type="radio" name="zoomType" checked={draft.zoomType === 'webinar'} onChange={() => updateField('zoomType', 'webinar')} className="accent-[#031373] w-4 h-4" />
+            <span className="text-sm text-ww-navy">Zoom Webinar</span>
+          </label>
         </div>
       </div>
 

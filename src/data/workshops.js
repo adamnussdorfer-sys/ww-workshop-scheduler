@@ -35,6 +35,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [142, 138, 151, 129, 145],
   },
   {
@@ -49,6 +50,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [88, 95, 102, 91, 87],
   },
   {
@@ -63,6 +65,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [76, 82, 69, 74, 80],
   },
   {
@@ -77,6 +80,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [63, 71, 58, 66, 72],
   },
   {
@@ -91,6 +95,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [104, 98, 112, 107, 95],
   },
   {
@@ -105,6 +110,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [55, 61, 48, 52, 59],
   },
   {
@@ -119,6 +125,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [131, 125, 140, 136, 128],
   },
   {
@@ -133,6 +140,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [89, 94, 101, 86, 92],
   },
   {
@@ -147,6 +155,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [117, 123, 108, 115, 121],
   },
   {
@@ -161,6 +170,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [156, 149, 163, 152, 158],
   },
   {
@@ -175,6 +185,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [178, 185, 172, 180, 176],
   },
   {
@@ -189,6 +200,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [143, 137, 150, 146, 141],
   },
   // ============================================================
@@ -206,6 +218,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [47, 53, 41, 49, 55],
   },
   {
@@ -220,6 +233,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [62, 58, 67, 64, 60],
   },
   {
@@ -234,6 +248,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [73, 68, 79, 75, 71],
   },
   {
@@ -248,6 +263,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [84, 79, 90, 86, 82],
   },
   {
@@ -262,6 +278,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [165, 171, 159, 168, 162],
   },
   {
@@ -276,6 +293,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [132, 126, 139, 134, 130],
   },
   {
@@ -290,6 +308,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [97, 103, 91, 99, 105],
   },
   {
@@ -304,6 +323,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [78, 84, 72, 80, 76],
   },
   {
@@ -318,6 +338,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [111, 105, 118, 113, 109],
   },
   {
@@ -332,6 +353,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [66, 72, 60, 68, 74],
   },
   {
@@ -346,6 +368,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [189, 183, 195, 191, 187],
   },
   {
@@ -360,6 +383,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [124, 118, 131, 126, 122],
   },
   {
@@ -374,6 +398,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [93, 87, 100, 95, 91],
   },
   {
@@ -388,6 +413,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [148, 142, 155, 150, 146],
   },
   {
@@ -402,6 +428,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [174, 168, 181, 176, 172],
   },
   {
@@ -416,6 +443,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [108, 114, 102, 110, 106],
   },
   {
@@ -430,6 +458,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [161, 167, 155, 163, 159],
   },
   {
@@ -444,6 +473,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [82, 76, 89, 84, 80],
   },
   {
@@ -458,6 +488,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [57, 63, 51, 59, 65],
   },
   {
@@ -472,6 +503,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [145, 139, 152, 147, 143],
   },
   {
@@ -486,6 +518,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [119, 113, 126, 121, 117],
   },
   {
@@ -500,6 +533,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [86, 92, 80, 88, 94],
   },
   {
@@ -514,6 +548,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [103, 97, 110, 105, 101],
   },
   {
@@ -528,6 +563,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [71, 77, 65, 73, 69],
   },
   {
@@ -542,6 +578,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [134, 128, 141, 136, 132],
   },
   {
@@ -556,6 +593,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [182, 176, 189, 184, 180],
   },
   {
@@ -570,6 +608,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [127, 121, 134, 129, 125],
   },
   {
@@ -584,6 +623,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [193, 187, 200, 195, 191],
   },
   {
@@ -598,6 +638,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [64, 70, 58, 66, 62],
   },
   {
@@ -612,6 +653,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [96, 102, 90, 98, 94],
   },
   {
@@ -626,6 +668,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [170, 164, 177, 172, 168],
   },
   {
@@ -640,6 +683,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [115, 109, 122, 117, 113],
   },
   {
@@ -654,6 +698,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [139, 133, 146, 141, 137],
   },
   {
@@ -668,6 +713,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [58, 64, 52, 60, 56],
   },
   {
@@ -682,6 +728,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [148, 142, 155, 150, 146],
   },
   {
@@ -696,6 +743,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [107, 101, 114, 109, 105],
   },
   {
@@ -710,6 +758,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [81, 87, 75, 83, 79],
   },
   {
@@ -724,6 +773,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [158, 164, 152, 160, 156],
   },
   {
@@ -738,6 +788,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [122, 116, 129, 124, 120],
   },
   {
@@ -752,6 +803,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [186, 180, 193, 188, 184],
   },
   {
@@ -766,6 +818,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [74, 80, 68, 76, 72],
   },
   {
@@ -780,6 +833,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [91, 85, 98, 93, 89],
   },
   {
@@ -794,6 +848,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [153, 147, 160, 155, 151],
   },
   {
@@ -808,6 +863,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [69, 75, 63, 71, 67],
   },
   {
@@ -822,6 +878,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [100, 94, 107, 102, 98],
   },
   {
@@ -836,6 +893,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [116, 110, 123, 118, 114],
   },
   {
@@ -850,6 +908,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [54, 60, 48, 56, 52],
   },
   {
@@ -864,6 +923,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [137, 131, 144, 139, 135],
   },
   {
@@ -878,6 +938,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [128, 122, 135, 130, 126],
   },
   {
@@ -892,6 +953,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [85, 79, 92, 87, 83],
   },
   {
@@ -906,6 +968,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [73, 79, 67, 75, 71],
   },
   {
@@ -920,6 +983,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [159, 153, 166, 161, 157],
   },
   {
@@ -934,6 +998,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [175, 169, 182, 177, 173],
   },
   // ============================================================
@@ -951,6 +1016,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [46, 52, 40, 48, 54],
   },
   {
@@ -965,6 +1031,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [59, 65, 53, 61, 57],
   },
   {
@@ -979,6 +1046,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [78, 72, 85, 80, 76],
   },
   {
@@ -993,6 +1061,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [133, 127, 140, 135, 131],
   },
   {
@@ -1007,6 +1076,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [87, 93, 81, 89, 85],
   },
   {
@@ -1021,6 +1091,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [141, 135, 148, 143, 139],
   },
   {
@@ -1035,6 +1106,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [112, 106, 119, 114, 110],
   },
   {
@@ -1049,6 +1121,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [166, 160, 173, 168, 164],
   },
   {
@@ -1063,6 +1136,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [95, 101, 89, 97, 93],
   },
   {
@@ -1077,6 +1151,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [154, 148, 161, 156, 152],
   },
   {
@@ -1091,6 +1166,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [68, 74, 62, 70, 66],
   },
   {
@@ -1105,6 +1181,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [104, 98, 111, 106, 102],
   },
   {
@@ -1119,6 +1196,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [179, 173, 186, 181, 177],
   },
   {
@@ -1133,6 +1211,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [83, 77, 90, 85, 81],
   },
   {
@@ -1147,6 +1226,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [146, 140, 153, 148, 144],
   },
   {
@@ -1161,6 +1241,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [92, 86, 99, 94, 90],
   },
   {
@@ -1175,6 +1256,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [171, 165, 178, 173, 169],
   },
   {
@@ -1189,6 +1271,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [188, 182, 195, 190, 186],
   },
   {
@@ -1203,6 +1286,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [77, 83, 71, 79, 75],
   },
   {
@@ -1217,6 +1301,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [109, 103, 116, 111, 107],
   },
   {
@@ -1231,6 +1316,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [56, 62, 50, 58, 54],
   },
   {
@@ -1245,6 +1331,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [121, 115, 128, 123, 119],
   },
   {
@@ -1259,6 +1346,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [99, 105, 93, 101, 97],
   },
   {
@@ -1273,6 +1361,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [80, 86, 74, 82, 78],
   },
   {
@@ -1287,6 +1376,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [144, 138, 151, 146, 142],
   },
   {
@@ -1301,6 +1391,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [113, 107, 120, 115, 111],
   },
   {
@@ -1315,6 +1406,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [67, 73, 61, 69, 65],
   },
   {
@@ -1329,6 +1421,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [183, 177, 190, 185, 181],
   },
   {
@@ -1343,6 +1436,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [75, 81, 69, 77, 73],
   },
   {
@@ -1357,6 +1451,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [53, 59, 47, 55, 51],
   },
   {
@@ -1371,6 +1466,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [126, 120, 133, 128, 124],
   },
   {
@@ -1385,6 +1481,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [138, 132, 145, 140, 136],
   },
   {
@@ -1399,6 +1496,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [157, 151, 164, 159, 155],
   },
   {
@@ -1413,6 +1511,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [88, 82, 95, 90, 86],
   },
   {
@@ -1427,6 +1526,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [173, 167, 180, 175, 171],
   },
   {
@@ -1441,6 +1541,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [61, 67, 55, 63, 59],
   },
   {
@@ -1455,6 +1556,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [94, 88, 101, 96, 92],
   },
   {
@@ -1469,6 +1571,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [162, 168, 156, 164, 160],
   },
   {
@@ -1483,6 +1586,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [118, 112, 125, 120, 116],
   },
   {
@@ -1497,6 +1601,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [130, 124, 137, 132, 128],
   },
   {
@@ -1511,6 +1616,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [185, 179, 192, 187, 183],
   },
   {
@@ -1525,6 +1631,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [169, 163, 176, 171, 167],
   },
   {
@@ -1539,6 +1646,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [143, 137, 150, 145, 141],
   },
   {
@@ -1553,6 +1661,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [76, 82, 70, 78, 74],
   },
   // ============================================================
@@ -1570,6 +1679,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [167, 161, 174, 169, 165],
   },
   {
@@ -1584,6 +1694,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [155, 149, 162, 157, 153],
   },
   {
@@ -1598,6 +1709,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [79, 85, 73, 81, 77],
   },
   {
@@ -1612,6 +1724,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [101, 95, 108, 103, 99],
   },
   {
@@ -1626,6 +1739,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [176, 170, 183, 178, 174],
   },
   {
@@ -1640,6 +1754,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [160, 154, 167, 162, 158],
   },
   {
@@ -1654,6 +1769,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [65, 71, 59, 67, 63],
   },
   {
@@ -1668,6 +1784,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [191, 185, 198, 193, 189],
   },
   {
@@ -1682,6 +1799,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [148, 142, 155, 150, 146],
   },
   {
@@ -1696,6 +1814,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [110, 104, 117, 112, 108],
   },
   {
@@ -1710,6 +1829,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [135, 129, 142, 137, 133],
   },
   {
@@ -1724,6 +1844,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [180, 174, 187, 182, 178],
   },
   {
@@ -1738,6 +1859,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [49, 55, 43, 51, 47],
   },
   {
@@ -1752,6 +1874,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [164, 158, 171, 166, 162],
   },
   {
@@ -1766,6 +1889,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [139, 133, 146, 141, 137],
   },
   {
@@ -1780,6 +1904,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [196, 190, 200, 198, 194],
   },
   {
@@ -1794,6 +1919,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [87, 81, 94, 89, 85],
   },
   {
@@ -1808,6 +1934,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [72, 78, 66, 74, 70],
   },
   {
@@ -1822,6 +1949,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [105, 99, 112, 107, 103],
   },
   {
@@ -1836,6 +1964,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [184, 178, 191, 186, 182],
   },
   {
@@ -1850,6 +1979,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [92, 86, 99, 94, 90],
   },
   {
@@ -1864,6 +1994,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [120, 114, 127, 122, 118],
   },
   {
@@ -1878,6 +2009,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [175, 169, 182, 177, 173],
   },
   {
@@ -1892,6 +2024,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [63, 69, 57, 65, 61],
   },
   {
@@ -1906,6 +2039,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [84, 90, 78, 86, 82],
   },
   {
@@ -1920,6 +2054,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [97, 91, 104, 99, 95],
   },
   {
@@ -1934,6 +2069,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [56, 62, 50, 58, 54],
   },
   {
@@ -1948,6 +2084,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [103, 97, 110, 105, 101],
   },
   {
@@ -1962,6 +2099,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [190, 184, 197, 192, 188],
   },
   {
@@ -1976,6 +2114,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [147, 141, 154, 149, 145],
   },
   {
@@ -1990,6 +2129,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [115, 109, 122, 117, 113],
   },
   {
@@ -2004,6 +2144,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [172, 166, 179, 174, 170],
   },
   {
@@ -2018,6 +2159,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [108, 102, 115, 110, 106],
   },
   {
@@ -2032,6 +2174,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [81, 87, 75, 83, 79],
   },
   {
@@ -2046,6 +2189,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [93, 99, 87, 95, 91],
   },
   {
@@ -2060,6 +2204,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [126, 120, 133, 128, 124],
   },
   {
@@ -2074,6 +2219,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [140, 134, 147, 142, 138],
   },
   {
@@ -2088,6 +2234,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [74, 80, 68, 76, 72],
   },
   {
@@ -2102,6 +2249,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [181, 175, 188, 183, 179],
   },
   {
@@ -2116,6 +2264,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [106, 100, 113, 108, 104],
   },
   {
@@ -2130,6 +2279,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [131, 125, 138, 133, 129],
   },
   {
@@ -2144,6 +2294,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [57, 63, 51, 59, 55],
   },
   {
@@ -2158,6 +2309,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [194, 188, 200, 196, 192],
   },
   {
@@ -2172,6 +2324,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [118, 112, 125, 120, 116],
   },
   {
@@ -2186,6 +2339,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [152, 146, 159, 154, 150],
   },
   {
@@ -2200,6 +2354,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [187, 181, 194, 189, 185],
   },
   {
@@ -2214,6 +2369,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [168, 162, 175, 170, 166],
   },
   {
@@ -2228,6 +2384,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [124, 118, 131, 126, 122],
   },
   {
@@ -2242,6 +2399,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [177, 171, 184, 179, 175],
   },
   {
@@ -2256,6 +2414,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [111, 105, 118, 113, 109],
   },
   // ============================================================
@@ -2273,6 +2432,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [163, 157, 170, 165, 161],
   },
   {
@@ -2287,6 +2447,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [44, 50, 42, 46, 48],
   },
   {
@@ -2301,6 +2462,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [116, 110, 123, 118, 114],
   },
   {
@@ -2315,6 +2477,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [98, 92, 105, 100, 96],
   },
   {
@@ -2329,6 +2492,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [60, 66, 54, 62, 58],
   },
   {
@@ -2343,6 +2507,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [156, 150, 163, 158, 154],
   },
   {
@@ -2357,6 +2522,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [172, 166, 179, 174, 170],
   },
   {
@@ -2371,6 +2537,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [134, 128, 141, 136, 132],
   },
   {
@@ -2385,6 +2552,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [68, 74, 62, 70, 66],
   },
   {
@@ -2399,6 +2567,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [183, 177, 190, 185, 181],
   },
   {
@@ -2413,6 +2582,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [168, 162, 175, 170, 166],
   },
   {
@@ -2427,6 +2597,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [53, 59, 47, 55, 51],
   },
   {
@@ -2441,6 +2612,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [89, 83, 96, 91, 87],
   },
   {
@@ -2455,6 +2627,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [178, 172, 185, 180, 176],
   },
   {
@@ -2469,6 +2642,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [161, 155, 168, 163, 159],
   },
   {
@@ -2483,6 +2657,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [95, 89, 102, 97, 93],
   },
   {
@@ -2497,6 +2672,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [77, 71, 84, 79, 75],
   },
   {
@@ -2511,6 +2687,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [102, 96, 109, 104, 100],
   },
   {
@@ -2525,6 +2702,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [189, 183, 196, 191, 187],
   },
   {
@@ -2539,6 +2717,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [71, 77, 65, 73, 69],
   },
   {
@@ -2553,6 +2732,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [146, 140, 153, 148, 144],
   },
   {
@@ -2567,6 +2747,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [58, 64, 52, 60, 56],
   },
   {
@@ -2581,6 +2762,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [155, 149, 162, 157, 153],
   },
   {
@@ -2595,6 +2777,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [175, 169, 182, 177, 173],
   },
   {
@@ -2609,6 +2792,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [166, 160, 173, 168, 164],
   },
   {
@@ -2623,6 +2807,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [50, 56, 44, 52, 48],
   },
   {
@@ -2637,6 +2822,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [114, 108, 121, 116, 112],
   },
   {
@@ -2651,6 +2837,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [141, 135, 148, 143, 139],
   },
   {
@@ -2665,6 +2852,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [82, 76, 89, 84, 80],
   },
   {
@@ -2679,6 +2867,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [69, 75, 63, 71, 67],
   },
   {
@@ -2693,6 +2882,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [75, 81, 69, 77, 73],
   },
   {
@@ -2707,6 +2897,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [192, 186, 199, 194, 190],
   },
   {
@@ -2721,6 +2912,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [179, 173, 186, 181, 177],
   },
   {
@@ -2735,6 +2927,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [86, 80, 93, 88, 84],
   },
   {
@@ -2749,6 +2942,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [150, 144, 157, 152, 148],
   },
   {
@@ -2763,6 +2957,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [160, 154, 167, 162, 158],
   },
   {
@@ -2777,6 +2972,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [67, 73, 61, 69, 65],
   },
   {
@@ -2791,6 +2987,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [93, 87, 100, 95, 91],
   },
   {
@@ -2805,6 +3002,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [109, 103, 116, 111, 107],
   },
   {
@@ -2819,6 +3017,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [185, 179, 192, 187, 183],
   },
   {
@@ -2833,6 +3032,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [78, 84, 72, 80, 76],
   },
   {
@@ -2847,6 +3047,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [64, 70, 58, 66, 62],
   },
   {
@@ -2861,6 +3062,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [137, 131, 144, 139, 135],
   },
   {
@@ -2875,6 +3077,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [171, 165, 178, 173, 169],
   },
   {
@@ -2889,6 +3092,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [99, 93, 106, 101, 97],
   },
   {
@@ -2903,6 +3107,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [122, 116, 129, 124, 120],
   },
   {
@@ -2917,6 +3122,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [107, 101, 114, 109, 105],
   },
   {
@@ -2931,6 +3137,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [119, 113, 126, 121, 117],
   },
   {
@@ -2945,6 +3152,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [149, 143, 156, 151, 147],
   },
   {
@@ -2959,6 +3167,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [176, 170, 183, 178, 174],
   },
   {
@@ -2973,6 +3182,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [88, 82, 95, 90, 86],
   },
   {
@@ -2987,6 +3197,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [104, 98, 111, 106, 102],
   },
   {
@@ -3001,6 +3212,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [61, 67, 55, 63, 59],
   },
   {
@@ -3015,6 +3227,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [169, 163, 176, 171, 167],
   },
   {
@@ -3029,6 +3242,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [73, 79, 67, 75, 71],
   },
   {
@@ -3043,6 +3257,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [133, 127, 140, 135, 131],
   },
   {
@@ -3057,6 +3272,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [188, 182, 195, 190, 186],
   },
   {
@@ -3071,6 +3287,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [55, 61, 49, 57, 53],
   },
   {
@@ -3085,6 +3302,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [145, 139, 152, 147, 143],
   },
   {
@@ -3099,6 +3317,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [128, 122, 135, 130, 126],
   },
   {
@@ -3113,6 +3332,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [181, 175, 188, 183, 179],
   },
   {
@@ -3127,6 +3347,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [83, 77, 90, 85, 81],
   },
   {
@@ -3141,6 +3362,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [91, 85, 98, 93, 89],
   },
   {
@@ -3155,6 +3377,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [174, 168, 181, 176, 172],
   },
   {
@@ -3169,6 +3392,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [70, 76, 64, 72, 68],
   },
   {
@@ -3183,6 +3407,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [157, 151, 164, 159, 155],
   },
   {
@@ -3197,6 +3422,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [167, 161, 174, 169, 165],
   },
   // ============================================================
@@ -3214,6 +3440,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [43, 49, 41, 45, 47],
   },
   {
@@ -3228,6 +3455,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [159, 153, 166, 161, 157],
   },
   {
@@ -3242,6 +3470,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [173, 167, 180, 175, 171],
   },
   {
@@ -3256,6 +3485,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [90, 84, 97, 92, 88],
   },
   {
@@ -3270,6 +3500,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [112, 106, 119, 114, 110],
   },
   {
@@ -3284,6 +3515,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [96, 90, 103, 98, 94],
   },
   {
@@ -3298,6 +3530,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [79, 85, 73, 81, 77],
   },
   {
@@ -3312,6 +3545,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [186, 180, 193, 188, 184],
   },
   {
@@ -3326,6 +3560,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [66, 72, 60, 68, 64],
   },
   {
@@ -3340,6 +3575,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [170, 164, 177, 172, 168],
   },
   {
@@ -3354,6 +3590,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [117, 111, 124, 119, 115],
   },
   {
@@ -3368,6 +3605,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [182, 176, 189, 184, 180],
   },
   {
@@ -3382,6 +3620,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [85, 79, 92, 87, 83],
   },
   {
@@ -3396,6 +3635,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [54, 60, 48, 56, 52],
   },
   {
@@ -3410,6 +3650,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [62, 68, 56, 64, 60],
   },
   {
@@ -3424,6 +3665,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [164, 158, 171, 166, 162],
   },
   {
@@ -3438,6 +3680,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [125, 119, 132, 127, 123],
   },
   {
@@ -3452,6 +3695,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [195, 189, 200, 197, 193],
   },
   {
@@ -3466,6 +3710,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [82, 88, 76, 84, 80],
   },
   {
@@ -3480,6 +3725,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [71, 77, 65, 73, 69],
   },
   {
@@ -3494,6 +3740,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [138, 132, 145, 140, 136],
   },
   {
@@ -3508,6 +3755,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [57, 63, 51, 59, 55],
   },
   {
@@ -3522,6 +3770,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [100, 94, 107, 102, 98],
   },
   {
@@ -3536,6 +3785,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [178, 172, 185, 180, 176],
   },
   {
@@ -3550,6 +3800,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [94, 88, 101, 96, 92],
   },
   {
@@ -3564,6 +3815,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [190, 184, 197, 192, 188],
   },
   {
@@ -3578,6 +3830,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [74, 80, 68, 76, 72],
   },
   {
@@ -3592,6 +3845,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [87, 81, 94, 89, 85],
   },
   {
@@ -3606,6 +3860,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [65, 71, 59, 67, 63],
   },
   {
@@ -3620,6 +3875,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [153, 147, 160, 155, 151],
   },
   {
@@ -3634,6 +3890,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [48, 54, 42, 50, 46],
   },
   {
@@ -3648,6 +3905,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [120, 114, 127, 122, 118],
   },
   {
@@ -3662,6 +3920,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [103, 97, 110, 105, 101],
   },
   {
@@ -3676,6 +3935,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [136, 130, 143, 138, 134],
   },
   {
@@ -3690,6 +3950,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [116, 110, 123, 118, 114],
   },
   {
@@ -3704,6 +3965,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [129, 123, 136, 131, 127],
   },
   {
@@ -3718,6 +3980,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [59, 65, 53, 61, 57],
   },
   {
@@ -3732,6 +3995,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [88, 82, 95, 90, 86],
   },
   {
@@ -3746,6 +4010,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [196, 190, 200, 198, 194],
   },
   {
@@ -3760,6 +4025,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [77, 83, 71, 79, 75],
   },
   {
@@ -3774,6 +4040,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [131, 125, 138, 133, 129],
   },
   {
@@ -3788,6 +4055,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [158, 152, 165, 160, 156],
   },
   {
@@ -3802,6 +4070,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [113, 107, 120, 115, 111],
   },
   {
@@ -3816,6 +4085,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [143, 137, 150, 145, 141],
   },
   {
@@ -3830,6 +4100,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [148, 142, 155, 150, 146],
   },
   {
@@ -3844,6 +4115,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [105, 99, 112, 107, 103],
   },
   {
@@ -3858,6 +4130,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [91, 85, 98, 93, 89],
   },
   {
@@ -3872,6 +4145,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [127, 121, 134, 129, 125],
   },
   {
@@ -3886,6 +4160,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [76, 82, 70, 78, 74],
   },
   {
@@ -3900,6 +4175,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [110, 104, 117, 112, 108],
   },
   {
@@ -3914,6 +4190,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [99, 93, 106, 101, 97],
   },
   {
@@ -3928,6 +4205,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [163, 157, 170, 165, 161],
   },
   {
@@ -3942,6 +4220,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [142, 136, 149, 144, 140],
   },
   {
@@ -3956,6 +4235,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [187, 181, 194, 189, 185],
   },
   {
@@ -3970,6 +4250,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [52, 58, 46, 54, 50],
   },
   {
@@ -3984,6 +4265,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [81, 75, 88, 83, 79],
   },
   {
@@ -3998,6 +4280,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [126, 120, 133, 128, 124],
   },
   {
@@ -4012,6 +4295,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [95, 89, 102, 97, 93],
   },
   {
@@ -4026,6 +4310,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [118, 112, 125, 120, 116],
   },
   {
@@ -4040,6 +4325,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [176, 170, 183, 178, 174],
   },
   {
@@ -4054,6 +4340,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [68, 74, 62, 70, 66],
   },
   {
@@ -4068,6 +4355,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [169, 163, 176, 171, 167],
   },
   {
@@ -4082,6 +4370,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [56, 62, 50, 58, 54],
   },
   {
@@ -4096,6 +4385,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [184, 178, 191, 186, 182],
   },
   {
@@ -4110,6 +4400,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [63, 69, 57, 65, 61],
   },
   {
@@ -4124,6 +4415,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [84, 78, 91, 86, 82],
   },
   {
@@ -4138,6 +4430,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [155, 149, 162, 157, 153],
   },
   {
@@ -4152,6 +4445,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [80, 86, 74, 82, 78],
   },
   {
@@ -4166,6 +4460,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [72, 78, 66, 74, 70],
   },
   {
@@ -4180,6 +4475,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [67, 73, 61, 69, 65],
   },
   {
@@ -4194,6 +4490,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [121, 115, 128, 123, 119],
   },
   {
@@ -4208,6 +4505,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [172, 166, 179, 174, 170],
   },
   // ============================================================
@@ -4225,6 +4523,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [97, 91, 104, 99, 95],
   },
   {
@@ -4239,6 +4538,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [157, 151, 164, 159, 155],
   },
   {
@@ -4253,6 +4553,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [61, 67, 55, 63, 59],
   },
   {
@@ -4267,6 +4568,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [140, 134, 147, 142, 138],
   },
   {
@@ -4281,6 +4583,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [174, 168, 181, 176, 172],
   },
   {
@@ -4295,6 +4598,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [162, 156, 169, 164, 160],
   },
   {
@@ -4309,6 +4613,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [135, 129, 142, 137, 133],
   },
   {
@@ -4323,6 +4628,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [118, 112, 125, 120, 116],
   },
   {
@@ -4337,6 +4643,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [53, 59, 47, 55, 51],
   },
   {
@@ -4351,6 +4658,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [180, 174, 187, 182, 178],
   },
   {
@@ -4365,6 +4673,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [166, 160, 173, 168, 164],
   },
   {
@@ -4379,6 +4688,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [98, 92, 105, 100, 96],
   },
   {
@@ -4393,6 +4703,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [82, 76, 89, 84, 80],
   },
   {
@@ -4407,6 +4718,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [109, 103, 116, 111, 107],
   },
   {
@@ -4421,6 +4733,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [64, 70, 58, 66, 62],
   },
   {
@@ -4435,6 +4748,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [185, 179, 192, 187, 183],
   },
   {
@@ -4449,6 +4763,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [171, 165, 178, 173, 169],
   },
   {
@@ -4463,6 +4778,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [193, 187, 200, 195, 191],
   },
   {
@@ -4477,6 +4793,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [179, 173, 186, 181, 177],
   },
   {
@@ -4491,6 +4808,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [141, 135, 148, 143, 139],
   },
   {
@@ -4505,6 +4823,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [55, 61, 49, 57, 53],
   },
   {
@@ -4519,6 +4838,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [78, 84, 72, 80, 76],
   },
   {
@@ -4533,6 +4853,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [156, 150, 163, 158, 154],
   },
   {
@@ -4547,6 +4868,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [60, 66, 54, 62, 58],
   },
   {
@@ -4561,6 +4883,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [139, 133, 146, 141, 137],
   },
   {
@@ -4575,6 +4898,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [188, 182, 195, 190, 186],
   },
   {
@@ -4589,6 +4913,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [86, 80, 93, 88, 84],
   },
   {
@@ -4603,6 +4928,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [144, 138, 151, 146, 142],
   },
   {
@@ -4617,6 +4943,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [150, 144, 157, 152, 148],
   },
   {
@@ -4631,6 +4958,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [73, 79, 67, 75, 71],
   },
   {
@@ -4645,6 +4973,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [159, 153, 166, 161, 157],
   },
   {
@@ -4659,6 +4988,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [175, 169, 182, 177, 173],
   },
   {
@@ -4673,6 +5003,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [101, 95, 108, 103, 99],
   },
   {
@@ -4687,6 +5018,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [66, 72, 60, 68, 64],
   },
   {
@@ -4701,6 +5033,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [79, 85, 73, 81, 77],
   },
   {
@@ -4715,6 +5048,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [132, 126, 139, 134, 130],
   },
   {
@@ -4729,6 +5063,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [57, 63, 51, 59, 55],
   },
   {
@@ -4743,6 +5078,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [87, 81, 94, 89, 85],
   },
   {
@@ -4757,6 +5093,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [104, 98, 111, 106, 102],
   },
   {
@@ -4771,6 +5108,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [49, 55, 43, 51, 47],
   },
   {
@@ -4785,6 +5123,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [63, 69, 57, 65, 61],
   },
   {
@@ -4799,6 +5138,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [76, 82, 70, 78, 74],
   },
   {
@@ -4813,6 +5153,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [80, 74, 87, 82, 78],
   },
   {
@@ -4827,6 +5168,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [167, 161, 174, 169, 165],
   },
   {
@@ -4841,6 +5183,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [183, 177, 190, 185, 181],
   },
   {
@@ -4855,6 +5198,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [170, 164, 177, 172, 168],
   },
   {
@@ -4869,6 +5213,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [117, 111, 124, 119, 115],
   },
   {
@@ -4883,6 +5228,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [191, 185, 198, 193, 189],
   },
   {
@@ -4897,6 +5243,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [96, 90, 103, 98, 94],
   },
   {
@@ -4911,6 +5258,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [178, 172, 185, 180, 176],
   },
   {
@@ -4925,6 +5273,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [130, 124, 137, 132, 128],
   },
   {
@@ -4939,6 +5288,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [75, 81, 69, 77, 73],
   },
   {
@@ -4953,6 +5303,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [68, 74, 62, 70, 66],
   },
   {
@@ -4967,6 +5318,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [148, 142, 155, 150, 146],
   },
   {
@@ -4981,6 +5333,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [135, 129, 142, 137, 133],
   },
   {
@@ -4995,6 +5348,7 @@ export const workshops = [
     markets: ['US'],
     description: '',
     recurrence: 'weekly',
+    zoomType: 'meeting',
     attendance: [124, 118, 131, 126, 122],
   },
 ];
