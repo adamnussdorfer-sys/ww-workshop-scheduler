@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { ChevronDown, Check, SlidersHorizontal } from 'lucide-react';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import { ChevronDown, Check, SlidersHorizontal, Search } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import Checkbox from '../ui/Checkbox';
 
@@ -35,20 +35,37 @@ function ColoredCheckbox({ checked, colors }) {
   );
 }
 
-function FilterDropdown({ title, items, dimension, filters, toggleFilter, colorMap = null }) {
+function FilterDropdown({ title, items, dimension, filters, toggleFilter, colorMap = null, searchable = false }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState('');
   const ref = useRef(null);
+  const searchInputRef = useRef(null);
 
   const activeCount = filters[dimension]?.length ?? 0;
+
+  const filteredItems = useMemo(() => {
+    if (!searchable || !search.trim()) return items;
+    const q = search.toLowerCase();
+    return items.filter((item) => item.label.toLowerCase().includes(q));
+  }, [items, search, searchable]);
 
   useEffect(() => {
     if (!isOpen) return;
     function handleClick(e) {
-      if (ref.current && !ref.current.contains(e.target)) setIsOpen(false);
+      if (ref.current && !ref.current.contains(e.target)) {
+        setIsOpen(false);
+        setSearch('');
+      }
     }
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen && searchable && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isOpen, searchable]);
 
   return (
     <div className="relative" ref={ref}>
@@ -71,36 +88,57 @@ function FilterDropdown({ title, items, dimension, filters, toggleFilter, colorM
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-40 min-w-[180px] max-h-56 overflow-y-auto">
-          {items.map((item) => {
-            const isChecked = filters[dimension]?.includes(item.key) ?? false;
-            const colors = colorMap?.[item.key];
+        <div className="absolute left-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-slate-200 z-40 min-w-[180px]">
+          {searchable && (
+            <div className="px-2 pt-2 pb-1">
+              <div className="flex items-center gap-1.5 px-2 py-1.5 border border-slate-200 rounded-md bg-slate-50">
+                <Search size={12} className="text-slate-400 shrink-0" />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search..."
+                  className="bg-transparent outline-none text-xs text-slate-700 w-full placeholder:text-slate-400"
+                />
+              </div>
+            </div>
+          )}
+          <div className="py-1 max-h-56 overflow-y-auto">
+            {filteredItems.length === 0 ? (
+              <p className="px-3 py-2 text-xs text-slate-400">No results</p>
+            ) : (
+              filteredItems.map((item) => {
+                const isChecked = filters[dimension]?.includes(item.key) ?? false;
+                const colors = colorMap?.[item.key];
 
-            return (
-              <label
-                key={item.key}
-                className="flex items-center gap-2 px-3 py-1.5 cursor-pointer hover:bg-slate-50"
-              >
-                {colors ? (
-                  <>
-                    <input
-                      type="checkbox"
-                      checked={isChecked}
-                      onChange={() => toggleFilter(dimension, item.key)}
-                      className="sr-only"
-                    />
-                    <ColoredCheckbox checked={isChecked} colors={colors} />
-                  </>
-                ) : (
-                  <Checkbox
-                    checked={isChecked}
-                    onChange={() => toggleFilter(dimension, item.key)}
-                  />
-                )}
-                <span className="text-slate-700 text-xs truncate">{item.label}</span>
-              </label>
-            );
-          })}
+                return (
+                  <label
+                    key={item.key}
+                    className="flex items-center gap-2 px-3 py-1.5 cursor-pointer hover:bg-slate-50"
+                  >
+                    {colors ? (
+                      <>
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={() => toggleFilter(dimension, item.key)}
+                          className="sr-only"
+                        />
+                        <ColoredCheckbox checked={isChecked} colors={colors} />
+                      </>
+                    ) : (
+                      <Checkbox
+                        checked={isChecked}
+                        onChange={() => toggleFilter(dimension, item.key)}
+                      />
+                    )}
+                    <span className="text-slate-700 text-xs truncate">{item.label}</span>
+                  </label>
+                );
+              })
+            )}
+          </div>
         </div>
       )}
     </div>
@@ -191,6 +229,7 @@ export default function FilterBar() {
           dimension="coaches"
           filters={filters}
           toggleFilter={toggleFilter}
+          searchable
         />
         <FilterDropdown
           title="Type"
