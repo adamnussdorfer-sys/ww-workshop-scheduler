@@ -25,14 +25,15 @@
  * @returns {Set<string>} Set of workshop IDs that match all active dimensions
  */
 export function getMatchedWorkshopIds(workshops, filters) {
-  const { coaches = [], types = [], statuses = [], markets = [] } = filters;
+  const { coaches = [], types = [], statuses = [], markets = [], zoomTypes = [] } = filters;
 
   // No filters active — all workshops match
   if (
     coaches.length === 0 &&
     types.length === 0 &&
     statuses.length === 0 &&
-    markets.length === 0
+    markets.length === 0 &&
+    zoomTypes.length === 0
   ) {
     return new Set(workshops.map((ws) => ws.id));
   }
@@ -61,6 +62,9 @@ export function getMatchedWorkshopIds(workshops, filters) {
       if (!marketMatch) continue;
     }
 
+    // Zoom type dimension (OR within): pass if empty or ws.zoomType is selected
+    if (zoomTypes.length > 0 && !zoomTypes.includes(ws.zoomType)) continue;
+
     matched.add(ws.id);
   }
 
@@ -77,11 +81,12 @@ export function getMatchedWorkshopIds(workshops, filters) {
  * @returns {boolean}
  */
 export function hasActiveFilters(filters) {
-  const { coaches = [], types = [], statuses = [], markets = [] } = filters;
+  const { coaches = [], types = [], statuses = [], markets = [], zoomTypes = [] } = filters;
   return (
     coaches.length > 0 ||
     types.length > 0 ||
     statuses.length > 0 ||
-    markets.length > 0
+    markets.length > 0 ||
+    zoomTypes.length > 0
   );
 }

@@ -6,6 +6,7 @@ import Checkbox from '../ui/Checkbox';
 const WORKSHOP_TYPES = ['All In', 'Coaching Corner', 'Community', 'Education', 'GLP-1 & Diabetes', 'Life Stage', 'Mindset & Wellness', 'Movement & Fitness', 'Nutrition & Cooking', 'Real Room', 'Weekly Connection', 'Weekly Workshop'];
 const WORKSHOP_STATUSES = ['Published', 'Draft'];
 const WORKSHOP_MARKETS = ['US', 'CA', 'UK', 'ANZ'];
+const ZOOM_TYPES = ['meeting', 'webinar'];
 
 const TYPE_CHECKBOX_COLORS = {
   'Weekly Workshop': { checked: 'bg-sky-500 border-sky-500', unchecked: 'border-sky-400' },
@@ -161,12 +162,14 @@ export default function FilterBar() {
   const typeItems = WORKSHOP_TYPES.map((v) => ({ key: v, label: v }));
   const statusItems = WORKSHOP_STATUSES.map((v) => ({ key: v, label: v }));
   const marketItems = WORKSHOP_MARKETS.map((v) => ({ key: v, label: v }));
+  const zoomTypeItems = ZOOM_TYPES.map((v) => ({ key: v, label: v === 'meeting' ? 'Zoom Meeting' : 'Zoom Webinar' }));
 
   const totalActive =
     (filters.coaches?.length ?? 0) +
     (filters.types?.length ?? 0) +
     (filters.statuses?.length ?? 0) +
-    (filters.markets?.length ?? 0);
+    (filters.markets?.length ?? 0) +
+    (filters.zoomTypes?.length ?? 0);
 
   // Close mobile panel on outside click
   useEffect(() => {
@@ -208,6 +211,13 @@ export default function FilterBar() {
           title="Market"
           items={marketItems}
           dimension="markets"
+          filters={filters}
+          toggleFilter={toggleFilter}
+        />
+        <FilterDropdown
+          title="Zoom"
+          items={zoomTypeItems}
+          dimension="zoomTypes"
           filters={filters}
           toggleFilter={toggleFilter}
         />
@@ -261,6 +271,13 @@ export default function FilterBar() {
             title="Market"
             items={marketItems}
             dimension="markets"
+            filters={filters}
+            toggleFilter={toggleFilter}
+          />
+          <MobileFilterSection
+            title="Zoom"
+            items={zoomTypeItems}
+            dimension="zoomTypes"
             filters={filters}
             toggleFilter={toggleFilter}
           />

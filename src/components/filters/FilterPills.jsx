@@ -43,12 +43,21 @@ export default function FilterPills() {
           markets: prev.markets.filter((v) => v !== value),
         })),
     })),
+    ...(filters.zoomTypes || []).map((value) => ({
+      key: `zoom-${value}`,
+      label: `Zoom: ${value === 'meeting' ? 'Meeting' : 'Webinar'}`,
+      remove: () =>
+        setFilters((prev) => ({
+          ...prev,
+          zoomTypes: prev.zoomTypes.filter((v) => v !== value),
+        })),
+    })),
   ];
 
   if (pills.length === 0) return null;
 
   const clearAll = () =>
-    setFilters({ coaches: [], types: [], statuses: [], markets: [] });
+    setFilters({ coaches: [], types: [], statuses: [], markets: [], zoomTypes: [] });
 
   return (
     <div className="flex flex-wrap items-center gap-2 px-4 py-2">

@@ -21,6 +21,7 @@ export default function App() {
     types: [],
     statuses: [],
     markets: [],
+    zoomTypes: [],
   })
   const [highlightedIds, setHighlightedIds] = useState(new Set())
   const highlightTimer = useRef(null)
