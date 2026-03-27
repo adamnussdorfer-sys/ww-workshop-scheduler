@@ -590,21 +590,25 @@ export default function WorkshopForm({
   // Custom dropdown open states
   const [coachDropdownOpen, setCoachDropdownOpen] = useState(false);
   const [coCoachDropdownOpen, setCoCoachDropdownOpen] = useState(false);
+  const [marketsDropdownOpen, setMarketsDropdownOpen] = useState(false);
   const [showCoCoach, setShowCoCoach] = useState(() => !!draft.coCoachId);
 
   // Refs for click-outside detection
   const coachDropdownRef = useRef(null);
   const coCoachDropdownRef = useRef(null);
+  const marketsDropdownRef = useRef(null);
 
   // Close dropdowns on outside click
   useEffect(() => {
-    if (!coachDropdownOpen && !coCoachDropdownOpen) return;
+    if (!coachDropdownOpen && !coCoachDropdownOpen && !marketsDropdownOpen) return;
 
     function handleMouseDown(e) {
       const clickedOutsideCoach =
         coachDropdownRef.current && !coachDropdownRef.current.contains(e.target);
       const clickedOutsideCoCoach =
         coCoachDropdownRef.current && !coCoachDropdownRef.current.contains(e.target);
+      const clickedOutsideMarkets =
+        marketsDropdownRef.current && !marketsDropdownRef.current.contains(e.target);
 
       if (coachDropdownOpen && clickedOutsideCoach) {
         setCoachDropdownOpen(false);
@@ -612,11 +616,14 @@ export default function WorkshopForm({
       if (coCoachDropdownOpen && clickedOutsideCoCoach) {
         setCoCoachDropdownOpen(false);
       }
+      if (marketsDropdownOpen && clickedOutsideMarkets) {
+        setMarketsDropdownOpen(false);
+      }
     }
 
     document.addEventListener('mousedown', handleMouseDown);
     return () => document.removeEventListener('mousedown', handleMouseDown);
-  }, [coachDropdownOpen, coCoachDropdownOpen]);
+  }, [coachDropdownOpen, coCoachDropdownOpen, marketsDropdownOpen]);
 
   const updateField = (field, value) =>
     setDraft((prev) => ({ ...prev, [field]: value }));
@@ -770,6 +777,41 @@ export default function WorkshopForm({
       </label>
       {draft.recurring && <RecurrenceField draft={draft} setDraft={setDraft} />}
 
+      {/* Markets — multi-select dropdown */}
+      <div ref={marketsDropdownRef} className="relative w-full">
+        <button
+          type="button"
+          onClick={() => setMarketsDropdownOpen((o) => !o)}
+          className={`${DROPDOWN_TRIGGER_BASE} ${
+            marketsDropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : draft.markets.length > 0 ? 'border-[#031373]' : 'border-[#84ABFF]'
+          }`}
+        >
+          <div className="flex flex-col items-start">
+            {draft.markets.length > 0 && <span className="block text-[12px] font-normal text-[#031373]">Markets</span>}
+            <span className="text-[14px] font-semibold text-[#031373]">
+              {draft.markets.length > 0 ? draft.markets.join(', ') : 'Markets'}
+            </span>
+          </div>
+          <ChevronDown size={16} className={`text-[#031373] transition-transform ${marketsDropdownOpen ? 'rotate-180' : ''}`} />
+        </button>
+
+        {marketsDropdownOpen && (
+          <div className={DROPDOWN_MENU_CLASS}>
+            {MARKETS.map((market) => (
+              <button
+                key={market}
+                type="button"
+                className="w-full text-left px-4 py-2.5 text-[14px] font-semibold text-[#031373] hover:bg-slate-50 hover:text-ww-blue cursor-pointer flex items-center gap-2"
+                onClick={() => toggleMarket(market)}
+              >
+                <Checkbox checked={draft.markets.includes(market)} onChange={() => {}} />
+                <span>{market}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* 4. Coach — custom availability-aware dropdown */}
       <div ref={coachDropdownRef} className="relative w-full">
         <button
@@ -905,22 +947,6 @@ export default function WorkshopForm({
         onChange={(e) => updateField('description', e.target.value)}
         placeholder="Workshop description"
       />
-
-      {/* 8. Markets */}
-      <div>
-        <label className="block text-xs text-slate-500 mb-1.5">Markets</label>
-        <div className="flex gap-4 flex-wrap">
-          {MARKETS.map((market) => (
-            <label key={market} className="flex items-center gap-1.5 cursor-pointer">
-              <Checkbox
-                checked={draft.markets.includes(market)}
-                onChange={() => toggleMarket(market)}
-              />
-              <span className="text-sm text-slate-700">{market}</span>
-            </label>
-          ))}
-        </div>
-      </div>
 
       {/* Action buttons */}
       <div className="pt-4 border-t border-border mt-6 space-y-3">
