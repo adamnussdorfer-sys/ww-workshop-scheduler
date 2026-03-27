@@ -208,7 +208,7 @@ function TimePicker({ value, onChange, label }) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="text-[14px] font-semibold text-[#031AA1] cursor-pointer hover:opacity-70 transition-opacity"
+        className="text-[14px] font-semibold text-[#031373] cursor-pointer hover:opacity-70 transition-opacity"
       >
         {display}
       </button>
@@ -220,7 +220,7 @@ function TimePicker({ value, onChange, label }) {
               <div
                 key={t.display}
                 data-selected={sel ? 'true' : undefined}
-                className={`px-3 py-1.5 text-sm cursor-pointer ${sel ? 'bg-ww-blue/10 text-ww-blue font-medium' : 'text-[#031AA1] hover:bg-slate-50'}`}
+                className={`px-3 py-1.5 text-sm cursor-pointer ${sel ? 'bg-ww-blue/10 text-ww-blue font-medium' : 'text-[#031373] hover:bg-slate-50'}`}
                 onClick={() => { onChange(t); setOpen(false); }}
               >
                 {t.display}
@@ -286,17 +286,17 @@ function DateTimeRow({ draft, updateField }) {
   const hasDate = !!currentDate;
 
   return (
-    <div className={`w-full rounded-2xl border px-4 h-[62px] flex flex-col justify-center bg-white transition-all ${
-      hasDate ? 'border-ww-blue' : 'border-[#84ABFF]'
+    <div className={`w-full rounded-2xl border px-4 h-[59px] flex flex-col justify-center bg-white transition-all ${
+      hasDate ? 'border-[#031373]' : 'border-[#84ABFF]'
     }`}>
-      {hasDate && <span className="block text-[12px] font-normal text-[#031AA1]">Date & Time</span>}
+      {hasDate && <span className="block text-[12px] font-normal text-[#031373]">Date & Time</span>}
       <div className="flex items-center gap-2">
         {/* Date button */}
         <div className="relative" ref={dateRef}>
           <button
             type="button"
             onClick={() => setCalOpen((o) => !o)}
-            className="text-[14px] font-semibold text-[#031AA1] cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap"
+            className="text-[14px] font-semibold text-[#031373] cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap"
           >
             {currentDate ? format(currentDate, 'EEE, MMM d') : 'Date & Time'}
           </button>
@@ -307,16 +307,16 @@ function DateTimeRow({ draft, updateField }) {
 
         {hasDate && (
           <>
-            <span className="text-[#031AA1]/40 text-sm">|</span>
+            <span className="text-[#031373]/40 text-sm">|</span>
             <TimePicker value={startTime} onChange={handleStartTimeChange} label="Start" />
-            <span className="text-[#031AA1]/40 text-sm">–</span>
+            <span className="text-[#031373]/40 text-sm">–</span>
             <TimePicker value={endTime} onChange={handleEndTimeChange} label="End" />
-            <span className="text-[#031AA1]/40 text-sm">|</span>
+            <span className="text-[#031373]/40 text-sm">|</span>
             <div className="relative" ref={tzRef}>
               <button
                 type="button"
                 onClick={() => setTzOpen((o) => !o)}
-                className="text-[13px] font-semibold text-[#031AA1] cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap"
+                className="text-[13px] font-semibold text-[#031373] cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap"
               >
                 {draft.timezone}
               </button>
@@ -328,7 +328,7 @@ function DateTimeRow({ draft, updateField }) {
                       type="button"
                       onClick={() => { updateField('timezone', tz.value); setTzOpen(false); }}
                       className={`w-full text-left px-4 py-2 text-[13px] font-semibold cursor-pointer transition-colors ${
-                        draft.timezone === tz.value ? 'text-ww-blue bg-ww-blue/5' : 'text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue'
+                        draft.timezone === tz.value ? 'text-ww-blue bg-ww-blue/5' : 'text-[#031373] hover:bg-slate-50 hover:text-ww-blue'
                       }`}
                     >
                       {tz.label}
@@ -392,7 +392,7 @@ function CustomRecurrenceModal({ draft, onSave, onClose }) {
                 max={52}
                 value={localWeeks}
                 onChange={(e) => setLocalWeeks(Math.max(1, Math.min(52, parseInt(e.target.value) || 1)))}
-                className="w-16 h-10 text-center text-sm font-semibold text-[#031AA1] border border-[#84ABFF] rounded-xl outline-none focus:border-ww-blue transition-colors"
+                className="w-16 h-10 text-center text-sm font-semibold text-[#031373] border border-[#84ABFF] rounded-xl outline-none focus:border-ww-blue transition-colors"
               />
               <span className="text-sm text-slate-600">{localWeeks === 1 ? 'week' : 'weeks'}</span>
             </div>
@@ -427,11 +427,11 @@ function CustomRecurrenceModal({ draft, onSave, onClose }) {
             <p className="text-sm text-slate-600 mb-2">Ends</p>
             <div className="space-y-3">
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="radio" name="endType" checked={endType === 'never'} onChange={() => setEndType('never')} className="accent-ww-blue w-4 h-4" />
+                <input type="radio" name="endType" checked={endType === 'never'} onChange={() => setEndType('never')} className="accent-[#031373] w-4 h-4" />
                 <span className="text-sm text-ww-navy">Never</span>
               </label>
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="radio" name="endType" checked={endType === 'after'} onChange={() => setEndType('after')} className="accent-ww-blue w-4 h-4" />
+                <input type="radio" name="endType" checked={endType === 'after'} onChange={() => setEndType('after')} className="accent-[#031373] w-4 h-4" />
                 <span className="text-sm text-ww-navy">After</span>
                 <input
                   type="number"
@@ -440,7 +440,7 @@ function CustomRecurrenceModal({ draft, onSave, onClose }) {
                   value={occurrences}
                   onChange={(e) => setOccurrences(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
                   disabled={endType !== 'after'}
-                  className="w-14 h-9 text-center text-sm font-semibold text-[#031AA1] border border-[#84ABFF] rounded-xl outline-none focus:border-ww-blue transition-colors disabled:opacity-40"
+                  className="w-14 h-9 text-center text-sm font-semibold text-[#031373] border border-[#84ABFF] rounded-xl outline-none focus:border-ww-blue transition-colors disabled:opacity-40"
                 />
                 <span className="text-sm text-slate-600">occurrences</span>
               </label>
@@ -529,19 +529,19 @@ function RecurrenceField({ draft, setDraft }) {
         <button
           type="button"
           onClick={() => setDropdownOpen((o) => !o)}
-          className={`w-full h-[62px] px-4 flex items-center justify-between cursor-pointer rounded-2xl border bg-white transition-all ${
-            dropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : draft.recurring ? 'border-ww-blue' : 'border-[#84ABFF]'
+          className={`w-full h-[59px] px-4 flex items-center justify-between cursor-pointer rounded-2xl border bg-white transition-all ${
+            dropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : draft.recurring ? 'border-[#031373]' : 'border-[#84ABFF]'
           }`}
         >
           <div className="flex flex-col items-start">
-            {draft.recurring && <span className="block text-[12px] font-normal text-[#031AA1]">Recurrence</span>}
+            {draft.recurring && <span className="block text-[12px] font-normal text-[#031373]">Recurrence</span>}
             <Tooltip content={draft.recurring ? displayLabel : null}>
-              <span className="text-[14px] font-semibold text-[#031AA1] truncate max-w-[280px]">
+              <span className="text-[14px] font-semibold text-[#031373] truncate max-w-[280px]">
                 {draft.recurring ? displayLabel : 'Does not repeat'}
               </span>
             </Tooltip>
           </div>
-          <ChevronDown size={16} className={`text-[#031AA1] transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown size={16} className={`text-[#031373] transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
         </button>
 
         {dropdownOpen && (
@@ -551,7 +551,7 @@ function RecurrenceField({ draft, setDraft }) {
                 key={p.value}
                 type="button"
                 onClick={() => handlePreset(p.value)}
-                className="w-full text-left px-4 py-2.5 text-[14px] font-semibold text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue cursor-pointer"
+                className="w-full text-left px-4 py-2.5 text-[14px] font-semibold text-[#031373] hover:bg-slate-50 hover:text-ww-blue cursor-pointer"
               >
                 {p.label}
               </button>
@@ -571,7 +571,7 @@ function RecurrenceField({ draft, setDraft }) {
   );
 }
 
-const DROPDOWN_TRIGGER_BASE = 'w-full h-[62px] px-4 flex items-center justify-between cursor-pointer rounded-2xl border bg-white transition-all';
+const DROPDOWN_TRIGGER_BASE = 'w-full h-[59px] px-4 flex items-center justify-between cursor-pointer rounded-2xl border bg-white transition-all';
 const DROPDOWN_MENU_CLASS = 'absolute left-0 top-full mt-1 w-full bg-white border border-slate-200 rounded-2xl shadow-lg z-30 py-1 max-h-64 overflow-y-auto';
 
 export default function WorkshopForm({
@@ -763,16 +763,16 @@ export default function WorkshopForm({
           type="button"
           onClick={() => setCoachDropdownOpen((o) => !o)}
           className={`${DROPDOWN_TRIGGER_BASE} ${
-            coachDropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : selectedCoach ? 'border-ww-blue' : 'border-[#84ABFF]'
+            coachDropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : selectedCoach ? 'border-[#031373]' : 'border-[#84ABFF]'
           }`}
         >
           <div className="flex flex-col items-start">
-            {selectedCoach && <span className="block text-[12px] font-normal text-[#031AA1]">Coach</span>}
-            <span className={`text-[14px] font-semibold ${selectedCoach ? 'text-[#031AA1]' : 'text-[#031AA1]'}`}>
+            {selectedCoach && <span className="block text-[12px] font-normal text-[#031373]">Coach</span>}
+            <span className={`text-[14px] font-semibold ${selectedCoach ? 'text-[#031373]' : 'text-[#031373]'}`}>
               {selectedCoach ? selectedCoach.name : 'Coach'}
             </span>
           </div>
-          <ChevronDown size={16} className={`text-[#031AA1] transition-transform ${coachDropdownOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown size={16} className={`text-[#031373] transition-transform ${coachDropdownOpen ? 'rotate-180' : ''}`} />
         </button>
 
         {coachDropdownOpen && (
@@ -788,7 +788,7 @@ export default function WorkshopForm({
                   type="button"
                   className={`w-full text-left px-4 py-2.5 text-[14px] font-semibold flex items-center gap-2 ${
                     avail.available
-                      ? 'text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue cursor-pointer'
+                      ? 'text-[#031373] hover:bg-slate-50 hover:text-ww-blue cursor-pointer'
                       : 'text-slate-400 cursor-not-allowed'
                   }`}
                   onClick={() => {
@@ -832,16 +832,16 @@ export default function WorkshopForm({
             type="button"
             onClick={() => setCoCoachDropdownOpen((o) => !o)}
             className={`${DROPDOWN_TRIGGER_BASE} ${
-              coCoachDropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : 'border-ww-blue'
+              coCoachDropdownOpen ? 'border-transparent shadow-[0_2px_2px_0_rgba(7,5,23,0.04)]' : 'border-[#031373]'
             }`}
           >
             <div className="flex flex-col items-start">
-              <span className="block text-[12px] font-normal text-[#031AA1]">Co-Coach</span>
-              <span className="text-[14px] font-semibold text-[#031AA1]">
+              <span className="block text-[12px] font-normal text-[#031373]">Co-Coach</span>
+              <span className="text-[14px] font-semibold text-[#031373]">
                 {selectedCoCoach ? selectedCoCoach.name : 'Select co-coach'}
               </span>
             </div>
-            <ChevronDown size={16} className={`text-[#031AA1] transition-transform ${coCoachDropdownOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown size={16} className={`text-[#031373] transition-transform ${coCoachDropdownOpen ? 'rotate-180' : ''}`} />
           </button>
 
           {coCoachDropdownOpen && (
@@ -859,7 +859,7 @@ export default function WorkshopForm({
                       type="button"
                       className={`w-full text-left px-4 py-2.5 text-[14px] font-semibold flex items-center gap-2 ${
                         avail.available
-                          ? 'text-[#031AA1] hover:bg-slate-50 hover:text-ww-blue cursor-pointer'
+                          ? 'text-[#031373] hover:bg-slate-50 hover:text-ww-blue cursor-pointer'
                           : 'text-slate-400 cursor-not-allowed'
                       }`}
                       onClick={() => {

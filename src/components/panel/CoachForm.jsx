@@ -168,7 +168,7 @@ export default function CoachForm({ coach, mode, onClose, onRemove }) {
 
       {/* Availability */}
       <div>
-        <label className="block text-[12px] font-normal text-[#031AA1] mb-2">Availability</label>
+        <label className="block text-[12px] font-normal text-[#031373] mb-2">Availability</label>
         <div className="space-y-3">
           {draft.availability.map((slot, i) => (
             <div key={i} className="flex items-center gap-2">
