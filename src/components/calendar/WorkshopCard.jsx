@@ -28,7 +28,7 @@ const CONFLICT_RING = {
   orange: 'ring-2 ring-inset ring-red-400',
 };
 
-export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999, hideConflictIcon = false }) {
+export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999, hideConflictIcon = false, weekView = false }) {
   const { highlightedIds, userTimezone } = useApp();
   const isHighlighted = highlightedIds.has(workshop.id);
   const compact = height < 42;
@@ -104,6 +104,8 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
       )}
       {compact ? (
         <p className="font-semibold text-ww-navy leading-tight truncate">{workshop.title}</p>
+      ) : weekView ? (
+        <p className="font-normal text-ww-navy leading-tight break-words line-clamp-3" style={{ fontSize: '11px' }}>{workshop.title}</p>
       ) : (
         <>
           <div className="flex items-center gap-1 mb-0.5">

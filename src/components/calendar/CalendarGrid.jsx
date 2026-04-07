@@ -30,6 +30,7 @@ function getEventPosition(startTimeISO, endTimeISO, tz) {
 }
 
 // Assign columns to overlapping workshops so they sit side-by-side
+// Each card's width is based on how many cards overlap at its specific time, not the cluster max
 function getColumnLayout(dayWorkshops) {
   const items = dayWorkshops.map((ws) => {
     const start = parseISO(ws.startTime);
@@ -57,7 +58,6 @@ function getColumnLayout(dayWorkshops) {
   for (const cluster of clusters) {
     const cols = [];
     for (const item of cluster) {
-      // Find first column where this item doesn't overlap with existing items
       let col = 0;
       while (cols[col]?.some((c) => c.start < item.end && item.start < c.end)) {
         col++;
@@ -66,9 +66,15 @@ function getColumnLayout(dayWorkshops) {
       cols[col].push(item);
       layout.set(item.id, { col, totalCols: 0 });
     }
-    // Set totalCols for all items in this cluster
+    // For each item, count how many columns are actually occupied at its time range
     for (const item of cluster) {
-      layout.get(item.id).totalCols = cols.length;
+      let activeCols = 0;
+      for (const colItems of cols) {
+        if (colItems?.some((c) => c.start < item.end && item.start < c.end)) {
+          activeCols++;
+        }
+      }
+      layout.get(item.id).totalCols = activeCols;
     }
   }
   return layout;
@@ -262,6 +268,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                         isFiltered={isFiltered}
                         height={height}
                         hideConflictIcon
+                        weekView
                       />
                     </div>
                   );
