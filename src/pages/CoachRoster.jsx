@@ -154,11 +154,12 @@ export default function CoachRoster() {
           <div className="hidden md:block">
             <table className="w-full table-fixed">
               <colgroup>
-                <col className="w-[25%]" />
-                <col className="w-[30%]" />
-                <col className="w-[15%]" />
-                <col className="w-[15%]" />
-                <col className="w-[15%]" />
+                <col className="w-[22%]" />
+                <col className="w-[22%]" />
+                <col className="w-[18%]" />
+                <col className="w-[13%]" />
+                <col className="w-[13%]" />
+                <col className="w-[12%]" />
               </colgroup>
               <thead>
                 <tr className="border-b border-border bg-slate-50/60">
@@ -172,6 +173,13 @@ export default function CoachRoster() {
                   <SortHeader
                     label="Email"
                     sortKey="email"
+                    sort={sort}
+                    onSort={handleSort}
+                    align="left"
+                  />
+                  <SortHeader
+                    label="Role"
+                    sortKey="group"
                     sort={sort}
                     onSort={handleSort}
                     align="left"
@@ -219,6 +227,9 @@ export default function CoachRoster() {
                         <Mail size={14} className="flex-shrink-0 text-slate-400" />
                         <span className="truncate">{coach.email}</span>
                       </div>
+                    </td>
+                    <td className="px-4 py-3 text-sm text-slate-600 truncate">
+                      {coach.group === 'Expert' ? `Expert — ${coach.subgroup}` : coach.group}
                     </td>
                     <td className="px-4 py-3 text-sm text-slate-600">
                       <div className="flex items-center gap-2">

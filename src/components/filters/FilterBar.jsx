@@ -46,7 +46,8 @@ function FilterDropdown({ title, items, dimension, filters, toggleFilter, colorM
   const filteredItems = useMemo(() => {
     if (!searchable || !search.trim()) return items;
     const q = search.toLowerCase();
-    return items.filter((item) => item.label.toLowerCase().includes(q));
+    // When searching, show only matching selectable items (no headers)
+    return items.filter((item) => !item.type && item.label.toLowerCase().includes(q));
   }, [items, search, searchable]);
 
   useEffect(() => {
@@ -108,7 +109,21 @@ function FilterDropdown({ title, items, dimension, filters, toggleFilter, colorM
             {filteredItems.length === 0 ? (
               <p className="px-3 py-2 text-xs text-slate-400">No results</p>
             ) : (
-              filteredItems.map((item) => {
+              filteredItems.map((item, idx) => {
+                if (item.type === 'header') {
+                  return (
+                    <div key={`h-${idx}`} className="px-3 pt-2.5 pb-1 first:pt-1.5">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{item.label}</span>
+                    </div>
+                  );
+                }
+                if (item.type === 'subheader') {
+                  return (
+                    <div key={`sh-${idx}`} className="px-3 pt-1.5 pb-0.5 pl-5">
+                      <span className="text-[10px] font-semibold text-slate-400 tracking-wide">{item.label}</span>
+                    </div>
+                  );
+                }
                 const isChecked = filters[dimension]?.includes(item.key) ?? false;
                 const colors = colorMap?.[item.key];
 
@@ -196,7 +211,26 @@ export default function FilterBar() {
     });
   }
 
-  const coachItems = coaches.map((c) => ({ key: c.id, label: c.name }));
+  const coachItems = useMemo(() => {
+    const creators = coaches.filter((c) => c.group === 'Coach Creator').sort((a, b) => a.name.localeCompare(b.name));
+    const clinicians = coaches.filter((c) => c.group === 'Expert' && c.subgroup === 'Clinician').sort((a, b) => a.name.localeCompare(b.name));
+    const rds = coaches.filter((c) => c.group === 'Expert' && c.subgroup === 'RD').sort((a, b) => a.name.localeCompare(b.name));
+    const guests = coaches.filter((c) => c.group === 'Expert' && c.subgroup === 'Guest / Partner').sort((a, b) => a.name.localeCompare(b.name));
+    const legacy = coaches.filter((c) => c.group === 'Legacy Coach').sort((a, b) => a.name.localeCompare(b.name));
+    return [
+      { type: 'header', label: 'Coach Creators' },
+      ...creators.map((c) => ({ key: c.id, label: c.name })),
+      { type: 'header', label: 'Experts' },
+      { type: 'subheader', label: 'Clinicians' },
+      ...clinicians.map((c) => ({ key: c.id, label: c.name })),
+      { type: 'subheader', label: "RD's" },
+      ...rds.map((c) => ({ key: c.id, label: c.name })),
+      { type: 'subheader', label: 'Guests / Partners' },
+      ...guests.map((c) => ({ key: c.id, label: c.name })),
+      { type: 'header', label: 'Legacy Coaches' },
+      ...legacy.map((c) => ({ key: c.id, label: c.name })),
+    ];
+  }, [coaches]);
   const typeItems = WORKSHOP_TYPES.map((v) => ({ key: v, label: v }));
   const statusItems = WORKSHOP_STATUSES.map((v) => ({ key: v, label: v }));
   const marketItems = WORKSHOP_MARKETS.map((v) => ({ key: v, label: v }));
