@@ -158,17 +158,26 @@ export function buildConflictMap(workshops, coaches, tz = 'America/New_York') {
         new Date(a.endTime)
       );
 
-      if (gapMinutes < BUFFER_MINUTES) {
+      // Per-workshop buffer override: use the more permissive (lower) of the pair
+      const effectiveBuffer = Math.min(
+        a.bufferOverride ?? BUFFER_MINUTES,
+        b.bufferOverride ?? BUFFER_MINUTES
+      );
+
+      // If either workshop has buffer disabled (0), skip check entirely
+      if (effectiveBuffer === 0) continue;
+
+      if (gapMinutes < effectiveBuffer) {
         addConflict(resultMap, a.id, {
           type: 'buffer',
           severity: 'orange',
-          message: `Only ${gapMinutes} min gap before "${b.title}" — recommend 15+ min buffer`,
+          message: `Only ${gapMinutes} min gap before "${b.title}" — recommend ${effectiveBuffer}+ min buffer`,
         });
 
         addConflict(resultMap, b.id, {
           type: 'buffer',
           severity: 'orange',
-          message: `Only ${gapMinutes} min gap after "${a.title}" — recommend 15+ min buffer`,
+          message: `Only ${gapMinutes} min gap after "${a.title}" — recommend ${effectiveBuffer}+ min buffer`,
         });
       }
     }

@@ -323,6 +323,165 @@ describe('buildConflictMap - integration with real data', () => {
   });
 });
 
+// ── Buffer override tests (EVNT-03) ─────────────────────────────────────────
+
+describe('buildConflictMap - buffer override', () => {
+  const testCoach = {
+    id: 'coach-buf-test',
+    name: 'Buffer Coach',
+    status: 'active',
+    availability: [{ day: 'wednesday', start: '06:00', end: '22:00' }],
+  };
+
+  it('detects buffer conflict when both workshops have bufferOverride=5 and gap is 3 min', () => {
+    const wsA = {
+      id: 'ws-buf-a',
+      title: 'Workshop A',
+      type: 'Weekly Workshop',
+      status: 'Published',
+      coachId: 'coach-buf-test',
+      coCoachId: null,
+      startTime: getWeekDay(2, 10, 0),
+      endTime: getWeekDay(2, 11, 0),
+      markets: ['US'],
+      bufferOverride: 5,
+    };
+    const wsB = {
+      id: 'ws-buf-b',
+      title: 'Workshop B',
+      type: 'Weekly Workshop',
+      status: 'Published',
+      coachId: 'coach-buf-test',
+      coCoachId: null,
+      startTime: getWeekDay(2, 11, 3),
+      endTime: getWeekDay(2, 12, 3),
+      markets: ['US'],
+      bufferOverride: 5,
+    };
+    const result = buildConflictMap([wsA, wsB], [testCoach]);
+    expect(result.get('ws-buf-a').conflicts.some((c) => c.type === 'buffer')).toBe(true);
+    expect(result.get('ws-buf-b').conflicts.some((c) => c.type === 'buffer')).toBe(true);
+  });
+
+  it('does NOT detect buffer conflict when one workshop has bufferOverride=0 (Off), gap is 2 min', () => {
+    const wsA = {
+      id: 'ws-off-a',
+      title: 'Workshop A Off',
+      type: 'Weekly Workshop',
+      status: 'Published',
+      coachId: 'coach-buf-test',
+      coCoachId: null,
+      startTime: getWeekDay(2, 10, 0),
+      endTime: getWeekDay(2, 11, 0),
+      markets: ['US'],
+      bufferOverride: 0,
+    };
+    const wsB = {
+      id: 'ws-off-b',
+      title: 'Workshop B Off',
+      type: 'Weekly Workshop',
+      status: 'Published',
+      coachId: 'coach-buf-test',
+      coCoachId: null,
+      startTime: getWeekDay(2, 11, 2),
+      endTime: getWeekDay(2, 12, 2),
+      markets: ['US'],
+      bufferOverride: 15,
+    };
+    const result = buildConflictMap([wsA, wsB], [testCoach]);
+    expect(result.get('ws-off-a').conflicts.some((c) => c.type === 'buffer')).toBe(false);
+    expect(result.get('ws-off-b').conflicts.some((c) => c.type === 'buffer')).toBe(false);
+  });
+
+  it('detects buffer conflict when both workshops have bufferOverride=20 and gap is 18 min', () => {
+    const wsA = {
+      id: 'ws-20-a',
+      title: 'Workshop A 20',
+      type: 'Weekly Workshop',
+      status: 'Published',
+      coachId: 'coach-buf-test',
+      coCoachId: null,
+      startTime: getWeekDay(2, 10, 0),
+      endTime: getWeekDay(2, 11, 0),
+      markets: ['US'],
+      bufferOverride: 20,
+    };
+    const wsB = {
+      id: 'ws-20-b',
+      title: 'Workshop B 20',
+      type: 'Weekly Workshop',
+      status: 'Published',
+      coachId: 'coach-buf-test',
+      coCoachId: null,
+      startTime: getWeekDay(2, 11, 18),
+      endTime: getWeekDay(2, 12, 18),
+      markets: ['US'],
+      bufferOverride: 20,
+    };
+    const result = buildConflictMap([wsA, wsB], [testCoach]);
+    expect(result.get('ws-20-a').conflicts.some((c) => c.type === 'buffer')).toBe(true);
+    expect(result.get('ws-20-b').conflicts.some((c) => c.type === 'buffer')).toBe(true);
+  });
+
+  it('uses Math.min of pair (A=5, B=20): effectiveBuffer=5, gap=8 min -> NO conflict', () => {
+    const wsA = {
+      id: 'ws-min-a',
+      title: 'Workshop A Min',
+      type: 'Weekly Workshop',
+      status: 'Published',
+      coachId: 'coach-buf-test',
+      coCoachId: null,
+      startTime: getWeekDay(2, 10, 0),
+      endTime: getWeekDay(2, 11, 0),
+      markets: ['US'],
+      bufferOverride: 5,
+    };
+    const wsB = {
+      id: 'ws-min-b',
+      title: 'Workshop B Min',
+      type: 'Weekly Workshop',
+      status: 'Published',
+      coachId: 'coach-buf-test',
+      coCoachId: null,
+      startTime: getWeekDay(2, 11, 8),
+      endTime: getWeekDay(2, 12, 8),
+      markets: ['US'],
+      bufferOverride: 20,
+    };
+    const result = buildConflictMap([wsA, wsB], [testCoach]);
+    expect(result.get('ws-min-a').conflicts.some((c) => c.type === 'buffer')).toBe(false);
+    expect(result.get('ws-min-b').conflicts.some((c) => c.type === 'buffer')).toBe(false);
+  });
+
+  it('falls back to BUFFER_MINUTES=15 when bufferOverride is undefined, gap=10 min -> conflict detected', () => {
+    const wsA = {
+      id: 'ws-undef-a',
+      title: 'Workshop A Undef',
+      type: 'Weekly Workshop',
+      status: 'Published',
+      coachId: 'coach-buf-test',
+      coCoachId: null,
+      startTime: getWeekDay(2, 10, 0),
+      endTime: getWeekDay(2, 11, 0),
+      markets: ['US'],
+    };
+    const wsB = {
+      id: 'ws-undef-b',
+      title: 'Workshop B Undef',
+      type: 'Weekly Workshop',
+      status: 'Published',
+      coachId: 'coach-buf-test',
+      coCoachId: null,
+      startTime: getWeekDay(2, 11, 10),
+      endTime: getWeekDay(2, 12, 10),
+      markets: ['US'],
+    };
+    const result = buildConflictMap([wsA, wsB], [testCoach]);
+    expect(result.get('ws-undef-a').conflicts.some((c) => c.type === 'buffer')).toBe(true);
+    expect(result.get('ws-undef-b').conflicts.some((c) => c.type === 'buffer')).toBe(true);
+  });
+});
+
 // ── getSaturatedSlots tests (GRID_START_HOUR=2) ─────────────────────────────
 
 describe('getSaturatedSlots', () => {

@@ -7,8 +7,7 @@ High-fidelity workshop scheduling prototype built in natural layers. v1.0 delive
 ## Milestones
 
 - v1.0 Core Scheduling Prototype — Phases 1-4 (shipped 2026-03-09)
-- v1.1 Interactive Polish — Phases 5-12 (shipped 2026-03-10)
-- v1.2 Event Configuration & Status — Phases 13-14 (active)
+- v1.1 Interactive Polish — Phases 5-11 (active)
 
 ## Phases
 
@@ -133,45 +132,10 @@ Plans:
 Plans:
 - [ ] 11-01-PLAN.md — CSS tokens, card hover lift, conflict pulse, panel easing, and empty week state
 
-### v1.2 Event Configuration & Status (Active)
-
-- [ ] **Phase 13: Event Form Enhancements** - Plan selector, draft support, and buffer override (pending)
-- [ ] **Phase 14: Status Visibility & Published Links** - Status indicators and published link in panel (pending)
-
-## Phase Details (v1.2)
-
-### Phase 13: Event Form Enhancements
-**Goal**: Coordinators can select plan types, save incomplete drafts, and override buffer times when creating or editing workshops
-**Depends on**: Phase 12
-**Requirements**: EVNT-01, EVNT-02, EVNT-03
-**UI hint**: yes
-**Success Criteria** (what must be TRUE):
-  1. When creating or editing a workshop, coordinator can select either "Core" or "Core Plus" as the plan type — selection persists on save and displays correctly when re-opening the workshop
-  2. Coordinator can save a workshop as Draft with only title and time filled in — other fields (coach, markets, description) are optional for drafts
-  3. Coordinator can set a custom buffer time (0, 5, 10, 15, 20, 30 min) per workshop that overrides the default 15-minute buffer — conflict engine respects the override when checking buffer violations
-  4. Plan type and buffer override fields appear in both create and edit modes of the workshop form
-**Plans**: 1 plan
-Plans:
-- [ ] 13-01-PLAN.md — Add planType and bufferOverride to data model, form fields, and conflict engine integration
-
-### Phase 14: Status Visibility & Published Links
-**Goal**: Coordinators can instantly distinguish draft from published workshops and access published event links from the detail panel
-**Depends on**: Phase 13
-**Requirements**: STAT-01, STAT-02
-**UI hint**: yes
-**Success Criteria** (what must be TRUE):
-  1. Draft workshop cards show a distinct visual treatment (dashed border + muted background) clearly different from published cards (solid border + full color) across all three calendar views
-  2. The slide-out detail panel for a published workshop displays a shareable link field with a copy-to-clipboard button
-  3. Draft workshops in the panel header show a prominent "DRAFT" badge in yellow/amber, while published workshops show a "PUBLISHED" badge in green
-  4. Status visual distinctions are consistent across week, day, and month views
-**Plans**: 1 plan
-Plans:
-- [ ] 14-01-PLAN.md — Enhanced status card styles, published link field in panel, and status badge updates
-
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13 → 14
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -186,9 +150,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 9. Draft Manager Page | 1/1 | Complete    | 2026-03-10 | - |
 | 10. Availability Overlay | v1.1 | Complete    | 2026-03-10 | 2026-03-10 |
 | 11. Micro-interactions + Empty States | 1/1 | Complete    | 2026-03-10 | - |
-| 12. Day and Month Calendar Views | v1.1 | 2/2 | Complete | 2026-03-10 |
-| 13. Event Form Enhancements | v1.2 | 0/1 | Pending | - |
-| 14. Status Visibility & Published Links | v1.2 | 0/1 | Pending | - |
 
 ### Phase 12: Day and Month Calendar Views
 **Goal**: Coordinators can switch between week, day, and month views to see their schedule at different time scales
@@ -205,3 +166,12 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 Plans:
 - [x] 12-01-PLAN.md — Day view component, view-switching infrastructure, keyboard shortcut adaptation, day drill-down from week header
 - [x] 12-02-PLAN.md — Month view component with workshop pills, overflow handling, conflict dots, and drill-to-day navigation
+
+### Phase 13: Event Form Enhancements
+**Goal**: Coordinators can tag workshops by plan tier, save incomplete drafts quickly, and control per-workshop buffer strictness
+**Depends on**: Phase 12
+**Requirements**: EVNT-01, EVNT-02, EVNT-03
+**Plans**: 1 plan
+
+Plans:
+- [x] 13-01-PLAN.md — Plan type selector, buffer override selector, split validation, conflict engine buffer override logic, seed data backfill
