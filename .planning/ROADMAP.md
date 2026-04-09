@@ -165,4 +165,13 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 Plans:
 - [x] 12-01-PLAN.md — Day view component, view-switching infrastructure, keyboard shortcut adaptation, day drill-down from week header
-- [ ] 12-02-PLAN.md — Month view component with workshop pills, overflow handling, conflict dots, and drill-to-day navigation
+- [x] 12-02-PLAN.md — Month view component with workshop pills, overflow handling, conflict dots, and drill-to-day navigation
+
+### Phase 13: Event Form Enhancements
+**Goal**: Coordinators can tag workshops by plan tier, save incomplete drafts quickly, and control per-workshop buffer strictness
+**Depends on**: Phase 12
+**Requirements**: EVNT-01, EVNT-02, EVNT-03
+**Plans**: 1 plan
+
+Plans:
+- [x] 13-01-PLAN.md — Plan type selector, buffer override selector, split validation, conflict engine buffer override logic, seed data backfill

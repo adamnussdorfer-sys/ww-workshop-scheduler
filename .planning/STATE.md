@@ -5,17 +5,17 @@
 See: .planning/PROJECT.md (updated 2026-03-09)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** Phase 12: Day and Month Calendar Views (Complete)
+**Current focus:** Phase 13: Event Form Enhancements (In Progress)
 
 ## Current Position
 
-Phase: 12 (Day and Month Calendar Views)
-Plan: 2 of 2 complete
-Status: Phase 12 complete — All three calendar views (Day, Week, Month) fully functional
-Last activity: 2026-03-24 - Completed quick task 1: Make the app responsive
+Phase: 13 (Event Form Enhancements)
+Plan: 1 of 1 complete
+Status: Phase 13 Plan 01 complete — Plan type selector, buffer override, and split validation added
+Last activity: 2026-04-09 - Completed 13-01: Event Form Enhancements
 
 ```
-Progress: [####################] 2/2 plans complete (Phase 12 done)
+Progress: [####################] 1/1 plans complete (Phase 13 Plan 01 done)
 ```
 
 ## Performance Metrics
@@ -48,6 +48,7 @@ Progress: [####################] 2/2 plans complete (Phase 12 done)
 | 11-micro-interactions-empty-states | 01 | 2 min | 4 | 2026-03-10 |
 | 12-day-and-month-calendar-views | 01 | 2 min | 4 | 2026-03-10 |
 | 12-day-and-month-calendar-views | 02 | 2 min | 2 | 2026-03-10 |
+| 13-event-form-enhancements | 01 | 5 min | 4 | 2026-04-09 |
 
 ## Accumulated Context
 
@@ -112,6 +113,12 @@ All v1.0 decisions have been reviewed and marked with outcomes.
 - Day view reuses same grid constants, slot line pattern, and WorkshopCard from CalendarGrid for visual consistency
 - drillToDay callback shared between onDayClick (week header) and future month view cell clicks
 
+**Phase 13 Plan 01 decisions:**
+- effectiveBuffer uses Math.min of pair so either workshop can relax strictness without both needing to agree
+- bufferOverride=0 skips the check entirely via continue rather than treating 0 as a threshold
+- planType and bufferOverride defaults placed before ...workshop spread so persisted values always win over defaults
+- errors state cleared on each save attempt so stale errors don't persist after field correction
+
 **Phase 12 Plan 02 decisions:**
 - MonthView groups workshops into Map<dateKey, workshop[]> for O(1) per-day lookup instead of filtering per cell
 - monthMatchCount uses isSameMonth for broader filter empty state check (entire month, not just visible grid range)
@@ -138,6 +145,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-23
-Stopped at: Completed quick/1-make-the-app-responsive/1-PLAN.md
-Resume file: .planning/quick/1-make-the-app-responsive/1-SUMMARY.md
+Last session: 2026-04-09
+Stopped at: Completed .planning/phases/13-event-form-enhancements/13-01-PLAN.md
+Resume file: .planning/phases/13-event-form-enhancements/13-01-SUMMARY.md
