@@ -41,6 +41,17 @@ const TIMEZONE_OPTIONS = [
   { value: 'AEST', label: 'Australian Eastern (AEST)' },
 ];
 
+const PLAN_TYPES = ['Core', 'Core Plus'];
+
+const BUFFER_OPTIONS = [
+  { value: 0, label: 'Off' },
+  { value: 5, label: '5 min' },
+  { value: 10, label: '10 min' },
+  { value: 15, label: '15 min' },
+  { value: 20, label: '20 min' },
+  { value: 30, label: '30 min' },
+];
+
 const RECURRING_DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 const RECURRING_DAY_LABELS = { monday: 'Mon', tuesday: 'Tue', wednesday: 'Wed', thursday: 'Thu', friday: 'Fri', saturday: 'Sat', sunday: 'Sun' };
 const DAY_INDICES = { sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6 };
@@ -123,6 +134,8 @@ function initDraft(workshop, mode, slotContext, tz) {
       recurrenceEndType: 'never',
       recurrenceOccurrences: 13,
       timezone: 'ET',
+      planType: 'Core',
+      bufferOverride: 15,
       ...workshop,
     };
   }
@@ -144,6 +157,8 @@ function initDraft(workshop, mode, slotContext, tz) {
     timezone: 'ET',
     markets: ['US'],
     zoomType: 'meeting',
+    planType: 'Core',
+    bufferOverride: 15,
     startTime: buildISO(slot, tz),
     endTime: buildEndISO(slot, tz),
   };
@@ -593,6 +608,7 @@ export default function WorkshopForm({
   const [marketsDropdownOpen, setMarketsDropdownOpen] = useState(false);
   const [coachSearch, setCoachSearch] = useState('');
   const [showCoCoach, setShowCoCoach] = useState(() => !!draft.coCoachId);
+  const [errors, setErrors] = useState({});
 
   // Refs for click-outside detection
   const coachDropdownRef = useRef(null);
@@ -651,6 +667,12 @@ export default function WorkshopForm({
 
   // Action handlers
   const handleSaveDraft = () => {
+    const newErrors = {};
+    if (!draft.title?.trim()) newErrors.title = 'Title is required';
+    if (!draft.startTime) newErrors.startTime = 'Date and time are required';
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
+
     if (mode === 'create') {
       const base = { ...draft, id: 'ws-' + Date.now() };
       const extras = draft.recurring && draft.recurringDays.length > 0
@@ -683,6 +705,14 @@ export default function WorkshopForm({
   };
 
   const handlePublish = () => {
+    const newErrors = {};
+    if (!draft.title?.trim()) newErrors.title = 'Title is required';
+    if (!draft.startTime) newErrors.startTime = 'Date and time are required';
+    if (!draft.coachId) newErrors.coachId = 'Coach is required to publish';
+    if (!draft.markets?.length) newErrors.markets = 'Select at least one market to publish';
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
+
     if (mode === 'create') {
       const base = { ...draft, id: 'ws-' + Date.now(), status: 'Published' };
       const extras = draft.recurring && draft.recurringDays.length > 0
@@ -739,6 +769,9 @@ export default function WorkshopForm({
         onChange={(e) => updateField('title', e.target.value)}
         placeholder="Workshop title"
       />
+      {errors.title && (
+        <p className="text-[12px] text-red-500 mt-1 px-1">Title is required</p>
+      )}
 
       {/* 2. Type */}
       <Select
@@ -760,8 +793,32 @@ export default function WorkshopForm({
         </label>
       </div>
 
+      {/* Plan Type (EVNT-01) */}
+      <div className="space-y-1">
+        <span className="text-[12px] font-normal text-[#031373]">Plan Type</span>
+        <div className="flex gap-2">
+          {PLAN_TYPES.map((pt) => (
+            <button
+              key={pt}
+              type="button"
+              onClick={() => updateField('planType', pt)}
+              className={`px-4 py-2 text-sm font-semibold rounded-full border transition-colors cursor-pointer ${
+                draft.planType === pt
+                  ? 'bg-ww-blue text-white border-ww-blue'
+                  : 'border-[#84ABFF] text-[#031373] bg-white hover:border-[#031373]'
+              }`}
+            >
+              {pt}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* 3. Date & Time */}
       <DateTimeRow draft={draft} updateField={updateField} />
+      {errors.startTime && (
+        <p className="text-[12px] text-red-500 mt-1 px-1">Date and time are required</p>
+      )}
 
       {/* 3. Recurrence toggle + dropdown */}
       <label className="flex items-center gap-2 cursor-pointer">
@@ -813,6 +870,9 @@ export default function WorkshopForm({
           </div>
         )}
       </div>
+      {errors.markets && (
+        <p className="text-[12px] text-red-500 mt-1 px-1">Select at least one market to publish</p>
+      )}
 
       {/* 4. Coach — custom availability-aware dropdown */}
       <div ref={coachDropdownRef} className="relative w-full">
@@ -883,6 +943,9 @@ export default function WorkshopForm({
           </div>
         )}
       </div>
+      {errors.coachId && (
+        <p className="text-[12px] text-red-500 mt-1 px-1">Coach is required to publish</p>
+      )}
 
       {/* 5. Co-Coach toggle + dropdown */}
       <label className="flex items-center gap-2 cursor-pointer">
@@ -966,6 +1029,34 @@ export default function WorkshopForm({
         placeholder="Workshop description"
       />
 
+      {/* Buffer Override (EVNT-03) */}
+      <div className="space-y-1">
+        <span className="text-[12px] font-normal text-[#031373]">Buffer Override</span>
+        <div className="flex flex-wrap gap-2">
+          {BUFFER_OPTIONS.map(({ value, label }) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => updateField('bufferOverride', value)}
+              className={`px-3 py-2 text-[14px] font-semibold rounded-full border transition-colors cursor-pointer ${
+                draft.bufferOverride === value
+                  ? 'bg-ww-blue text-white border-ww-blue'
+                  : 'border-[#84ABFF] text-[#031373] bg-white hover:border-[#031373]'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        {draft.bufferOverride !== 15 && (
+          <span className="text-[11px] text-[#031373]/60 mt-1 block">
+            {draft.bufferOverride === 0
+              ? 'Buffer check disabled for this workshop'
+              : 'Default is 15 min'}
+          </span>
+        )}
+      </div>
+
       {/* Action buttons */}
       <div className="pt-4 border-t border-border mt-6 space-y-3">
         <div className="flex gap-3">
@@ -979,7 +1070,7 @@ export default function WorkshopForm({
             onClick={handlePublish}
             className="flex-1 px-4 py-2 text-sm font-medium bg-ww-blue text-white rounded-full hover:bg-ww-navy transition-colors"
           >
-            Publish
+            Publish Workshop
           </button>
         </div>
 
