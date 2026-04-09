@@ -17,6 +17,7 @@ import {
 } from '../../utils/availabilityBands';
 import { useApp } from '../../context/AppContext';
 import { getHoursInTz, getMinutesInTz, isSameDayInTz, isTodayInTz, getTzAbbr } from '../../utils/timezone';
+import useDrag from '../../hooks/useDrag';
 
 function getEventPosition(startTimeISO, endTimeISO, tz) {
   const start = parseISO(startTimeISO);
@@ -94,7 +95,11 @@ export default function DayView({
   anyFilterActive = false,
   showOverlay = false,
 }) {
-  const { filters, userTimezone } = useApp();
+  const { filters, userTimezone, setWorkshops, toast } = useApp();
+
+  const { dragState, didDrag, onPointerDown, onPointerMove, onPointerUp } = useDrag({
+    workshops, setWorkshops, userTimezone, toast,
+  });
 
   const coachMap = useMemo(
     () => new Map(coaches.map((c) => [c.id, c])),
@@ -267,10 +272,34 @@ export default function DayView({
                     onClick={onWorkshopClick}
                     isFiltered={isFiltered}
                     height={height}
+                    isDragging={dragState.active && dragState.workshopId === ws.id}
+                    didDrag={didDrag}
+                    onPointerDown={(e) => onPointerDown(e, ws, scrollRef.current, date)}
+                    onPointerMove={onPointerMove}
+                    onPointerUp={onPointerUp}
                   />
                 </div>
               );
             });
+          })()}
+
+          {/* Drag ghost */}
+          {dragState.active && (() => {
+            const ghostWs = workshops.find((w) => w.id === dragState.workshopId);
+            if (!ghostWs) return null;
+            return (
+              <div
+                className="absolute left-0 right-1 pointer-events-none"
+                style={{ top: dragState.top, height: dragState.height, zIndex: 50 }}
+              >
+                <WorkshopCard
+                  workshop={ghostWs}
+                  coachMap={coachMap}
+                  conflicts={[]}
+                  height={dragState.height}
+                />
+              </div>
+            );
           })()}
         </div>
       </div>

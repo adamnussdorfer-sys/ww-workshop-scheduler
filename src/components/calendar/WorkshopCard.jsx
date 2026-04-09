@@ -28,7 +28,7 @@ const CONFLICT_RING = {
   orange: 'ring-2 ring-inset ring-red-400',
 };
 
-export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999, hideConflictIcon = false, weekView = false }) {
+export default function WorkshopCard({ workshop, coachMap, conflicts = [], onClick, isFiltered = false, height = 999, hideConflictIcon = false, weekView = false, isDragging = false, didDrag, onPointerDown: onPD, onPointerMove: onPM, onPointerUp: onPU }) {
   const { highlightedIds, userTimezone } = useApp();
   const isHighlighted = highlightedIds.has(workshop.id);
   const compact = height < 42;
@@ -78,15 +78,21 @@ export default function WorkshopCard({ workshop, coachMap, conflicts = [], onCli
   const card = (
     <div
       {...cardTipHandlers}
-      className={`h-full overflow-hidden rounded text-xs px-1.5 py-1 cursor-pointer relative
+      className={`h-full overflow-hidden rounded text-xs px-1.5 py-1 relative
         transition-[transform,box-shadow] duration-150 ease-out
         hover:-translate-y-0.5 hover:shadow-md
         motion-reduce:transition-none motion-reduce:hover:transform-none
+        ${isDragging ? 'opacity-30 cursor-grabbing' : 'cursor-grab'}
         ${cardStyle} ${ringClass || (isDraft ? DRAFT_BORDER : 'ring-[1.5px] ring-inset ring-border')}${isFiltered ? ' opacity-25 pointer-events-none' : ''}${isHighlighted ? ' animate-new-glow' : ''}`}
+      style={{ touchAction: 'none' }}
       onClick={(e) => {
         e.stopPropagation();
+        if (didDrag?.current) { didDrag.current = false; return; }
         onClick?.(workshop.id);
       }}
+      onPointerDown={onPD}
+      onPointerMove={onPM}
+      onPointerUp={onPU}
     >
       {hasConflicts && !hideConflictIcon && (
         <div className={`absolute top-1.5 right-1.5 ${iconColor} cursor-help`}>

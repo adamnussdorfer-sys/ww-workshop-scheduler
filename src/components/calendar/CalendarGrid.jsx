@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useRef } from 'react';
+import { useMemo, useEffect, useRef, useCallback } from 'react';
 import {
   parseISO,
   differenceInMinutes,
@@ -17,6 +17,7 @@ import {
 } from '../../utils/availabilityBands';
 import { useApp } from '../../context/AppContext';
 import { getHoursInTz, getMinutesInTz, isSameDayInTz, isTodayInTz, getTzAbbr } from '../../utils/timezone';
+import useDrag from '../../hooks/useDrag';
 
 function getEventPosition(startTimeISO, endTimeISO, tz) {
   const start = parseISO(startTimeISO);
@@ -95,7 +96,20 @@ const HOUR_LABELS = Array.from(
 const SLOT_LINES = Array.from({ length: GRID_SLOTS }, (_, i) => i);
 
 export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap, onWorkshopClick, onSlotClick, filteredIds = new Set(), anyFilterActive = false, showOverlay = false, onDayClick }) {
-  const { filters, userTimezone } = useApp();
+  const { filters, userTimezone, setWorkshops, toast } = useApp();
+
+  const dayColumnsRef = useRef([]);
+  const { dragState, didDrag, onPointerDown, onPointerMove, onPointerUp } = useDrag({
+    workshops, setWorkshops, userTimezone, toast,
+    dayColumns: dayColumnsRef,
+  });
+
+  const setDayColRef = useCallback((el, idx, day) => {
+    if (el) {
+      dayColumnsRef.current[idx] = el;
+      el.__day = day;
+    }
+  }, []);
 
   const coachMap = useMemo(
     () => new Map(coaches.map((c) => [c.id, c])),
@@ -186,7 +200,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
 
         {/* Day columns */}
         <div className="grid flex-1" style={{ gridTemplateColumns: 'repeat(7, 1fr)' }}>
-          {weekDays.map((day) => {
+          {weekDays.map((day, dayIdx) => {
             const dayWorkshops = visibleWorkshops.filter((ws) =>
               isSameDayInTz(parseISO(ws.startTime), day, userTimezone)
             );
@@ -194,6 +208,7 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
             return (
               <div
                 key={day.toISOString()}
+                ref={(el) => setDayColRef(el, dayIdx, day)}
                 className="relative border-l border-border cursor-pointer"
                 style={{ height: GRID_HEIGHT }}
                 onClick={(e) => {
@@ -269,10 +284,36 @@ export default function CalendarGrid({ weekDays, workshops, coaches, conflictMap
                         height={height}
                         hideConflictIcon
                         weekView
+                        isDragging={dragState.active && dragState.workshopId === ws.id}
+                        didDrag={didDrag}
+                        onPointerDown={(e) => onPointerDown(e, ws, scrollRef.current, day)}
+                        onPointerMove={onPointerMove}
+                        onPointerUp={onPointerUp}
                       />
                     </div>
                   );
                 });
+                })()}
+
+                {/* Drag ghost */}
+                {dragState.active && dragState.targetDay === day && (() => {
+                  const ghostWs = workshops.find((w) => w.id === dragState.workshopId);
+                  if (!ghostWs) return null;
+                  return (
+                    <div
+                      className="absolute left-0 right-1 pointer-events-none"
+                      style={{ top: dragState.top, height: dragState.height, zIndex: 50 }}
+                    >
+                      <WorkshopCard
+                        workshop={ghostWs}
+                        coachMap={coachMap}
+                        conflicts={[]}
+                        height={dragState.height}
+                        hideConflictIcon
+                        weekView
+                      />
+                    </div>
+                  );
                 })()}
               </div>
             );
