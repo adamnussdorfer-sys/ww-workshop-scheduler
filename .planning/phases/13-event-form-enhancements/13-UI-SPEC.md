@@ -34,7 +34,7 @@ Declared values (must be multiples of 4):
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| xs | 4px | Icon gaps, radio button gap (`gap-1.5`), checkbox label gap |
+| xs | 4px | Icon gaps, radio button gap (`gap-1`), checkbox label gap |
 | sm | 8px | Compact element spacing, dropdown item vertical padding |
 | md | 16px | Form field horizontal padding (`px-4`), section spacing |
 | lg | 24px | Section padding, modal padding (`p-6`) |
@@ -61,6 +61,8 @@ Source: Extracted from `src/components/ui/Input.jsx` (`text-[12px] font-normal` 
 
 Only two weights in use: 400 and 600. Do not introduce 500 or 700.
 
+Buffer option button text uses `text-[14px]` (same as field value / trigger text). Do not use 13px anywhere in this phase — the scale is 12px, 14px, 18px only.
+
 ---
 
 ## Color
@@ -69,14 +71,14 @@ Only two weights in use: 400 and 600. Do not introduce 500 or 700.
 |------|-------|-------|
 | Dominant (60%) | `#F8FAFC` (`--color-surface`) | Page background, panel scroll area |
 | Secondary (30%) | `#FFFFFF` | Form field backgrounds, dropdown menus, modal backgrounds |
-| Accent (10%) | `#0222D0` (`--color-ww-blue`) | Selected state for planType toggle buttons; active dropdown item text; "Publish" button background |
+| Accent (10%) | `#0222D0` (`--color-ww-blue`) | Selected state for planType toggle buttons; active dropdown item text; "Publish Workshop" button background |
 | Destructive | `#EF4444` (Tailwind `red-500`) | "Delete workshop" text link only |
 
 Accent (`#0222D0`) reserved for:
 1. The currently selected planType option pill/button (filled background + white text)
 2. The currently selected bufferOverride option (filled background + white text)
 3. Hover state text color on dropdown options (`hover:text-ww-blue`)
-4. "Publish" primary action button background
+4. "Publish Workshop" primary action button background
 5. "Save Draft" outline button border + text
 
 Border colors (pre-established, do not change):
@@ -124,12 +126,12 @@ Options: `0`, `5`, `10`, `15`, `20`, `30` (minutes). Render as a tight row of co
 [ 0 ]  [ 5 ]  [ 10 ]  [ 15 ]  [ 20 ]  [ 30 ]
 ```
 
-- Container: `flex flex-wrap gap-1.5` row, no outer border
+- Container: `flex flex-wrap gap-2` row, no outer border
 - Each option label: `{value} min` (e.g., "15 min") — omit "min" for 0: show "Off"
   - Option 0 displays as "Off" (buffer disabled — skip buffer check entirely)
   - Options 5–30 display as "5 min", "10 min", etc.
-- Unselected: `px-3 py-1.5 text-[13px] font-semibold rounded-full border border-[#84ABFF] text-[#031373] bg-white hover:border-[#031373] cursor-pointer transition-colors`
-- Selected: `px-3 py-1.5 text-[13px] font-semibold rounded-full bg-ww-blue text-white border border-ww-blue cursor-pointer`
+- Unselected: `px-3 py-1.5 text-[14px] font-semibold rounded-full border border-[#84ABFF] text-[#031373] bg-white hover:border-[#031373] cursor-pointer transition-colors`
+- Selected: `px-3 py-1.5 text-[14px] font-semibold rounded-full bg-ww-blue text-white border border-ww-blue cursor-pointer`
 - Field label above: `<span className="text-[12px] font-normal text-[#031373]">Buffer Override</span>`
 - Sub-label below when value != 15: `<span className="text-[11px] text-[#031373]/60 mt-1">Default is 15 min</span>` — only shown when non-default selected
 - Position in form: after the description textarea, before the action buttons
@@ -140,7 +142,7 @@ Options: `0`, `5`, `10`, `15`, `20`, `30` (minutes). Render as a tight row of co
 
 Visual changes:
 - When `draft.status === 'Draft'` and the form has fields left empty (coach, markets, description), no red error borders appear on those fields — they remain in the normal "empty" state (`border-[#84ABFF]`).
-- Validation red border (`border-red-400`) is only applied when the user clicks "Publish" and a required-for-publish field is blank.
+- Validation red border (`border-red-400`) is only applied when the user clicks "Publish Workshop" and a required-for-publish field is blank.
 - Required for any save: `title` (non-empty) + `startTime` (set). All others optional for drafts.
 
 If title is blank when "Save Draft" is clicked, show an inline error below the title `Input`:
@@ -171,8 +173,16 @@ Complete ordered field list for WorkshopForm after Phase 13 changes:
 10. Co-Coach toggle + field (existing)
 11. Description (existing `Input` multiline)
 12. **Buffer Override** (new segmented buttons — EVNT-03)
-13. Action buttons: "Save Draft" + "Publish" (existing)
+13. Action buttons: "Save Draft" + "Publish Workshop" (existing, CTA label updated)
 14. Delete workshop link (existing — edit mode only)
+
+---
+
+## Focal Point
+
+The **action button row** (items 13 above — "Save Draft" + "Publish Workshop") is the primary focal point of the form panel. It must remain visually distinct: full-width layout, "Publish Workshop" button carrying the `bg-ww-blue` accent fill, positioned at the bottom of the scrollable field list so it is always reachable and identifiable as the terminal action.
+
+All other form elements are supporting — they feed into this row. No other element in the form should use a filled accent background except the selected state of segmented buttons (which are secondary affordances).
 
 ---
 
@@ -224,7 +234,7 @@ Both fields must be added to:
 
 | Element | Copy |
 |---------|------|
-| Primary CTA (create) | "Publish" |
+| Primary CTA (create) | "Publish Workshop" |
 | Secondary CTA | "Save Draft" |
 | Plan Type label | "Plan Type" |
 | Plan Type option A | "Core" |
