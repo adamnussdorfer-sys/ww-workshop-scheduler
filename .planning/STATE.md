@@ -5,17 +5,17 @@
 See: .planning/PROJECT.md (updated 2026-03-09)
 
 **Core value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
-**Current focus:** Phase 12: Day and Month Calendar Views (Complete)
+**Current focus:** Phase 13: Event Form Enhancements
 
 ## Current Position
 
-Phase: 12 (Day and Month Calendar Views)
-Plan: 2 of 2 complete
-Status: Phase 12 complete — All three calendar views (Day, Week, Month) fully functional
-Last activity: 2026-03-24 - Completed quick task 1: Make the app responsive
+Phase: 13 (Event Form Enhancements)
+Plan: 0 of 1
+Status: Ready to plan — v1.2 milestone initialized
+Last activity: 2026-04-08 - v1.2 milestone created with 5 requirements across 2 phases
 
 ```
-Progress: [####################] 2/2 plans complete (Phase 12 done)
+Progress: [____________________] 0/2 plans (v1.2 starting)
 ```
 
 ## Performance Metrics

@@ -1,6 +1,6 @@
-# Requirements: WW Workshop Scheduler v1.1
+# Requirements: WW Workshop Scheduler v1.2
 
-**Defined:** 2026-03-09
+**Defined:** 2026-04-08
 **Core Value:** Coordinators can see the full weekly workshop schedule at a glance, spot conflicts immediately, and publish changes with confidence.
 
 ## v1.1 Requirements
@@ -67,14 +67,33 @@ Requirements for Interactive Polish milestone. Each maps to roadmap phases.
 - [x] **CAL-06**: Clicking a day cell in month view or a day label in week view drills into that day's day view
 - [x] **CAL-07**: Active filters, detail panel, and keyboard shortcuts work consistently across all three views
 
+## v1.2 Requirements
+
+Requirements for Event Configuration & Status milestone. Each maps to roadmap phases.
+
+### Event Configuration
+
+- [ ] **EVNT-01**: Coordinator can select a plan type (Core or Core Plus) when creating or editing a workshop via single-selection control
+- [ ] **EVNT-02**: Coordinator can save a workshop as Draft without all fields being required (title and time sufficient)
+- [ ] **EVNT-03**: Coordinator can set a custom buffer time override per workshop that replaces the default 15-minute buffer in conflict detection
+
+### Status Visibility
+
+- [ ] **STAT-01**: Published workshops display a shareable/public link in the slide-out detail panel
+- [ ] **STAT-02**: Draft and Published workshops have clearly distinct visual indicators on calendar cards (color, badge, or border treatment) and in the panel header
+
 ## Future Requirements
 
-Deferred beyond v1.1. Tracked for future consideration.
+Deferred beyond v1.2. Tracked for future consideration.
 
 ### Roster Enhancements
 
 - **ROST-07**: Coordinator can view coach schedule directly from roster detail panel
 - **ROST-08**: Roster supports pagination for larger coach lists (>50)
+
+### Event Extensions
+
+- **EVNT-04**: Coordinator can assign a sub-type code to workshops for international coach payment tracking
 
 ### Advanced Filtering
 
@@ -138,11 +157,18 @@ Deferred beyond v1.1. Tracked for future consideration.
 | CAL-06 | Phase 12 | Complete |
 | CAL-07 | Phase 12 | Complete |
 
+| EVNT-01 | Phase 13 | Pending |
+| EVNT-02 | Phase 13 | Pending |
+| EVNT-03 | Phase 13 | Pending |
+| STAT-01 | Phase 14 | Pending |
+| STAT-02 | Phase 14 | Pending |
+
 **Coverage:**
-- v1.1 requirements: 39 total
-- Mapped to phases: 39
+- v1.1 requirements: 39 total (all complete)
+- v1.2 requirements: 5 total
+- Mapped to phases: 5
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-09*
-*Last updated: 2026-03-09 after Phase 12 requirements added*
+*Last updated: 2026-04-08 after v1.2 requirements added*
