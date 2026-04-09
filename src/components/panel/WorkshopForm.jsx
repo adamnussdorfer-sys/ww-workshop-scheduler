@@ -794,25 +794,12 @@ export default function WorkshopForm({
       </div>
 
       {/* Plan Type (EVNT-01) */}
-      <div className="space-y-1">
-        <span className="text-[12px] font-normal text-[#031373]">Plan Type</span>
-        <div className="flex gap-2">
-          {PLAN_TYPES.map((pt) => (
-            <button
-              key={pt}
-              type="button"
-              onClick={() => updateField('planType', pt)}
-              className={`px-4 py-2 text-sm font-semibold rounded-full border transition-colors cursor-pointer ${
-                draft.planType === pt
-                  ? 'bg-ww-blue text-white border-ww-blue'
-                  : 'border-[#84ABFF] text-[#031373] bg-white hover:border-[#031373]'
-              }`}
-            >
-              {pt}
-            </button>
-          ))}
-        </div>
-      </div>
+      <Select
+        label="Plan Type"
+        value={draft.planType || 'Core'}
+        onChange={(v) => updateField('planType', v)}
+        options={PLAN_TYPES.map((pt) => ({ value: pt, label: pt }))}
+      />
 
       {/* 3. Date & Time */}
       <DateTimeRow draft={draft} updateField={updateField} />
