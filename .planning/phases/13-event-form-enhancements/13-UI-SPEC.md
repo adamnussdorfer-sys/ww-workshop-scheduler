@@ -56,12 +56,13 @@ Exceptions:
 | Label (floating) | 12px | 400 (normal) | 1.0 |
 | Field value / trigger text | 14px | 600 (semibold) | 1.0 |
 | Section heading (modal) | 18px (`text-lg`) | 600 (semibold) | 1.2 |
+| Sub-label / hint | 11px | 400 (normal) | 1.0 |
 
 Source: Extracted from `src/components/ui/Input.jsx` (`text-[12px] font-normal` for labels, `text-[14px] font-semibold` for values), `src/index.css` (`font-size: 14px; line-height: 1.5` on body), `WorkshopForm.jsx` modal heading (`text-lg font-semibold`).
 
 Only two weights in use: 400 and 600. Do not introduce 500 or 700.
 
-Buffer option button text uses `text-[14px]` (same as field value / trigger text). Do not use 13px anywhere in this phase — the scale is 12px, 14px, 18px only.
+Type scale: 11px, 12px, 14px, 18px (4 sizes). Buffer option button text uses `text-[14px]`. Do not use 13px anywhere in this phase.
 
 ---
 
@@ -130,8 +131,8 @@ Options: `0`, `5`, `10`, `15`, `20`, `30` (minutes). Render as a tight row of co
 - Each option label: `{value} min` (e.g., "15 min") — omit "min" for 0: show "Off"
   - Option 0 displays as "Off" (buffer disabled — skip buffer check entirely)
   - Options 5–30 display as "5 min", "10 min", etc.
-- Unselected: `px-3 py-1.5 text-[14px] font-semibold rounded-full border border-[#84ABFF] text-[#031373] bg-white hover:border-[#031373] cursor-pointer transition-colors`
-- Selected: `px-3 py-1.5 text-[14px] font-semibold rounded-full bg-ww-blue text-white border border-ww-blue cursor-pointer`
+- Unselected: `px-3 py-2 text-[14px] font-semibold rounded-full border border-[#84ABFF] text-[#031373] bg-white hover:border-[#031373] cursor-pointer transition-colors`
+- Selected: `px-3 py-2 text-[14px] font-semibold rounded-full bg-ww-blue text-white border border-ww-blue cursor-pointer`
 - Field label above: `<span className="text-[12px] font-normal text-[#031373]">Buffer Override</span>`
 - Sub-label below when value != 15: `<span className="text-[11px] text-[#031373]/60 mt-1">Default is 15 min</span>` — only shown when non-default selected
 - Position in form: after the description textarea, before the action buttons
